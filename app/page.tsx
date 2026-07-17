@@ -154,40 +154,54 @@ export default function Home() {
           Kinh tế, Voice Chat và nhiều tính năng hấp dẫn khác.
         </p>
 
-        <div className="mt-12">
+        <div className="mt-10 w-full flex justify-center">
 
-  <div className="mx-auto flex w-fit items-center rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-3 backdrop-blur-xl shadow-2xl">
+  <div
+    className="
+    flex items-center
+    w-full max-w-md sm:max-w-xl
+    rounded-full
+    border border-zinc-700
+    bg-zinc-900/80
+    backdrop-blur-xl
+    px-2 py-2
+    shadow-xl
+    "
+  >
 
-    <div className="flex items-center px-5">
+    <div className="flex items-center px-4">
+
       <span
-        className={`mr-3 h-3 w-3 rounded-full ${
+        className={`mr-2 h-3 w-3 rounded-full ${
           server.online
             ? "bg-green-500 animate-pulse"
             : "bg-red-500"
         }`}
       />
 
-      <span className="text-3xl font-black text-white">
+      <span className="text-xl sm:text-3xl font-bold">
         {server.players}
       </span>
 
-      <span className="ml-2 text-zinc-400">
+      <span className="ml-2 hidden sm:block text-zinc-400">
         đang chơi
       </span>
+
     </div>
 
-    <div className="h-8 w-px bg-zinc-700"></div>
+    <div className="h-8 w-px bg-zinc-700" />
 
-    <div className="px-6">
-      <span className="text-2xl font-bold tracking-wide">
+    <div className="flex-1 px-4 overflow-hidden">
+
+      <span className="block truncate text-lg sm:text-2xl font-bold">
         craftopia.zencheap.net
       </span>
+
     </div>
 
     <button
       onClick={copyIP}
-      className="ml-2 flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 transition hover:bg-zinc-800"
-      title="Copy IP"
+      className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-700 hover:bg-zinc-800"
     >
       {copied ? "✅" : "📋"}
     </button>
