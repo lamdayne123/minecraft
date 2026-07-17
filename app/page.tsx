@@ -150,12 +150,33 @@ export default function Home() {
         </h2>
 
         <p className="mt-6 max-w-2xl text-lg text-zinc-400">
-          Máy chủ Minecraft Survival với Claim, AuraSkills, Crate,
-          Kinh tế, Voice Chat và nhiều tính năng hấp dẫn khác.
-        </p>
+  Máy chủ Minecraft Survival với Claim, AuraSkills, Crate,
+  Kinh tế, Voice Chat và nhiều tính năng hấp dẫn khác.
+</p>
 
-        <div className="mt-10 w-full flex justify-center">
+{/* Hai nút */}
+<div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
 
+  <a
+    href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
+    className="w-72 rounded-full bg-green-500 py-4 text-center text-xl font-semibold text-black transition hover:scale-105 hover:bg-green-400"
+  >
+    🎮 Vào Server →
+  </a>
+
+  <a
+    href="https://discord.gg/maY22mamA"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-72 rounded-full border border-zinc-700 bg-zinc-900/70 py-4 text-center text-xl font-semibold transition hover:border-green-500 hover:bg-zinc-800"
+  >
+    💬 Tham gia Discord
+  </a>
+
+</div>
+
+{/* Thanh IP */}
+<div className="mt-10 w-full flex justify-center">
   <div
     className="
     flex items-center
