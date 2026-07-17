@@ -10,7 +10,7 @@ export default function Home() {
     version: "",
   });
   const [copied, setCopied] = useState(false);
-
+  const [menuOpen, setMenuOpen] = useState(false);
   const copyIP = async () => {
     try {
       await navigator.clipboard.writeText("craftopia.zencheap.net:30263");
@@ -43,9 +43,11 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-black text-white">
 
       {/* Navbar */}
-    <header className="sticky top-5 z-50">
-  <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-zinc-800 bg-zinc-900/80 px-8 py-4 backdrop-blur-xl">
+    <header className="sticky top-5 z-50 px-4">
 
+  <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-zinc-800 bg-zinc-900/80 px-6 py-4 backdrop-blur-xl">
+
+    {/* Logo */}
     <a
       href="/"
       className="text-3xl font-black text-green-400"
@@ -53,6 +55,7 @@ export default function Home() {
       Craftopia
     </a>
 
+    {/* Desktop */}
     <nav className="hidden items-center gap-8 md:flex">
 
       <a
@@ -70,13 +73,6 @@ export default function Home() {
       </a>
 
       <a
-        href="/rules"
-        className="text-zinc-300 transition hover:text-green-400"
-      >
-        📜 Rules
-      </a>
-
-      <a
         href="https://discord.gg/maY22mamA"
         target="_blank"
         rel="noopener noreferrer"
@@ -87,14 +83,58 @@ export default function Home() {
 
     </nav>
 
+    {/* Desktop Button */}
     <a
       href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
-      className="rounded-full bg-green-500 px-6 py-3 font-bold text-black transition hover:scale-105"
+      className="hidden rounded-full bg-green-500 px-6 py-3 font-bold text-black transition hover:scale-105 md:block"
     >
       🎮 Vào Server
     </a>
 
+    {/* Mobile Menu */}
+    <button
+      onClick={() => setMenuOpen(!menuOpen)}
+      className="text-3xl text-white md:hidden"
+    >
+      ☰
+    </button>
+
   </div>
+
+  {/* Mobile Dropdown */}
+  {menuOpen && (
+    <div className="mx-auto mt-4 max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/95 p-6 backdrop-blur-xl md:hidden">
+
+      <div className="flex flex-col gap-5">
+
+        <a href="/" className="text-lg">
+          🏠 Trang chủ
+        </a>
+
+        <a href="/donate" className="text-lg">
+          💎 Donate
+        </a>
+
+        <a
+          href="https://discord.gg/maY22mamA"
+          target="_blank"
+          className="text-lg"
+        >
+          💬 Discord
+        </a>
+
+        <a
+          href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
+          className="mt-2 rounded-xl bg-green-500 py-3 text-center font-bold text-black"
+        >
+          🎮 Vào Server
+        </a>
+
+      </div>
+
+    </div>
+  )}
+
 </header>
 
 
