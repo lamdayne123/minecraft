@@ -14,8 +14,7 @@ export async function POST(req: Request) {
     } = body;
 
     const cookieStore = await cookies();
-
-    const minecraft = cookieStore.get("username")?.value;
+    const minecraft = cookieStore.get("username")?.value || "unknown";
 
     console.log("INPUT CARD:", {
       minecraft,
@@ -35,6 +34,67 @@ export async function POST(req: Request) {
 
     const request_id = Date.now().toString();
 
+    const sign = crypto
+      .createHash("md5")
+      .update(
+        partner_key + code + serial
+      )
+      .digest("hex");
+
+
+    const form = new URLSearchParams();
+
+    form.append("telco", telco);
+    form.append("code", code);
+    form.append("serial", serial);
+    form.append("amount", amount);
+    form.append("request_id", request_id);
+    form.append("partner_id", partner_id);
+    form.append("sign", sign);
+    form.append("command", "charging");
+
+
+    const response = await fetch(
+      "https://card2k.net/chargingws/v2",
+      {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: form.toString(),
+      }
+    );
+
+
+    const data = await response.json();
+
+    console.log("CARD2K RESPONSE:", data);
+
+
+    return NextResponse.json({
+      ...data,
+      minecraft,
+      request_id
+    });
+
+
+  } catch (error) {
+
+    console.error("CARD2K ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Lỗi kết nối server"
+      },
+      {
+        status: 500
+      }
+    );
+
+  }
+}
     const sign = crypto
       .createHash("md5")
       .update(
