@@ -145,9 +145,28 @@ export default function Home() {
           🟢 Java & Bedrock
         </span>
 
-        <h2 className="mt-8 text-6xl font-black">
-          Craftopia Survival
-        </h2>
+        <h2
+  className="
+    mt-8
+    text-7xl
+    md:text-8xl
+    font-black
+    tracking-tight
+    bg-gradient-to-r
+    from-lime-400
+    via-emerald-400
+    to-sky-500
+    bg-clip-text
+    text-transparent
+    drop-shadow-[0_0_30px_rgba(34,197,94,.45)]
+  "
+>
+  CRAFTOPIA
+</h2>
+
+<p className="mt-2 text-4xl md:text-5xl font-bold">
+  Survival
+</p>
 
         <p className="mt-6 max-w-2xl text-lg text-zinc-400">
   Máy chủ Minecraft Survival với Claim, AuraSkills, Crate,
