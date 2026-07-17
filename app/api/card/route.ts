@@ -14,6 +14,15 @@ export async function POST(req: Request) {
       code,
     } = body;
 
+
+    if (!telco || !amount || !serial || !code) {
+      return NextResponse.json({
+        success: false,
+        message: "Thiếu dữ liệu thẻ"
+      });
+    }
+
+
     const cookieStore = await cookies();
 
     const minecraft =
@@ -71,10 +80,7 @@ export async function POST(req: Request) {
     const data = await response.json();
 
 
-    console.log(
-      "CARD2K RESPONSE:",
-      data
-    );
+    console.log("CARD2K:", data);
 
 
     await db.query(
@@ -97,9 +103,9 @@ export async function POST(req: Request) {
         minecraft,
         telco,
         amount,
-        serial.slice(0,4) + "****",
-        code.slice(0,4) + "****",
-        String(data.status),
+        serial.substring(0,4) + "****",
+        code.substring(0,4) + "****",
+        String(data.status ?? ""),
         data.message ?? "",
         request_id
       ]
@@ -112,7 +118,7 @@ export async function POST(req: Request) {
   } catch (error) {
 
     console.error(
-      "CARD2K ERROR:",
+      "CARD ERROR:",
       error
     );
 
@@ -120,101 +126,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         success: false,
-        message: "Lỗi kết nối server"
-      },
-      {
-        status: 500
-      }
-    );
-
-  }
-}
-    const sign = crypto
-      .createHash("md5")
-      .update(partner_key + code + serial)
-      .digest("hex");
-
-
-    const form = new URLSearchParams();
-
-    form.append("telco", telco);
-    form.append("code", code);
-    form.append("serial", serial);
-    form.append("amount", amount);
-    form.append("request_id", request_id);
-    form.append("partner_id", partner_id);
-    form.append("sign", sign);
-    form.append("command", "charging");
-
-
-    const response = await fetch(
-      "https://card2k.net/chargingws/v2",
-      {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: form.toString(),
-      }
-    );
-
-
-    const data = await response.json();
-
-
-    await db.query(
-      `
-      INSERT INTO payments
-      (
-        minecraft,
-        telco,
-        amount,
-        serial,
-        code,
-        status,
-        message,
-        request_id
-      )
-      VALUES
-      ($1,$2,$3,$4,$5,$6,$7,$8)
-      `,
-      [
-        minecraft,
-        telco,
-        amount,
-        serial.slice(0,4) + "****",
-        code.slice(0,4) + "****",
-        String(data.status),
-        data.message,
-        request_id
-      ]
-    );
-
-
-    return NextResponse.json(data);
-
-
-  } catch (error) {
-
-    console.error("CARD2K ERROR:", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Lỗi kết nối server"
-      },
-      {
-        status: 500
-      }
-    );
-
-  }
-}
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Lỗi kết nối server"
+        message: "Lỗi server"
       },
       {
         status: 500
