@@ -1,8 +1,7 @@
-import { Pool } from "pg";
+import { neon } from "@neondatabase/serverless";
 
-export const db = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is not defined");
+}
+
+export const db = neon(process.env.DATABASE_URL);
