@@ -1,37 +1,82 @@
 import { NextResponse } from "next/server";
 import { sql } from "@/lib/db";
 
-export async function GET() {
+export async function POST(req: Request) {
+
   try {
-    const events = await sql`
-      SELECT
-        id,
+
+    const body = await req.json();
+
+    const {
+      secret,
+      title,
+      content,
+      image,
+      author
+    } = body;
+
+
+    if (secret !== process.env.API_SECRET) {
+
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Sai secret"
+        },
+        {
+          status: 401
+        }
+      );
+
+    }
+
+
+    await sql`
+      INSERT INTO news
+      (
         title,
         content,
         image,
         author,
-        category,
-        created_at
-      FROM news
-      WHERE category = 'event'
-      ORDER BY created_at DESC
+        category
+      )
+
+      VALUES
+      (
+        ${title},
+        ${content},
+        ${image || ""},
+        ${author || "Craftopia"},
+        'event'
+      )
     `;
 
-    return NextResponse.json(events);
 
-  } catch (error) {
+    return NextResponse.json({
+      success: true,
+      message: "Event added"
+    });
 
-    console.error("EVENT ERROR:", error);
+
+  } catch(error) {
+
+    console.error(
+      "EVENT UPDATE ERROR:",
+      error
+    );
+
 
     return NextResponse.json(
       {
         success: false,
-        message: "Không thể tải sự kiện"
+        message: "Database error",
+        error: String(error)
       },
       {
-        status: 500
+        status:500
       }
     );
 
   }
+
 }
