@@ -71,7 +71,7 @@ export default function Home() {
         Craftopia
       </a>
 
-      <nav className="flex items-center gap-8">
+      <nav className="hidden items-center gap-8 md:flex">
         <a href="/donate" className="text-zinc-300 hover:text-green-400">
           💎 Donate
         </a>
@@ -170,57 +170,48 @@ export default function Home() {
           Kinh tế, Voice Chat và nhiều tính năng hấp dẫn khác.
         </p>
 
-        <div className="mt-12 w-full px-2">
+        <div className="mt-12 w-full px-3">
 
   <div className="
     mx-auto
     flex
     max-w-3xl
-    flex-col
-    gap-3
+    items-center
     rounded-full
     border
     border-zinc-700
     bg-zinc-900/80
-    p-3
+    px-3
+    py-3
     shadow-2xl
     backdrop-blur-xl
-
-    sm:flex-row
-    sm:items-center
-    sm:justify-between
   ">
 
 
-    {/* Player online */}
+    {/* Online */}
 
     <div className="
       flex
+      shrink-0
       items-center
-      justify-center
-      gap-3
-      px-4
-      sm:justify-start
+      gap-2
+      px-2
+      sm:px-5
     ">
 
       <span
-        className={`
-          h-3
-          w-3
-          rounded-full
-          ${
-            server.online
-            ? "bg-green-500 animate-pulse"
-            : "bg-red-500"
-          }
-        `}
+        className={`h-3 w-3 rounded-full ${
+          server.online
+          ? "bg-green-500 animate-pulse"
+          : "bg-red-500"
+        }`}
       />
 
-      <span className="text-2xl font-black">
+      <span className="text-xl font-black sm:text-3xl">
         {server.players}
       </span>
 
-      <span className="text-sm text-zinc-400">
+      <span className="hidden text-sm text-zinc-400 sm:block">
         đang chơi
       </span>
 
@@ -228,30 +219,31 @@ export default function Home() {
 
 
 
+    {/* Divider */}
+
+    <div className="hidden h-8 w-px bg-zinc-700 sm:block" />
+
+
+
     {/* IP */}
 
     <div className="
+      min-w-0
       flex-1
-      rounded-full
-      bg-zinc-800/60
-      px-5
-      py-3
+      px-3
       text-center
     ">
 
       <p className="
         truncate
-        text-base
+        text-sm
         font-bold
-        sm:text-xl
+        sm:text-2xl
       ">
         craftopia.zencheap.net
       </p>
 
-      <p className="
-        text-xs
-        text-zinc-500
-      ">
+      <p className="hidden text-xs text-zinc-500 sm:block">
         Port: 30263
       </p>
 
@@ -264,10 +256,9 @@ export default function Home() {
     <button
       onClick={copyIP}
       className="
-        mx-auto
         flex
-        h-12
-        w-12
+        h-10
+        w-10
         shrink-0
         items-center
         justify-center
@@ -277,21 +268,17 @@ export default function Home() {
         transition
         hover:bg-zinc-800
         active:scale-90
-
-        sm:mx-0
+        sm:h-12
+        sm:w-12
       "
-      title="Copy IP"
     >
-
       {copied ? "✅" : "📋"}
-
     </button>
 
 
   </div>
 
 </div>
-
 </section>
 
       {/* Features */}
