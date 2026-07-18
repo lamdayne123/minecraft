@@ -10,7 +10,7 @@ export default function Home() {
     version: "",
   });
   const [copied, setCopied] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+
   const copyIP = async () => {
     try {
       await navigator.clipboard.writeText("craftopia.zencheap.net:30263");
@@ -43,11 +43,9 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-black text-white">
 
       {/* Navbar */}
-    <header className="sticky top-5 z-50 px-4">
+    <header className="sticky top-5 z-50">
+  <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-zinc-800 bg-zinc-900/80 px-8 py-4 backdrop-blur-xl">
 
-  <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-zinc-800 bg-zinc-900/80 px-6 py-4 backdrop-blur-xl">
-
-    {/* Logo */}
     <a
       href="/"
       className="text-3xl font-black text-green-400"
@@ -55,7 +53,6 @@ export default function Home() {
       Craftopia
     </a>
 
-    {/* Desktop */}
     <nav className="hidden items-center gap-8 md:flex">
 
       <a
@@ -73,6 +70,13 @@ export default function Home() {
       </a>
 
       <a
+        href="/rules"
+        className="text-zinc-300 transition hover:text-green-400"
+      >
+        📜 Rules
+      </a>
+
+      <a
         href="https://discord.gg/maY22mamA"
         target="_blank"
         rel="noopener noreferrer"
@@ -83,58 +87,14 @@ export default function Home() {
 
     </nav>
 
-    {/* Desktop Button */}
     <a
       href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
-      className="hidden rounded-full bg-green-500 px-6 py-3 font-bold text-black transition hover:scale-105 md:block"
+      className="rounded-full bg-green-500 px-6 py-3 font-bold text-black transition hover:scale-105"
     >
       🎮 Vào Server
     </a>
 
-    {/* Mobile Menu */}
-    <button
-      onClick={() => setMenuOpen(!menuOpen)}
-      className="text-3xl text-white md:hidden"
-    >
-      ☰
-    </button>
-
   </div>
-
-  {/* Mobile Dropdown */}
-  {menuOpen && (
-    <div className="mx-auto mt-4 max-w-md rounded-3xl border border-zinc-800 bg-zinc-900/95 p-6 backdrop-blur-xl md:hidden">
-
-      <div className="flex flex-col gap-5">
-
-        <a href="/" className="text-lg">
-          🏠 Trang chủ
-        </a>
-
-        <a href="/donate" className="text-lg">
-          💎 Donate
-        </a>
-
-        <a
-          href="https://discord.gg/maY22mamA"
-          target="_blank"
-          className="text-lg"
-        >
-          💬 Discord
-        </a>
-
-        <a
-          href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
-          className="mt-2 rounded-xl bg-green-500 py-3 text-center font-bold text-black"
-        >
-          🎮 Vào Server
-        </a>
-
-      </div>
-
-    </div>
-  )}
-
 </header>
 
 
@@ -145,103 +105,49 @@ export default function Home() {
           🟢 Java & Bedrock
         </span>
 
-        <h2
-  className="
-    mt-8
-    text-7xl
-    md:text-8xl
-    font-black
-    tracking-tight
-    bg-gradient-to-r
-    from-lime-400
-    via-emerald-400
-    to-sky-500
-    bg-clip-text
-    text-transparent
-    drop-shadow-[0_0_30px_rgba(34,197,94,.45)]
-  "
->
-  CRAFTOPIA
-</h2>
-
-<p className="mt-2 text-4xl md:text-5xl font-bold">
-  Survival
-</p>
+        <h2 className="mt-8 text-6xl font-black">
+          Craftopia Survival
+        </h2>
 
         <p className="mt-6 max-w-2xl text-lg text-zinc-400">
-  Máy chủ Minecraft Survival với Claim, AuraSkills, Crate,
-  Kinh tế, Voice Chat và nhiều tính năng hấp dẫn khác.
-</p>
+          Máy chủ Minecraft Survival với Claim, AuraSkills, Crate,
+          Kinh tế, Voice Chat và nhiều tính năng hấp dẫn khác.
+        </p>
 
-{/* Hai nút */}
-<div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="mt-12">
 
-  <a
-    href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
-    className="w-72 rounded-full bg-green-500 py-4 text-center text-xl font-semibold text-black transition hover:scale-105 hover:bg-green-400"
-  >
-    🎮 Vào Server →
-  </a>
+  <div className="mx-auto flex w-fit items-center rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-3 backdrop-blur-xl shadow-2xl">
 
-  <a
-    href="https://discord.gg/maY22mamA"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="w-72 rounded-full border border-zinc-700 bg-zinc-900/70 py-4 text-center text-xl font-semibold transition hover:border-green-500 hover:bg-zinc-800"
-  >
-    💬 Tham gia Discord
-  </a>
-
-</div>
-
-{/* Thanh IP */}
-<div className="mt-10 w-full flex justify-center">
-  <div
-    className="
-    flex items-center
-    w-full max-w-md sm:max-w-xl
-    rounded-full
-    border border-zinc-700
-    bg-zinc-900/80
-    backdrop-blur-xl
-    px-2 py-2
-    shadow-xl
-    "
-  >
-
-    <div className="flex items-center px-4">
-
+    <div className="flex items-center px-5">
       <span
-        className={`mr-2 h-3 w-3 rounded-full ${
+        className={`mr-3 h-3 w-3 rounded-full ${
           server.online
             ? "bg-green-500 animate-pulse"
             : "bg-red-500"
         }`}
       />
 
-      <span className="text-xl sm:text-3xl font-bold">
+      <span className="text-3xl font-black text-white">
         {server.players}
       </span>
 
-      <span className="ml-2 hidden sm:block text-zinc-400">
+      <span className="ml-2 text-zinc-400">
         đang chơi
       </span>
-
     </div>
 
-    <div className="h-8 w-px bg-zinc-700" />
+    <div className="h-8 w-px bg-zinc-700"></div>
 
-    <div className="flex-1 px-4 overflow-hidden">
-
-      <span className="block truncate text-lg sm:text-2xl font-bold">
+    <div className="px-6">
+      <span className="text-2xl font-bold tracking-wide">
         craftopia.zencheap.net
       </span>
-
     </div>
 
     <button
       onClick={copyIP}
-      className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-700 hover:bg-zinc-800"
+      className="ml-2 flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 transition hover:bg-zinc-800"
+      title="Copy IP"
     >
       {copied ? "✅" : "📋"}
     </button>
@@ -253,12 +159,36 @@ export default function Home() {
 </section>
 
       {/* Features */}
-      <section className="mx-auto max-w-7xl px-6 py-20">
-        <div className="grid gap-6 md:grid-cols-3">
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <div className="mb-12 text-center">
+          <h2 className="text-5xl font-black">
+            ✨ Khám phá
+          </h2>
+        </div>
 
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 transition hover:border-green-500 hover:-translate-y-1">
-            <h3 className="text-xl font-bold">🏡 Claim</h3>
-          </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          <a
+            href="/events"
+            className="group rounded-2xl border border-orange-500/40 bg-gradient-to-br from-orange-500/10 to-red-500/10 p-6 transition hover:-translate-y-1 hover:border-orange-400"
+          >
+            <h3 className="text-xl font-bold text-orange-400">
+              🎉 Events
+            </h3>
+
+            <p className="mt-3 text-sm text-zinc-400">
+              Theo dõi các sự kiện mới nhất, phần thưởng và hoạt động đang diễn ra tại Craftopia.
+            </p>
+
+            <div className="mt-6 flex items-center justify-between">
+              <span className="font-semibold text-orange-400">
+                Xem Events →
+              </span>
+
+              <span className="text-3xl transition group-hover:scale-110">
+                🎁
+              </span>
+            </div>
+          </a>
 
           <a
             href="/faq"
