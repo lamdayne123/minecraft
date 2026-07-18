@@ -1,22 +1,30 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { neon } from "@neondatabase/serverless";
+
+const sql = neon(process.env.DATABASE_URL!);
 
 export async function GET() {
+  try {
 
-  const file = path.join(
-    process.cwd(),
-    "data",
-    "baltop.json"
-  );
+    const baltop = await sql`
+      SELECT
+        player,
+        money
+      FROM baltop
+      ORDER BY money DESC
+      LIMIT 20
+    `;
 
-  if (!fs.existsSync(file)) {
-    return NextResponse.json([]);
+    return NextResponse.json(baltop);
+
+  } catch (error) {
+
+    console.error(error);
+
+    return NextResponse.json(
+      [],
+      { status: 500 }
+    );
+
   }
-
-  const data = JSON.parse(
-    fs.readFileSync(file, "utf8")
-  );
-
-  return NextResponse.json(data);
 }
