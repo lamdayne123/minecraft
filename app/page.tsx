@@ -56,12 +56,19 @@ export default function Home() {
   }, []);
 
   return (
-   <main
-  className="min-h-screen bg-cover bg-center bg-fixed"
-  style={{
-    backgroundImage: "linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.85)), url('/background.jpg')",
-  }}
->
+   return (
+  <main
+    className="min-h-screen text-white bg-cover bg-center bg-fixed"
+    style={{
+      backgroundImage: `
+        linear-gradient(
+          rgba(0,0,0,0.25),
+          rgba(0,0,0,0.45)
+        ),
+        url('/background.jpg')
+      `,
+    }}
+  >
       {/* Navbar */}
     <header className="sticky top-5 z-50 px-4">
   <div className="mx-auto max-w-7xl rounded-3xl border border-zinc-800 bg-zinc-900/80 px-5 py-4 backdrop-blur-xl">
