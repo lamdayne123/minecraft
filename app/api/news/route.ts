@@ -1,22 +1,36 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { db } from "@/lib/db";
 
 export async function GET() {
+  try {
+    const result = await db.query(`
+      SELECT
+        id,
+        title,
+        content,
+        image,
+        author,
+        category,
+        created_at
+      FROM news
+      ORDER BY created_at DESC
+    `);
 
-  const file = path.join(
-    process.cwd(),
-    "data",
-    "news.json"
-  );
+    return NextResponse.json(result.rows);
 
-  if (!fs.existsSync(file)) {
-    return NextResponse.json([]);
+  } catch (error) {
+
+    console.error("NEWS ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Không thể tải tin tức"
+      },
+      {
+        status: 500
+      }
+    );
+
   }
-
-  const data = JSON.parse(
-    fs.readFileSync(file, "utf8")
-  );
-
-  return NextResponse.json(data);
 }
