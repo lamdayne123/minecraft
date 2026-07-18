@@ -71,14 +71,7 @@ export default function Home() {
         Craftopia
       </a>
 
-
-      {/* Desktop menu */}
-      <nav className="hidden items-center gap-8 md:flex">
-
-        <a href="/" className="text-zinc-300 hover:text-green-400">
-          🏠 Trang chủ
-        </a>
-
+      <nav className="flex items-center gap-8">
         <a href="/donate" className="text-zinc-300 hover:text-green-400">
           💎 Donate
         </a>
@@ -94,9 +87,7 @@ export default function Home() {
         >
           💬 Discord
         </a>
-
       </nav>
-
 
       <div className="flex items-center gap-3">
 
@@ -179,61 +170,123 @@ export default function Home() {
           Kinh tế, Voice Chat và nhiều tính năng hấp dẫn khác.
         </p>
 
-        <div className="mt-12 w-full max-w-xl">
+        <div className="mt-12 w-full px-2">
 
-  <div className="rounded-3xl border border-zinc-700 bg-zinc-900/80 p-4 shadow-2xl backdrop-blur-xl">
+  <div className="
+    mx-auto
+    flex
+    max-w-3xl
+    flex-col
+    gap-3
+    rounded-full
+    border
+    border-zinc-700
+    bg-zinc-900/80
+    p-3
+    shadow-2xl
+    backdrop-blur-xl
 
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    sm:flex-row
+    sm:items-center
+    sm:justify-between
+  ">
 
 
-      <div className="flex items-center justify-center sm:justify-start">
+    {/* Player online */}
 
-        <span
-          className={`mr-3 h-3 w-3 rounded-full ${
+    <div className="
+      flex
+      items-center
+      justify-center
+      gap-3
+      px-4
+      sm:justify-start
+    ">
+
+      <span
+        className={`
+          h-3
+          w-3
+          rounded-full
+          ${
             server.online
             ? "bg-green-500 animate-pulse"
             : "bg-red-500"
-          }`}
-        />
+          }
+        `}
+      />
 
-        <div>
-          <p className="text-2xl font-black">
-            {server.players}
-          </p>
+      <span className="text-2xl font-black">
+        {server.players}
+      </span>
 
-          <p className="text-sm text-zinc-400">
-            đang chơi
-          </p>
-        </div>
-
-      </div>
-
-
-      <div className="hidden h-10 w-px bg-zinc-700 sm:block"/>
-
-
-      <div className="flex-1 text-center">
-
-        <p className="break-all text-lg font-bold sm:text-xl">
-          craftopia.zencheap.net
-        </p>
-
-        <p className="text-sm text-zinc-500">
-          Port: 30263
-        </p>
-
-      </div>
-
-
-      <button
-        onClick={copyIP}
-        className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 hover:bg-zinc-800 sm:mx-0"
-      >
-        {copied ? "✅" : "📋"}
-      </button>
-
+      <span className="text-sm text-zinc-400">
+        đang chơi
+      </span>
 
     </div>
+
+
+
+    {/* IP */}
+
+    <div className="
+      flex-1
+      rounded-full
+      bg-zinc-800/60
+      px-5
+      py-3
+      text-center
+    ">
+
+      <p className="
+        truncate
+        text-base
+        font-bold
+        sm:text-xl
+      ">
+        craftopia.zencheap.net
+      </p>
+
+      <p className="
+        text-xs
+        text-zinc-500
+      ">
+        Port: 30263
+      </p>
+
+    </div>
+
+
+
+    {/* Copy */}
+
+    <button
+      onClick={copyIP}
+      className="
+        mx-auto
+        flex
+        h-12
+        w-12
+        shrink-0
+        items-center
+        justify-center
+        rounded-full
+        border
+        border-zinc-700
+        transition
+        hover:bg-zinc-800
+        active:scale-90
+
+        sm:mx-0
+      "
+      title="Copy IP"
+    >
+
+      {copied ? "✅" : "📋"}
+
+    </button>
+
 
   </div>
 
@@ -370,6 +423,7 @@ export default function Home() {
           </a>
 
         </div>
+
       </section>
 
       {/* Trạng thái Server */}
