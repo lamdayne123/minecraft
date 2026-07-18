@@ -2,27 +2,92 @@
 
 import { useEffect, useState } from "react";
 
+
 export default function BaltopPage() {
+
 
   const [players, setPlayers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+
+
+  function formatMoney(value:number) {
+
+    if (!value) return "0";
+
+
+    if (value >= 1_000_000_000) {
+
+      return (
+        (value / 1_000_000_000)
+          .toFixed(1)
+          .replace(".0","")
+        + "B"
+      );
+
+    }
+
+
+    if (value >= 1_000_000) {
+
+      return (
+        (value / 1_000_000)
+          .toFixed(1)
+          .replace(".0","")
+        + "M"
+      );
+
+    }
+
+
+    if (value >= 1_000) {
+
+      return (
+        (value / 1_000)
+          .toFixed(1)
+          .replace(".0","")
+        + "K"
+      );
+
+    }
+
+
+    return value.toString();
+
+  }
+
+
 
 
   async function loadBaltop() {
 
     try {
 
-      const res = await fetch("/api/baltop", {
-        cache: "no-store",
-      });
+      const res = await fetch(
+        "/api/baltop",
+        {
+          cache:"no-store"
+        }
+      );
+
 
       const data = await res.json();
 
-      setPlayers(Array.isArray(data) ? data : []);
 
-    } catch (err) {
+      setPlayers(
+        Array.isArray(data)
+        ? data
+        : []
+      );
 
-      console.error(err);
+
+    } catch(err) {
+
+      console.error(
+        "Baltop load error:",
+        err
+      );
+
 
     } finally {
 
@@ -34,18 +99,27 @@ export default function BaltopPage() {
 
 
 
-  useEffect(() => {
+
+
+  useEffect(()=>{
+
 
     loadBaltop();
 
-    const interval =
-      setInterval(loadBaltop, 30000);
+
+    const timer =
+      setInterval(
+        loadBaltop,
+        30000
+      );
 
 
-    return () =>
-      clearInterval(interval);
+    return ()=>clearInterval(timer);
 
-  }, []);
+
+  },[]);
+
+
 
 
 
@@ -57,9 +131,12 @@ export default function BaltopPage() {
 
 
 
+
+
   return (
 
-    <main className="
+    <main
+      className="
       min-h-screen
       bg-gradient-to-b
       from-zinc-950
@@ -69,21 +146,24 @@ export default function BaltopPage() {
       px-4
       sm:px-6
       py-16
-    ">
+      "
+    >
 
 
-      <div className="
+      <div
+        className="
         mx-auto
         max-w-6xl
-      ">
+        "
+      >
 
 
-        {/* HEADER */}
 
         <div className="text-center">
 
 
-          <h1 className="
+          <h1
+            className="
             text-4xl
             sm:text-6xl
             font-black
@@ -93,23 +173,22 @@ export default function BaltopPage() {
             to-cyan-400
             bg-clip-text
             text-transparent
-          ">
+            "
+          >
 
             💰 Baltop
 
           </h1>
 
 
-
-          <p className="
+          <p
+            className="
             mt-4
-            text-sm
-            sm:text-lg
             text-zinc-400
-          ">
+            "
+          >
 
-            Top 20 người chơi giàu nhất
-            Craftopia Survival
+            Top 20 người chơi giàu nhất Craftopia Survival
 
           </p>
 
@@ -120,38 +199,60 @@ export default function BaltopPage() {
 
 
 
-        {loading ? (
 
-          <div className="
-            mt-20
-            text-center
-            text-zinc-400
-            animate-pulse
-          ">
-
-            Đang tải bảng xếp hạng...
-
-          </div>
+        {
+          loading ?
 
 
-        ) : players.length === 0 ? (
+          (
 
-          <div className="
-            mt-20
-            rounded-3xl
-            border
-            border-zinc-800
-            bg-zinc-900
-            p-10
-            text-center
-          ">
+            <div
+              className="
+              mt-20
+              text-center
+              text-zinc-400
+              animate-pulse
+              "
+            >
 
-            Chưa có dữ liệu Baltop
+              Đang tải bảng xếp hạng...
 
-          </div>
+            </div>
+
+          )
 
 
-        ) : (
+          :
+
+
+          players.length === 0 ?
+
+
+          (
+
+            <div
+              className="
+              mt-20
+              rounded-3xl
+              border
+              border-zinc-800
+              bg-zinc-900
+              p-10
+              text-center
+              "
+            >
+
+              Chưa có dữ liệu Baltop
+
+            </div>
+
+          )
+
+
+          :
+
+
+          (
 
           <>
 
@@ -159,62 +260,57 @@ export default function BaltopPage() {
           {/* TOP 3 */}
 
 
-          <div className="
+          <section
+            className="
             mt-14
             grid
             gap-6
             md:grid-cols-3
-          ">
+            "
+          >
 
 
-            {players
-              .slice(0,3)
-              .map((player,index)=>(
+          {
+            players
+            .slice(0,3)
+            .map(
+              (player,index)=>(
 
 
               <div
                 key={player.player}
                 className={`
-                  relative
-                  overflow-hidden
-                  rounded-3xl
-                  border
-                  bg-zinc-900/80
-                  backdrop-blur-xl
-                  p-8
-                  text-center
-                  shadow-2xl
-                  transition
-                  hover:-translate-y-2
+                rounded-3xl
+                border
+                bg-zinc-900/80
+                backdrop-blur-xl
+                p-8
+                text-center
+                shadow-xl
+                transition
+                hover:-translate-y-2
 
-                  ${
-                    index===0
-                    ?
-                    "border-yellow-400 shadow-yellow-500/20"
-                    :
-                    index===1
-                    ?
-                    "border-zinc-400"
-                    :
-                    "border-orange-500"
-                  }
+                ${
+                  index===0
+                  ?
+                  "border-yellow-400"
+                  :
+                  index===1
+                  ?
+                  "border-gray-400"
+                  :
+                  "border-orange-500"
+                }
+
                 `}
               >
 
 
-                <div className="
-                  absolute
-                  inset-0
-                  bg-gradient-to-b
-                  from-white/5
-                  to-transparent
-                "/>
-
-
-                <div className="
-                  relative
+                <div
+                  className="
                   text-6xl
-                ">
+                  "
+                >
 
                   {medals[index]}
 
@@ -222,13 +318,14 @@ export default function BaltopPage() {
 
 
 
-                <h2 className="
-                  relative
+                <h2
+                  className="
                   mt-5
                   text-2xl
                   font-black
                   truncate
-                ">
+                  "
+                >
 
                   {player.player}
 
@@ -236,17 +333,18 @@ export default function BaltopPage() {
 
 
 
-                <p className="
-                  relative
+                <p
+                  className="
                   mt-4
-                  text-xl
-                  sm:text-2xl
+                  text-2xl
                   font-black
                   text-green-400
-                ">
+                  "
+                >
 
-                  💰 {Number(player.money)
-                    .toLocaleString()}
+                  💰 {formatMoney(
+                    Number(player.money)
+                  )}
 
                 </p>
 
@@ -254,33 +352,39 @@ export default function BaltopPage() {
               </div>
 
 
-            ))}
+            ))
+          }
 
 
-          </div>
+          </section>
 
 
 
 
 
 
-          {/* LIST */}
+
+          {/* TOP 4 - 20 */}
 
 
-          <div className="
-            mt-12
+          <section
+            className="
+            mt-10
             space-y-4
-          ">
+            "
+          >
 
 
-          {players
+          {
+            players
             .slice(3,20)
-            .map((player,index)=>(
+            .map(
+              (player,index)=>(
 
 
-            <div
-              key={player.player}
-              className="
+              <div
+                key={player.player}
+                className="
                 flex
                 items-center
                 justify-between
@@ -294,82 +398,93 @@ export default function BaltopPage() {
                 transition
                 hover:border-green-500
                 hover:bg-zinc-800
-              "
-            >
+                "
+              >
 
 
 
-              <div className="
-                flex
-                items-center
-                gap-3
-                min-w-0
-              ">
-
-
-                <div className="
+                <div
+                  className="
                   flex
-                  h-10
-                  w-10
-                  shrink-0
                   items-center
-                  justify-center
-                  rounded-full
-                  bg-zinc-800
-                  font-black
-                  text-green-400
-                ">
+                  gap-3
+                  min-w-0
+                  "
+                >
 
-                  #{index+4}
+
+                  <div
+                    className="
+                    flex
+                    h-11
+                    w-11
+                    shrink-0
+                    items-center
+                    justify-center
+                    rounded-full
+                    bg-zinc-800
+                    font-black
+                    text-green-400
+                    "
+                  >
+
+                    #{index+4}
+
+                  </div>
+
+
+
+                  <span
+                    className="
+                    font-bold
+                    truncate
+                    "
+                  >
+
+                    {player.player}
+
+                  </span>
+
 
                 </div>
 
 
 
-                <span className="
-                  font-bold
-                  truncate
-                  max-w-[150px]
-                  sm:max-w-none
-                ">
 
-                  {player.player}
+
+                <span
+                  className="
+                  font-black
+                  text-green-400
+                  whitespace-nowrap
+                  "
+                >
+
+                  💰 {formatMoney(
+                    Number(player.money)
+                  )}
 
                 </span>
+
 
 
               </div>
 
 
-
-
-              <span className="
-                whitespace-nowrap
-                text-sm
-                sm:text-lg
-                font-black
-                text-green-400
-              ">
-
-                💰 {Number(player.money)
-                  .toLocaleString()}
-
-              </span>
+            ))
+          }
 
 
 
-            </div>
-
-
-          ))}
-
-
-          </div>
+          </section>
 
 
           </>
 
-        )}
+
+          )
+        }
+
 
 
       </div>
