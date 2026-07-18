@@ -56,16 +56,12 @@ export default function Home() {
   }, []);
 
   return (
+  return (
   <main
-    className="min-h-screen text-white bg-cover bg-center bg-fixed"
+    className="min-h-screen bg-cover bg-center bg-fixed text-white"
     style={{
-      backgroundImage: `
-        linear-gradient(
-          rgba(0,0,0,0.25),
-          rgba(0,0,0,0.45)
-        ),
-        url('/background.jpg')
-      `,
+      backgroundImage:
+        "linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.55)), url('/images/background.jpg')",
     }}
   >
       {/* Navbar */}
