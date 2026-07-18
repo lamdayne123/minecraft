@@ -119,37 +119,135 @@ export default function Home() {
 
     {menuOpen && (
 
-      <div className="mt-4 space-y-3 border-t border-zinc-800 pt-4 md:hidden">
+  <div className="mt-4 space-y-3 border-t border-zinc-800 pt-4 md:hidden">
 
-        <a href="/" className="block rounded-xl p-3 hover:bg-zinc-800">
-          🏠 Trang chủ
-        </a>
+    <a
+      href="/"
+      className="
+        block
+        rounded-2xl
+        border
+        border-zinc-700
+        bg-zinc-800/40
+        p-4
+        font-semibold
+        text-zinc-300
+        backdrop-blur-xl
+        transition
+        active:bg-green-500/20
+        active:border-green-500
+      "
+    >
+      🏠 Trang chủ
+    </a>
 
-        <a href="/donate" className="block rounded-xl p-3 hover:bg-zinc-800">
-          💎 Donate
-        </a>
 
-        <a href="/rules" className="block rounded-xl p-3 hover:bg-zinc-800">
-          📜 Rules
-        </a>
+    <a
+      href="/donate"
+      className="
+        block
+        rounded-2xl
+        border
+        border-zinc-700
+        bg-zinc-800/40
+        p-4
+        font-semibold
+        text-zinc-300
+        backdrop-blur-xl
+        transition
+        active:bg-purple-500/20
+        active:border-purple-500
+      "
+    >
+      💎 Donate
+    </a>
 
-        <a
-          href="https://discord.gg/maY22mamA"
-          className="block rounded-xl p-3 hover:bg-zinc-800"
-        >
-          💬 Discord
-        </a>
 
-        <a
-          href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
-          className="block rounded-xl bg-green-500 p-3 text-center font-bold text-black"
-        >
-          🎮 Vào Server
-        </a>
+    <a
+      href="/rules"
+      className="
+        block
+        rounded-2xl
+        border
+        border-zinc-700
+        bg-zinc-800/40
+        p-4
+        font-semibold
+        text-zinc-300
+        backdrop-blur-xl
+        transition
+        active:bg-sky-500/20
+        active:border-sky-500
+      "
+    >
+      📜 Rules
+    </a>
 
-      </div>
 
-    )}
+    <a
+      href="/news"
+      className="
+        block
+        rounded-2xl
+        border
+        border-zinc-700
+        bg-zinc-800/40
+        p-4
+        font-semibold
+        text-zinc-300
+        backdrop-blur-xl
+        transition
+        active:bg-red-500/20
+        active:border-red-500
+      "
+    >
+      📰 Tin tức
+    </a>
+
+
+    <a
+      href="https://discord.gg/maY22mamA"
+      target="_blank"
+      className="
+        block
+        rounded-2xl
+        border
+        border-zinc-700
+        bg-zinc-800/40
+        p-4
+        font-semibold
+        text-zinc-300
+        backdrop-blur-xl
+        transition
+        active:bg-indigo-500/20
+        active:border-indigo-500
+      "
+    >
+      💬 Discord
+    </a>
+
+
+    <a
+      href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
+      className="
+        block
+        rounded-2xl
+        bg-green-500
+        p-4
+        text-center
+        font-black
+        text-black
+        transition
+        active:scale-95
+      "
+    >
+      🎮 Vào Server
+    </a>
+
+
+  </div>
+
+)}
 
   </div>
 </header>
