@@ -1,7 +1,9 @@
-import { NextResponse } from "next/server";
+    import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import crypto from "crypto";
-import { db } from "@/lib/db";
+import { neon } from "@neondatabase/serverless";
+
+const sql = neon(process.env.DATABASE_URL!);
 
 export async function POST(req: Request) {
   try {
@@ -14,43 +16,26 @@ export async function POST(req: Request) {
       code,
     } = body;
 
-
-    if (!telco || !amount || !serial || !code) {
-      return NextResponse.json({
-        success: false,
-        message: "Thiếu dữ liệu thẻ"
-      });
-    }
-
-
     const cookieStore = await cookies();
-
     const minecraft =
       cookieStore.get("username")?.value ?? "Unknown";
-
 
     const partner_id = process.env.CARD2K_PARTNER_ID;
     const partner_key = process.env.CARD2K_PARTNER_KEY;
 
-
     if (!partner_id || !partner_key) {
       return NextResponse.json({
         success: false,
-        message: "Thiếu Partner ID hoặc Partner Key"
+        message: "Thiếu cấu hình Card2K",
       });
     }
 
-
     const request_id = Date.now().toString();
-
 
     const sign = crypto
       .createHash("md5")
-      .update(
-        partner_key + code + serial
-      )
+      .update(partner_key + code + serial)
       .digest("hex");
-
 
     const form = new URLSearchParams();
 
@@ -63,30 +48,23 @@ export async function POST(req: Request) {
     form.append("sign", sign);
     form.append("command", "charging");
 
-
     const response = await fetch(
       "https://card2k.net/chargingws/v2",
       {
         method: "POST",
         headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+          "Content-Type":
+            "application/x-www-form-urlencoded",
         },
         body: form.toString(),
       }
     );
 
-
     const data = await response.json();
 
-
-    console.log("CARD2K:", data);
-
-
-    await db.query(
-      `
-      INSERT INTO payments
-      (
+    await sql`
+      INSERT INTO payments (
         minecraft,
         telco,
         amount,
@@ -94,42 +72,35 @@ export async function POST(req: Request) {
         code,
         status,
         message,
-        request_id
+        request_id,
+        created_at
       )
-      VALUES
-      ($1,$2,$3,$4,$5,$6,$7,$8)
-      `,
-      [
-        minecraft,
-        telco,
-        amount,
-        serial.substring(0,4) + "****",
-        code.substring(0,4) + "****",
-        String(data.status ?? ""),
-        data.message ?? "",
-        request_id
-      ]
-    );
-
+      VALUES (
+        ${minecraft},
+        ${telco},
+        ${Number(amount)},
+        ${serial.slice(0,4) + "****"},
+        ${code.slice(0,4) + "****"},
+        ${data.status},
+        ${data.message},
+        ${request_id},
+        NOW()
+      )
+    `;
 
     return NextResponse.json(data);
 
-
   } catch (error) {
 
-    console.error(
-      "CARD ERROR:",
-      error
-    );
-
+    console.error(error);
 
     return NextResponse.json(
       {
         success: false,
-        message: "Lỗi server"
+        message: "Lỗi kết nối server",
       },
       {
-        status: 500
+        status: 500,
       }
     );
 
