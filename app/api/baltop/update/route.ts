@@ -25,18 +25,18 @@ export async function POST(req: Request) {
       );
     }
 
-    // Xóa dữ liệu cũ
     await sql`DELETE FROM baltop`;
 
-    // Thêm top mới
     for (const player of body.players ?? []) {
       await sql`
         INSERT INTO baltop (
+          rank,
           player,
           money,
           updated_at
         )
         VALUES (
+          ${player.rank},
           ${player.player},
           ${Number(player.money)},
           NOW()
