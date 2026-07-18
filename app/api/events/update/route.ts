@@ -12,8 +12,7 @@ export async function POST(req: Request) {
       title,
       content,
       image,
-      author,
-      category
+      author
     } = body;
 
 
@@ -32,7 +31,6 @@ export async function POST(req: Request) {
     }
 
 
-
     await sql`
       INSERT INTO news
       (
@@ -48,24 +46,19 @@ export async function POST(req: Request) {
         ${title},
         ${content},
         ${image || ""},
-        ${author},
+        ${author || "Craftopia"},
         'event'
       )
     `;
 
 
-
     return NextResponse.json({
-
       success: true,
       message: "Event added"
-
     });
 
 
-
   } catch(error) {
-
 
     console.error(
       "EVENT UPDATE ERROR:",
@@ -75,14 +68,14 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        success:false,
-        message:"Database error"
+        success: false,
+        message: "Database error",
+        error: String(error)
       },
       {
         status:500
       }
     );
-
 
   }
 
