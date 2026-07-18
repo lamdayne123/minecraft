@@ -60,7 +60,7 @@ export default function Home() {
     className="min-h-screen bg-cover bg-center bg-fixed text-white"
     style={{
       backgroundImage:
-        "linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.55)), url('/images/background.jpeg')",
+        "linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.55)), url('/images/background.jpg')",
     }}
   >
       {/* Navbar */}
