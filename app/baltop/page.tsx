@@ -11,51 +11,54 @@ export default function BaltopPage() {
 
 
 
-  function formatMoney(value:number) {
+  function formatMoney(value: any) {
+  if (value === null || value === undefined) return "0";
 
-    if (!value) return "0";
+  // Nếu đã là dạng 1.5M, 20K, 2B thì giữ nguyên
+  if (typeof value === "string") {
+    const upper = value.toUpperCase().trim();
 
-
-    if (value >= 1_000_000_000) {
-
-      return (
-        (value / 1_000_000_000)
-          .toFixed(1)
-          .replace(".0","")
-        + "B"
-      );
-
+    if (
+      upper.endsWith("K") ||
+      upper.endsWith("M") ||
+      upper.endsWith("B")
+    ) {
+      return upper;
     }
 
-
-    if (value >= 1_000_000) {
-
-      return (
-        (value / 1_000_000)
-          .toFixed(1)
-          .replace(".0","")
-        + "M"
-      );
-
-    }
-
-
-    if (value >= 1_000) {
-
-      return (
-        (value / 1_000)
-          .toFixed(1)
-          .replace(".0","")
-        + "K"
-      );
-
-    }
-
-
-    return value.toString();
-
+    value = Number(upper.replace(/,/g, ""));
   }
 
+  value = Number(value);
+
+  if (isNaN(value)) return "0";
+
+  if (value >= 1_000_000_000) {
+    return (
+      (value / 1_000_000_000)
+        .toFixed(1)
+        .replace(".0", "") + "B"
+    );
+  }
+
+  if (value >= 1_000_000) {
+    return (
+      (value / 1_000_000)
+        .toFixed(1)
+        .replace(".0", "") + "M"
+    );
+  }
+
+  if (value >= 1_000) {
+    return (
+      (value / 1_000)
+        .toFixed(1)
+        .replace(".0", "") + "K"
+    );
+  }
+
+  return value.toString();
+}
 
 
 
@@ -342,9 +345,7 @@ export default function BaltopPage() {
                   "
                 >
 
-                  💰 {formatMoney(
-                    Number(player.money)
-                  )}
+                  💰 {formatMoney(player.money)}
 
                 </p>
 
@@ -460,9 +461,7 @@ export default function BaltopPage() {
                   "
                 >
 
-                  💰 {formatMoney(
-                    Number(player.money)
-                  )}
+                  💰 {formatMoney(player.money)}
 
                 </span>
 
