@@ -136,7 +136,6 @@ export default function Home() {
       <a href="https://discord.gg/maY22mamA" target="_blank" className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-zinc-900 text-2xl">💬</a>
     </div>
   </div>
-)})}
 
   </div>
 </header>
