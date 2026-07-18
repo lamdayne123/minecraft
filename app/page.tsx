@@ -392,10 +392,10 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3 items-stretch">
           <a
             href="/events"
-            className="group rounded-2xl border border-orange-500/40 bg-gradient-to-br from-orange-500/10 to-red-500/10 p-6 transition hover:-translate-y-1 hover:border-orange-400"
+            className="group rounded-2xl border border-orange-500/40 bg-black/50 backdrop-blur-xl p-6 shadow-2xl flex h-full flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:bg-black/60 hover:border-orange-400/60"
           >
             <h3 className="text-xl font-bold text-orange-400">
               🎉 Events
@@ -418,7 +418,7 @@ export default function Home() {
 
           <a
             href="/faq"
-            className="group rounded-2xl border border-purple-500/40 bg-gradient-to-br from-purple-500/10 to-fuchsia-500/10 p-6 transition hover:-translate-y-1 hover:border-purple-400"
+            className="group rounded-2xl border border-purple-500/40 bg-black/50 backdrop-blur-xl p-6 shadow-2xl flex h-full flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:bg-black/60 hover:border-purple-400/60"
           >
             <h3 className="text-xl font-bold text-purple-400">
               📚 FAQ
@@ -441,7 +441,7 @@ export default function Home() {
 
           <a
             href="/rules"
-            className="group rounded-2xl border border-sky-500/40 bg-gradient-to-br from-sky-500/10 to-blue-500/10 p-6 transition hover:-translate-y-1 hover:border-sky-400"
+            className="group rounded-2xl border border-sky-500/40 bg-black/50 backdrop-blur-xl p-6 shadow-2xl flex h-full flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:bg-black/60 hover:border-sky-400/60"
           >
             <h3 className="text-xl font-bold text-sky-400">
               📜 Rules
@@ -462,13 +462,13 @@ export default function Home() {
             </div>
           </a>
 
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 transition hover:border-green-500 hover:-translate-y-1">
+          <div className="rounded-2xl border border-white/10 bg-black/50 backdrop-blur-xl p-6 shadow-2xl flex h-full flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:bg-black/60 hover:border-green-400/60">
             <h3 className="text-xl font-bold">🎲 Tài Xỉu</h3>
           </div>
 
           <a
   href="/news"
-  className="group rounded-2xl border border-red-500/40 bg-gradient-to-br from-red-500/10 to-orange-500/10 p-6 transition hover:-translate-y-1 hover:border-red-400"
+  className="group rounded-2xl border border-red-500/40 bg-black/50 backdrop-blur-xl p-6 shadow-2xl flex h-full flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:bg-black/60 hover:border-red-400/60"
 >
   <h3 className="text-xl font-bold text-red-400">
     📰 Tin tức
@@ -491,7 +491,7 @@ export default function Home() {
 
           <a
             href="/baltop"
-            className="group rounded-2xl border border-yellow-500/40 bg-gradient-to-br from-yellow-500/10 to-green-500/10 p-6 transition hover:-translate-y-1 hover:border-yellow-400"
+            className="group rounded-2xl border border-yellow-500/40 bg-black/50 backdrop-blur-xl p-6 shadow-2xl flex h-full flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:bg-black/60 hover:border-yellow-400/60"
           >
             <h3 className="text-xl font-bold text-yellow-400">
               💰 Kinh tế
