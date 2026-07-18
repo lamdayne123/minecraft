@@ -3,22 +3,38 @@
 import { useEffect, useState } from "react";
 
 export default function Home() {
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const [server, setServer] = useState({
     online: false,
     players: 0,
     max: 0,
     version: "",
   });
+
   const [copied, setCopied] = useState(false);
+
 
   const copyIP = async () => {
     try {
-      await navigator.clipboard.writeText("craftopia.zencheap.net:30263");
+
+      await navigator.clipboard.writeText(
+        "craftopia.zencheap.net:30263"
+      );
+
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+
+      setTimeout(
+        () => setCopied(false),
+        2000
+      );
+
     } catch (error) {
+
       console.error(error);
       alert("Không thể sao chép IP.");
+
     }
   };
 
@@ -43,60 +59,109 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-black text-white">
 
       {/* Navbar */}
-    <header className="sticky top-5 z-50">
-  <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-zinc-800 bg-zinc-900/80 px-8 py-4 backdrop-blur-xl">
+    <header className="sticky top-5 z-50 px-4">
+  <div className="mx-auto max-w-7xl rounded-3xl border border-zinc-800 bg-zinc-900/80 px-5 py-4 backdrop-blur-xl">
 
-    <a
-      href="/"
-      className="text-3xl font-black text-green-400"
-    >
-      Craftopia
-    </a>
-
-    <nav className="hidden items-center gap-8 md:flex">
+    <div className="flex items-center justify-between">
 
       <a
         href="/"
-        className="text-zinc-300 transition hover:text-green-400"
+        className="text-2xl font-black text-green-400"
       >
-        🏠 Trang chủ
+        Craftopia
       </a>
 
-      <a
-        href="/donate"
-        className="text-zinc-300 transition hover:text-green-400"
-      >
-        💎 Donate
-      </a>
 
-      <a
-        href="/rules"
-        className="text-zinc-300 transition hover:text-green-400"
-      >
-        📜 Rules
-      </a>
+      {/* Desktop menu */}
+      <nav className="hidden items-center gap-8 md:flex">
 
-      <a
-        href="https://discord.gg/maY22mamA"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-zinc-300 transition hover:text-green-400"
-      >
-        💬 Discord
-      </a>
+        <a href="/" className="text-zinc-300 hover:text-green-400">
+          🏠 Trang chủ
+        </a>
 
-    </nav>
+        <a href="/donate" className="text-zinc-300 hover:text-green-400">
+          💎 Donate
+        </a>
 
-    <a
-      href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
-      className="rounded-full bg-green-500 px-6 py-3 font-bold text-black transition hover:scale-105"
-    >
-      🎮 Vào Server
-    </a>
+        <a href="/rules" className="text-zinc-300 hover:text-green-400">
+          📜 Rules
+        </a>
+
+        <a
+          href="https://discord.gg/maY22mamA"
+          target="_blank"
+          className="text-zinc-300 hover:text-green-400"
+        >
+          💬 Discord
+        </a>
+
+      </nav>
+
+
+      <div className="flex items-center gap-3">
+
+
+        <a
+          href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
+          className="hidden rounded-full bg-green-500 px-5 py-2 font-bold text-black md:block"
+        >
+          🎮 Vào Server
+        </a>
+
+
+        {/* Mobile button */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="rounded-xl border border-zinc-700 px-3 py-2 text-xl md:hidden"
+        >
+          ☰
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+
+    {/* Mobile menu */}
+
+    {menuOpen && (
+
+      <div className="mt-4 space-y-3 border-t border-zinc-800 pt-4 md:hidden">
+
+        <a href="/" className="block rounded-xl p-3 hover:bg-zinc-800">
+          🏠 Trang chủ
+        </a>
+
+        <a href="/donate" className="block rounded-xl p-3 hover:bg-zinc-800">
+          💎 Donate
+        </a>
+
+        <a href="/rules" className="block rounded-xl p-3 hover:bg-zinc-800">
+          📜 Rules
+        </a>
+
+        <a
+          href="https://discord.gg/maY22mamA"
+          className="block rounded-xl p-3 hover:bg-zinc-800"
+        >
+          💬 Discord
+        </a>
+
+        <a
+          href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
+          className="block rounded-xl bg-green-500 p-3 text-center font-bold text-black"
+        >
+          🎮 Vào Server
+        </a>
+
+      </div>
+
+    )}
 
   </div>
 </header>
-
 
       {/* Hero */}
       <section className="mx-auto flex max-w-7xl flex-col items-center px-6 py-24 text-center">
@@ -105,7 +170,7 @@ export default function Home() {
           🟢 Java & Bedrock
         </span>
 
-        <h2 className="mt-8 text-6xl font-black">
+        <h2 className="mt-8 text-4xl font-black sm:text-6xl">
           Craftopia Survival
         </h2>
 
@@ -114,43 +179,61 @@ export default function Home() {
           Kinh tế, Voice Chat và nhiều tính năng hấp dẫn khác.
         </p>
 
-        <div className="mt-12">
+        <div className="mt-12 w-full max-w-xl">
 
-  <div className="mx-auto flex w-fit items-center rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-3 backdrop-blur-xl shadow-2xl">
+  <div className="rounded-3xl border border-zinc-700 bg-zinc-900/80 p-4 shadow-2xl backdrop-blur-xl">
 
-    <div className="flex items-center px-5">
-      <span
-        className={`mr-3 h-3 w-3 rounded-full ${
-          server.online
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+
+      <div className="flex items-center justify-center sm:justify-start">
+
+        <span
+          className={`mr-3 h-3 w-3 rounded-full ${
+            server.online
             ? "bg-green-500 animate-pulse"
             : "bg-red-500"
-        }`}
-      />
+          }`}
+        />
 
-      <span className="text-3xl font-black text-white">
-        {server.players}
-      </span>
+        <div>
+          <p className="text-2xl font-black">
+            {server.players}
+          </p>
 
-      <span className="ml-2 text-zinc-400">
-        đang chơi
-      </span>
+          <p className="text-sm text-zinc-400">
+            đang chơi
+          </p>
+        </div>
+
+      </div>
+
+
+      <div className="hidden h-10 w-px bg-zinc-700 sm:block"/>
+
+
+      <div className="flex-1 text-center">
+
+        <p className="break-all text-lg font-bold sm:text-xl">
+          craftopia.zencheap.net
+        </p>
+
+        <p className="text-sm text-zinc-500">
+          Port: 30263
+        </p>
+
+      </div>
+
+
+      <button
+        onClick={copyIP}
+        className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 hover:bg-zinc-800 sm:mx-0"
+      >
+        {copied ? "✅" : "📋"}
+      </button>
+
+
     </div>
-
-    <div className="h-8 w-px bg-zinc-700"></div>
-
-    <div className="px-6">
-      <span className="text-2xl font-bold tracking-wide">
-        craftopia.zencheap.net
-      </span>
-    </div>
-
-    <button
-      onClick={copyIP}
-      className="ml-2 flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 transition hover:bg-zinc-800"
-      title="Copy IP"
-    >
-      {copied ? "✅" : "📋"}
-    </button>
 
   </div>
 
