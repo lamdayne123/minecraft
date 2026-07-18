@@ -1,58 +1,85 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { sql } from "@/lib/db";
 
 export async function POST(req: Request) {
+
   try {
+
     const body = await req.json();
 
+
     if (body.secret !== process.env.API_SECRET) {
+
       return NextResponse.json(
-        { message: "Wrong secret" },
-        { status: 401 }
+        {
+          success: false,
+          message: "Wrong secret"
+        },
+        {
+          status: 401
+        }
       );
+
     }
 
-    const folder = path.join(process.cwd(), "data");
 
-    if (!fs.existsSync(folder)) {
-      fs.mkdirSync(folder);
-    }
 
-    const file = path.join(folder, "news.json");
+    await sql`
 
-    let news = [];
+      INSERT INTO news
+      (
+        title,
+        content,
+        image,
+        author,
+        category
+      )
 
-    if (fs.existsSync(file)) {
-      try {
-        news = JSON.parse(fs.readFileSync(file, "utf8"));
-      } catch {}
-    }
+      VALUES
+      (
+        ${body.title},
+        ${body.content},
+        ${body.image || ""},
+        ${body.author || "Craftopia"},
+        ${body.category || "news"}
+      )
 
-    news.unshift({
-      id: Date.now(),
-      title: body.title,
-      content: body.content,
-      author: body.author,
-      time: new Date().toLocaleString("vi-VN")
+    `;
+
+
+
+    return NextResponse.json({
+
+      success: true,
+      message: "News saved"
+
     });
 
-    news = news.slice(0, 20);
 
-    fs.writeFileSync(
-      file,
-      JSON.stringify(news, null, 2),
-      "utf8"
+
+  } catch(error) {
+
+
+    console.error(
+      "NEWS UPDATE ERROR:",
+      error
     );
 
-    return NextResponse.json({ success: true });
-
-  } catch (e) {
-    console.error(e);
 
     return NextResponse.json(
-      { success: false },
-      { status: 500 }
+
+      {
+        success:false,
+        message:"Database error"
+      },
+
+      {
+        status:500
+      }
+
     );
+
+
   }
+
 }
