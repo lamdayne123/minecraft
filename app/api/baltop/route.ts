@@ -6,25 +6,24 @@ const sql = neon(process.env.DATABASE_URL!);
 export async function GET() {
   try {
 
-    const baltop = await sql`
+    const players = await sql`
       SELECT
+        rank,
         player,
         money
       FROM baltop
-      ORDER BY money DESC
-      LIMIT 20
+      ORDER BY rank ASC
     `;
 
-    return NextResponse.json(baltop);
+    return NextResponse.json(players);
 
-  } catch (error) {
+  } catch (err) {
 
-    console.error(error);
+    console.error(err);
 
-    return NextResponse.json(
-      [],
-      { status: 500 }
-    );
+    return NextResponse.json([], {
+      status: 500,
+    });
 
   }
 }
