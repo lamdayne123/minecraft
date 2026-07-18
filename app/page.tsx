@@ -56,7 +56,6 @@ export default function Home() {
   }, []);
 
   return (
-  return (
   <main
     className="min-h-screen bg-cover bg-center bg-fixed text-white"
     style={{
