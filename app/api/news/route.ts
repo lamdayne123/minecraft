@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { sql } from "@/lib/db";
 
 export async function GET() {
   try {
-    const result = await db.query(
-      `
+    const news = await sql`
       SELECT
         id,
         title,
@@ -16,10 +15,9 @@ export async function GET() {
       FROM news
       WHERE category IN ('news', 'update')
       ORDER BY created_at DESC
-      `
-    );
+    `;
 
-    return NextResponse.json(result.rows);
+    return NextResponse.json(news);
 
   } catch (error) {
 
