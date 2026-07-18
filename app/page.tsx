@@ -56,7 +56,7 @@ export default function Home() {
   }, []);
 
   return (
-    className="min-h-screen bg-gradient-to-b from-emerald-950 via-green-900 to-zinc-950 text-white"
+   <main className="min-h-screen bg-gradient-to-b from-emerald-950 via-green-900 to-zinc-950 text-white"></main>
       {/* Navbar */}
     <header className="sticky top-5 z-50 px-4">
   <div className="mx-auto max-w-7xl rounded-3xl border border-zinc-800 bg-zinc-900/80 px-5 py-4 backdrop-blur-xl">
