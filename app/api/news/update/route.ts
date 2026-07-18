@@ -23,6 +23,28 @@ export async function POST(req: Request) {
     }
 
 
+    if (!body.title || !body.content) {
+
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Missing title or content"
+        },
+        {
+          status:400
+        }
+      );
+
+    }
+
+
+
+    const category =
+      ["news", "update", "event"].includes(body.category)
+      ? body.category
+      : "news";
+
+
 
     await sql`
 
@@ -41,7 +63,7 @@ export async function POST(req: Request) {
         ${body.content},
         ${body.image || ""},
         ${body.author || "Craftopia"},
-        ${body.category || "news"}
+        ${category}
       )
 
     `;
@@ -50,14 +72,14 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
 
-      success: true,
-      message: "News saved"
+      success:true,
+      message:"News saved"
 
     });
 
 
 
-  } catch(error) {
+  } catch(error:any) {
 
 
     console.error(
@@ -67,16 +89,14 @@ export async function POST(req: Request) {
 
 
     return NextResponse.json(
-
       {
         success:false,
-        message:"Database error"
+        message:"Database error",
+        error:error.message
       },
-
       {
         status:500
       }
-
     );
 
 
