@@ -440,13 +440,19 @@ const [guideTab, setGuideTab] = useState<"java" | "bedrock">("java");
       </button>
     </div>
 
-    {guideTab === "java" ? (
-      <video controls className="w-full rounded-2xl">
-        <source src="/videos/java.mp4" type="video/mp4" />
-      </video>
-    ) : (
-      <video controls className="w-full rounded-2xl">
-        <source src="/videos/bedrock.mp4" type="video/mp4" />
+    {guideTab === "java" && (
+      <video
+        key={guideTab}
+        controls
+        autoPlay
+        muted
+        playsInline
+        className="w-full rounded-2xl"
+      >
+        <source
+          src={guideTab === "java" ? "/videos/java.mp4" : "/videos/bedrock.mp4"}
+          type="video/mp4"
+        />
       </video>
     )}
 
