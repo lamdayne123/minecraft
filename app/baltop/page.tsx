@@ -8,6 +8,19 @@ type Player = {
   money?: number | string;
 };
 
+function MobileTicker({ text }: { text: string }) {
+  return (
+    <div className="craftopia-ticker-wrap w-full overflow-hidden">
+      <div className="craftopia-ticker-track inline-flex min-w-max items-center whitespace-nowrap">
+        <span className="craftopia-ticker-item inline-block pr-8">{text}</span>
+        <span aria-hidden="true" className="craftopia-ticker-item inline-block pr-8">
+          {text}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function BaltopPage() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState(true);
@@ -80,6 +93,30 @@ export default function BaltopPage() {
           "radial-gradient(circle at top, rgba(34,197,94,0.14), transparent 36%), linear-gradient(to bottom, #050505 0%, #050705 52%, #030303 100%)",
       }}
     >
+      <style>{`
+        @keyframes craftopia-ticker {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-50%);
+          }
+        }
+
+        @media (max-width: 639px) {
+          .craftopia-ticker-track {
+            animation: craftopia-ticker 7s linear infinite;
+            will-change: transform;
+          }
+        }
+
+        @media (min-width: 640px) {
+          .craftopia-ticker-track {
+            animation: none;
+          }
+        }
+      `}</style>
+
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
         <header className="sticky top-4 z-40 pt-4">
           <div className="rounded-3xl border border-emerald-500/20 bg-black/75 px-4 py-3 shadow-[0_0_40px_rgba(34,197,94,0.08)] backdrop-blur-xl sm:px-6">
@@ -190,10 +227,10 @@ export default function BaltopPage() {
 
                   const rankStyles =
                     rank === 1
-                      ? "col-start-2 -mt-6 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)] sm:-mt-10 sm:scale-[1.05] z-10"
+                      ? "col-start-2 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)]"
                       : rank === 2
-                      ? "col-start-1 mt-4 border-zinc-300/60 bg-zinc-400/8 sm:mt-8"
-                      : "col-start-3 mt-4 border-orange-400/70 bg-orange-500/10 sm:mt-8";
+                      ? "col-start-1 border-zinc-300/60 bg-zinc-400/8"
+                      : "col-start-3 border-orange-400/70 bg-orange-500/10";
 
                   const rankGlow =
                     rank === 1
@@ -284,9 +321,7 @@ export default function BaltopPage() {
                         key={name + index}
                         className="grid grid-cols-[72px_1fr_120px] items-center gap-4 px-4 py-4 transition hover:bg-white/4 sm:grid-cols-[88px_1fr_160px] sm:px-6"
                       >
-                        <div className="text-lg font-black text-zinc-300">
-                          #{index + 4}
-                        </div>
+                        <div className="text-lg font-black text-zinc-300">#{index + 4}</div>
 
                         <div className="flex min-w-0 items-center gap-3">
                           <img
@@ -300,11 +335,16 @@ export default function BaltopPage() {
                           />
 
                           <div className="min-w-0">
-                            <div className="max-w-full">
+                            <div className="max-w-full sm:hidden">
+                              <MobileTicker text={name} />
+                            </div>
+
+                            <div className="hidden max-w-full sm:block">
                               <span className="block whitespace-normal break-words font-bold leading-tight text-white">
                                 {name}
                               </span>
                             </div>
+
                             <div className="truncate text-xs text-zinc-500">
                               Craftopia Survival
                             </div>
@@ -324,9 +364,7 @@ export default function BaltopPage() {
               <div className="mt-6 rounded-2xl border border-emerald-500/25 bg-emerald-500/8 px-4 py-4 text-sm text-zinc-300">
                 <div className="flex items-center gap-2">
                   <span className="text-emerald-400">ℹ️</span>
-                  <span>
-                    Số tiền được tính dựa trên hệ thống Economy của server Craftopia Survival.
-                  </span>
+                  <span>Số tiền được tính dựa trên hệ thống Economy của server Craftopia Survival.</span>
                 </div>
               </div>
             </>
@@ -346,4 +384,4 @@ export default function BaltopPage() {
       </div>
     </main>
   );
-} 
+}
