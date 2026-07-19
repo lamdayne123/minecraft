@@ -61,9 +61,6 @@ export default function Home() {
     style={{
       backgroundImage:
         "linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.55)), url('/images/background.jpg')",
-      backgroundSize: "100% auto",
-      backgroundPosition: "center top",
-      backgroundRepeat: "no-repeat",
     }}
   >
       {/* Navbar */}
