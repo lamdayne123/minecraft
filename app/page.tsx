@@ -410,19 +410,21 @@ const [guideTab, setGuideTab] = useState<"java" | "bedrock">("java");
 </div>
 </section>
 <section className="mx-auto mt-10 max-w-4xl px-6">
-  <div className="rounded-3xl border border-white/10 bg-black/35 p-6 backdrop-blur-xl">
+  <div className="rounded-3xl border border-white/10 bg-black/40 p-6 backdrop-blur-xl">
 
     <h2 className="mb-5 text-center text-2xl font-bold">
       📖 Hướng dẫn tham gia
     </h2>
 
+    {/* Tabs */}
     <div className="mb-5 flex rounded-full bg-zinc-900 p-1">
+
       <button
         onClick={() => setGuideTab("java")}
-        className={`flex-1 rounded-full py-3 font-bold transition ${
+        className={`flex-1 rounded-full py-3 font-bold transition-all duration-300 ${
           guideTab === "java"
-            ? "bg-green-500 text-black"
-            : "text-zinc-400"
+            ? "bg-green-500 text-black shadow-lg"
+            : "text-zinc-400 hover:text-white"
         }`}
       >
         🖥 Java
@@ -430,35 +432,39 @@ const [guideTab, setGuideTab] = useState<"java" | "bedrock">("java");
 
       <button
         onClick={() => setGuideTab("bedrock")}
-        className={`flex-1 rounded-full py-3 font-bold transition ${
+        className={`flex-1 rounded-full py-3 font-bold transition-all duration-300 ${
           guideTab === "bedrock"
-            ? "bg-green-500 text-black"
-            : "text-zinc-400"
+            ? "bg-green-500 text-black shadow-lg"
+            : "text-zinc-400 hover:text-white"
         }`}
       >
         📱 Bedrock
       </button>
+
     </div>
 
-    {guideTab === "java" && (
-      <video
-        key={guideTab}
-        controls
-        autoPlay
-        muted
-        playsInline
-        className="w-full rounded-2xl"
-      >
-        <source
-          src={
-            guideTab === "java"
-              ? "/videos/java.mp4"
-              : "/videos/bedrock.mp4"
-          }
-          type="video/mp4"
-        />
-      </video>
-    )}
+    {/* Video */}
+    <video
+      key={guideTab}
+      controls
+      autoPlay
+      muted
+      playsInline
+      preload="auto"
+      className="w-full rounded-2xl border border-white/10 bg-black"
+    >
+      <source
+        src={
+          guideTab === "java"
+            ? "/videos/java.mp4"
+            : "/videos/bedrock.mp4"
+        }
+        type="video/mp4"
+      />
+
+      Trình duyệt của bạn không hỗ trợ video.
+    </video>
+
   </div>
 </section>
       {/* Features */}
