@@ -56,23 +56,30 @@ export default function Home() {
   }, []);
 
   return (
-  <main className="relative min-h-screen overflow-x-hidden text-white">
+  <main className="relative min-h-screen overflow-hidden text-white">
 
-    {/* Background Mobile */}
+    {/* Mobile Background */}
     <div
-      className="absolute inset-0 -z-10 bg-cover bg-center md:hidden"
+      className="absolute inset-0 -z-10 md:hidden"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.55)), url('/images/background.jpg')",
+          "linear-gradient(rgba(0,0,0,.20), rgba(0,0,0,.60)), url('/images/background.jpg')",
+        backgroundPosition: "center top",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "100% auto",
+        backgroundColor: "#09090b",
       }}
     />
 
-    {/* Background PC */}
+    {/* Desktop Background */}
     <div
-      className="absolute inset-0 -z-10 hidden bg-cover bg-center md:block"
+      className="absolute inset-0 -z-10 hidden md:block"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.55)), url('/images/background-pc.jpg')",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
       }}
     />
       {/* Navbar */}
