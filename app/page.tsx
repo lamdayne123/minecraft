@@ -450,12 +450,15 @@ const [guideTab, setGuideTab] = useState<"java" | "bedrock">("java");
         className="w-full rounded-2xl"
       >
         <source
-          src={guideTab === "java" ? "/videos/java.mp4" : "/videos/bedrock.mp4"}
+          src={
+            guideTab === "java"
+              ? "/videos/java.mp4"
+              : "/videos/bedrock.mp4"
+          }
           type="video/mp4"
         />
       </video>
     )}
-
   </div>
 </section>
       {/* Features */}
