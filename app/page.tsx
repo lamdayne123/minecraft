@@ -295,8 +295,8 @@ export default function Home() {
         </h2>
 
         <p className="mt-6 max-w-2xl text-lg text-zinc-400">
-          Máy chủ Minecraft Survival với Claim, AuraSkills, Crate,
-          Kinh tế, Voice Chat và nhiều tính năng hấp dẫn khác.
+          Máy chủ Minecraft Survival với Claim, Skills, Crate,
+          Kinh tế, Xây dựng và nhiều tính năng hấp dẫn khác.
         </p>
 
         <div className="mt-12 w-full px-3">
