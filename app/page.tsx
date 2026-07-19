@@ -122,17 +122,101 @@ export default function Home() {
     {/* Mobile menu */}
 
     {menuOpen && (
-  <div className="mt-5 rounded-[2rem] border border-white/10 bg-zinc-950/90 p-5 shadow-2xl backdrop-blur-2xl md:hidden">
-    <div className="space-y-2">
-      <a href="/" className="flex items-center justify-between rounded-2xl px-5 py-4 hover:bg-white/5"><span>🏠 Trang chủ</span><span>→</span></a>
-      <a href="/donate" className="flex items-center justify-between rounded-2xl px-5 py-4 hover:bg-white/5"><span>💎 Donate</span><span>→</span></a>
-      <a href="/rules" className="flex items-center justify-between rounded-2xl px-5 py-4 hover:bg-white/5"><span>📜 Rules</span><span>→</span></a>
-      <a href="https://node1.zencheap.net:30275" target="_blank" className="flex items-center justify-between rounded-2xl px-5 py-4 hover:bg-white/5"><span>🚫 Danh sách cấm</span><span>↗</span></a>
+  <div
+    className="
+      absolute
+      right-0
+      top-[90px]
+      w-[320px]
+      rounded-[32px]
+      border border-white/10
+      bg-zinc-950/90
+      p-6
+      shadow-[0_20px_80px_rgba(0,0,0,.55)]
+      backdrop-blur-3xl
+      md:hidden
+      animate-in
+      fade-in
+      slide-in-from-top-2
+    "
+  >
+    {/* Menu */}
+    <div className="space-y-1">
+
+      <a
+        href="/"
+        className="block rounded-xl px-4 py-3 text-lg text-zinc-300 transition hover:bg-white/5 hover:text-white"
+      >
+        🏠 Trang chủ
+      </a>
+
+      <a
+        href="/donate"
+        className="block rounded-xl px-4 py-3 text-lg text-zinc-300 transition hover:bg-white/5 hover:text-white"
+      >
+        💎 Donate
+      </a>
+
+      <a
+        href="/rules"
+        className="block rounded-xl px-4 py-3 text-lg text-zinc-300 transition hover:bg-white/5 hover:text-white"
+      >
+        📜 Rules
+      </a>
+
+      <a
+        href="https://node1.zencheap.net:30275"
+        target="_blank"
+        className="block rounded-xl px-4 py-3 text-lg text-zinc-300 transition hover:bg-white/5 hover:text-white"
+      >
+        🚫 Danh sách cấm
+      </a>
+
     </div>
-    <div className="my-5 h-px bg-white/10"></div>
+
+    <div className="my-5 border-t border-white/10" />
+
+    {/* Buttons */}
     <div className="flex items-center gap-3">
-      <a href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263" className="flex-1 rounded-full bg-green-500 py-4 text-center font-black text-black">🎮 Vào Server</a>
-      <a href="https://discord.gg/maY22mamA" target="_blank" className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-zinc-900 text-2xl">💬</a>
+
+      <a
+        href="https://discord.gg/maY22mamA"
+        target="_blank"
+        className="
+          flex
+          h-14
+          w-14
+          items-center
+          justify-center
+          rounded-full
+          border
+          border-white/10
+          bg-zinc-900
+          text-2xl
+          transition
+          hover:bg-zinc-800
+        "
+      >
+        💬
+      </a>
+
+      <a
+        href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
+        className="
+          flex-1
+          rounded-full
+          bg-green-500
+          py-4
+          text-center
+          font-bold
+          text-black
+          transition
+          hover:bg-green-400
+        "
+      >
+        🎮 Vào Server
+      </a>
+
     </div>
   </div>
 )}
