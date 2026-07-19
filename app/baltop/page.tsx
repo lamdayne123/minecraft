@@ -19,7 +19,7 @@ export default function BaltopPage() {
       const upper = value.toUpperCase().trim();
 
       if (upper.endsWith("K") || upper.endsWith("M") || upper.endsWith("B")) {
-        return upper;
+        return upper.toLowerCase();
       }
 
       value = Number(upper.replace(/,/g, ""));
@@ -27,19 +27,14 @@ export default function BaltopPage() {
 
     value = Number(value);
 
-    if (isNaN(value)) return "0";
+    if (Number.isNaN(value)) return "0";
 
-    if (value >= 1_000_000_000) {
-      return (value / 1_000_000_000).toFixed(1).replace(".0", "") + "B";
-    }
+    const compact = (num: number, suffix: "k" | "m" | "b") =>
+      `${num.toFixed(2).replace(/\.?0+$/, "")}${suffix}`;
 
-    if (value >= 1_000_000) {
-      return (value / 1_000_000).toFixed(1).replace(".0", "") + "M";
-    }
-
-    if (value >= 1_000) {
-      return (value / 1_000).toFixed(1).replace(".0", "") + "K";
-    }
+    if (value >= 1_000_000_000) return compact(value / 1_000_000_000, "b");
+    if (value >= 1_000_000) return compact(value / 1_000_000, "m");
+    if (value >= 1_000) return compact(value / 1_000, "k");
 
     return value.toString();
   }
@@ -48,7 +43,6 @@ export default function BaltopPage() {
     try {
       const res = await fetch("/api/baltop", { cache: "no-store" });
       const data = await res.json();
-
       setPlayers(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Baltop load error:", err);
@@ -79,13 +73,49 @@ export default function BaltopPage() {
   });
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_rgba(34,197,94,0.12),_transparent_45%),linear-gradient(to_bottom,#050505,#050705_55%,#030303)] text-white">
-      <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 sm:px-6 lg:px-8">
+    <main
+      className="min-h-screen overflow-x-hidden text-white"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at top, rgba(34,197,94,0.14), transparent 36%), linear-gradient(to bottom, #050505 0%, #050705 52%, #030303 100%)",
+      }}
+    >
+      <style>{`
+        @keyframes craftopia-marquee {
+          0% { transform: translateX(0%); }
+          15% { transform: translateX(0%); }
+          85% { transform: translateX(calc(-100% + 12rem)); }
+          100% { transform: translateX(0%); }
+        }
+
+        @media (max-width: 767px) {
+          .craftopia-marquee {
+            display: inline-block;
+            min-width: max-content;
+            padding-right: 1rem;
+            animation: craftopia-marquee 7s linear infinite;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .craftopia-marquee {
+            animation: none;
+          }
+        }
+      `}</style>
+
+      <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
         <header className="sticky top-4 z-40 pt-4">
           <div className="rounded-3xl border border-emerald-500/20 bg-black/75 px-4 py-3 shadow-[0_0_40px_rgba(34,197,94,0.08)] backdrop-blur-xl sm:px-6">
             <div className="flex items-center justify-between gap-4">
               <a href="/" className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-[url('https://cdn.modrinth.com/data/zGYJG6Zh/e3730cc2ff44ab6ce952e9b192114fcbce25dbda_96.webp')] bg-cover bg-center shadow-lg" />
+                <div
+                  className="h-10 w-10 rounded-xl bg-cover bg-center shadow-lg"
+                  style={{
+                    backgroundImage:
+                      "url('https://cdn.modrinth.com/data/zGYJG6Zh/e3730cc2ff44ab6ce952e9b192114fcbce25dbda_96.webp')",
+                  }}
+                />
                 <div className="leading-none">
                   <div className="text-lg font-black tracking-[0.18em] text-emerald-400">
                     CRAFTOPIA
@@ -139,7 +169,7 @@ export default function BaltopPage() {
 
           <div className="relative z-10 text-center">
             <div className="mb-3 text-4xl">👑</div>
-            <h1 className="mx-auto max-w-4xl text-5xl font-black tracking-[0.08em] text-transparent sm:text-7xl bg-[linear-gradient(180deg,#ffffff_10%,#f7f7f7_35%,#bafc6d_65%,#43ff4e_100%)] bg-clip-text drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)]">
+            <h1 className="mx-auto max-w-4xl bg-[linear-gradient(180deg,#ffffff_10%,#f7f7f7_35%,#bafc6d_65%,#43ff4e_100%)] bg-clip-text text-5xl font-black tracking-[0.08em] text-transparent drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)] sm:text-7xl">
               BALTOP
             </h1>
             <p className="mt-4 text-sm font-bold tracking-[0.22em] text-zinc-300 sm:text-lg">
@@ -174,51 +204,45 @@ export default function BaltopPage() {
             </div>
           ) : (
             <>
-              <section className="grid gap-5 md:grid-cols-3">
+              <section className="grid items-end gap-5 md:grid-cols-3">
                 {sortedPlayers.slice(0, 3).map((player, index) => {
-                  const isFirst = index === 1 ? false : index === 0;
-                  const rank = index === 0 ? 2 : index === 1 ? 1 : 3;
-                  const primary =
-                    index === 1
-                      ? "border-yellow-300/80 shadow-[0_0_34px_rgba(250,204,21,0.18)]"
-                      : index === 0
-                      ? "border-zinc-300/70"
-                      : "border-orange-400/70";
+                  const rank = index + 1;
+                  const name = getPlayerName(player);
+                  const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(name)}/128`;
+
+                  const rankStyles =
+                    rank === 1
+                      ? "border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)] md:-mt-8 md:order-2 md:scale-[1.05] z-10"
+                      : rank === 2
+                      ? "border-zinc-300/60 bg-zinc-400/8 md:order-1 md:mt-6"
+                      : "border-orange-400/70 bg-orange-500/10 md:order-3 md:mt-6";
 
                   const rankGlow =
-                    index === 1
-                      ? "text-yellow-300"
-                      : index === 0
-                      ? "text-zinc-300"
-                      : "text-orange-300";
+                    rank === 1 ? "text-yellow-300" : rank === 2 ? "text-zinc-200" : "text-orange-300";
 
                   const moneyColor =
-                    index === 1
-                      ? "text-yellow-400"
-                      : index === 0
-                      ? "text-zinc-200"
-                      : "text-orange-300";
+                    rank === 1 ? "text-yellow-400" : rank === 2 ? "text-zinc-100" : "text-orange-300";
 
-                  const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(getPlayerName(player))}/128`;
+                  const medalIcon = medals[index] || "🏅";
 
                   return (
                     <article
-                      key={getPlayerName(player)}
-                      className={`relative overflow-hidden rounded-[2rem] border bg-black/65 p-6 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-8 ${primary} ${index === 1 ? "md:-mt-4 md:scale-[1.03]" : ""}`}
+                      key={name}
+                      className={`relative overflow-hidden rounded-[2rem] border p-6 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-8 ${rankStyles}`}
                     >
-                      {index === 1 && (
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.15),transparent_45%)]" />
+                      {rank === 1 && (
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.18),transparent_48%)]" />
                       )}
 
                       <div className="relative z-10">
                         <div className={`mb-3 text-4xl font-black ${rankGlow}`}>
-                          {medals[index]}
+                          {medalIcon}
                         </div>
 
                         <div className="mx-auto mb-4 flex h-28 w-28 items-center justify-center rounded-[1.65rem] border border-white/10 bg-zinc-950/80 shadow-[0_0_20px_rgba(0,0,0,0.35)]">
                           <img
                             src={avatar}
-                            alt={getPlayerName(player)}
+                            alt={name}
                             className="h-24 w-24 rounded-[1.1rem] object-cover"
                             onError={(e) => {
                               const target = e.currentTarget as HTMLImageElement;
@@ -229,8 +253,8 @@ export default function BaltopPage() {
 
                         <div className="mx-auto inline-flex max-w-full items-center gap-2 rounded-2xl border border-white/10 bg-black/45 px-4 py-2">
                           <span className="text-lime-300">▰</span>
-                          <span className="truncate font-bold text-lime-400">
-                            {getPlayerName(player)}
+                          <span className="craftopia-marquee max-w-[12rem] overflow-hidden whitespace-nowrap text-lime-400">
+                            {name}
                           </span>
                         </div>
 
@@ -242,14 +266,12 @@ export default function BaltopPage() {
                             <div className="text-4xl font-black tracking-tight">
                               {getMoney(player)}
                             </div>
-                            <div className="text-4xl">
-                              {index === 1 ? "🪙" : index === 0 ? "🪙" : "💰"}
-                            </div>
+                            <div className="text-4xl">{rank === 3 ? "💰" : "🪙"}</div>
                           </div>
                         </div>
                       </div>
 
-                      {index === 1 && (
+                      {rank === 1 && (
                         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-transparent via-yellow-300 to-transparent opacity-60" />
                       )}
                     </article>
@@ -266,10 +288,12 @@ export default function BaltopPage() {
 
                 <div className="divide-y divide-white/5">
                   {sortedPlayers.slice(3, 20).map((player, index) => {
-                    const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(getPlayerName(player))}/64`;
+                    const name = getPlayerName(player);
+                    const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(name)}/64`;
+
                     return (
                       <div
-                        key={getPlayerName(player)}
+                        key={name + index}
                         className="grid grid-cols-[72px_1fr_120px] items-center gap-4 px-4 py-4 transition hover:bg-white/4 sm:grid-cols-[88px_1fr_160px] sm:px-6"
                       >
                         <div className="text-lg font-black text-zinc-300">
@@ -279,16 +303,19 @@ export default function BaltopPage() {
                         <div className="flex min-w-0 items-center gap-3">
                           <img
                             src={avatar}
-                            alt={getPlayerName(player)}
+                            alt={name}
                             className="h-11 w-11 shrink-0 rounded-xl border border-white/10 bg-zinc-950 object-cover shadow-lg"
                             onError={(e) => {
                               const target = e.currentTarget as HTMLImageElement;
                               target.src = "https://mc-heads.net/avatar/Steve/64";
                             }}
                           />
+
                           <div className="min-w-0">
-                            <div className="truncate font-bold text-white">
-                              {getPlayerName(player)}
+                            <div className="max-w-full overflow-hidden whitespace-nowrap">
+                              <span className="craftopia-marquee inline-block max-w-[10.5rem] overflow-hidden whitespace-nowrap font-bold text-white sm:max-w-none">
+                                {name}
+                              </span>
                             </div>
                             <div className="truncate text-xs text-zinc-500">
                               Craftopia Survival
