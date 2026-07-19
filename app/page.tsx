@@ -56,11 +56,11 @@ export default function Home() {
   }, []);
 
   return (
-  <main className="relative min-h-screen overflow-x-hidden text-white">
+  <main className="relative min-h-screen text-white">
 
     {/* Mobile */}
     <div
-      className="absolute inset-0 -z-10 md:hidden bg-cover bg-center"
+      className="fixed inset-0 -z-10 md:hidden bg-cover bg-center bg-fixed"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.55)), url('/images/background.jpg')",
@@ -69,12 +69,14 @@ export default function Home() {
 
     {/* PC */}
     <div
-      className="absolute inset-0 -z-10 hidden md:block bg-cover bg-center"
+      className="fixed inset-0 -z-10 hidden md:block bg-cover bg-center bg-fixed"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.55)), url('/images/background-pc.jpg')",
       }}
     />
+
+    {/* Nội dung */}
       {/* Navbar */}
     <header className="sticky top-5 z-50 px-4">
   <div className="mx-auto max-w-7xl rounded-3xl border border-zinc-800 bg-zinc-900/80 px-5 py-4 backdrop-blur-xl">
