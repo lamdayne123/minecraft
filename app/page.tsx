@@ -56,17 +56,26 @@ export default function Home() {
   }, []);
 
   return (
-  <main
-  className="relative min-h-screen text-white"
-  style={{
-    backgroundImage:
-      "linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.7)), url('/images/background.jpg')",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center top",
-    backgroundSize: "contain",
-    backgroundColor: "#09090b",
-  }}
->
+  return (
+  <main className="relative min-h-screen overflow-x-hidden text-white">
+
+    {/* Background Mobile */}
+    <div
+      className="absolute inset-0 -z-10 bg-cover bg-center md:hidden"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.55)), url('/images/background.jpg')",
+      }}
+    />
+
+    {/* Background PC */}
+    <div
+      className="absolute inset-0 -z-10 hidden bg-cover bg-center md:block"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.55)), url('/images/background-pc.jpg')",
+      }}
+    />
       {/* Navbar */}
     <header className="sticky top-5 z-50 px-4">
   <div className="mx-auto max-w-7xl rounded-3xl border border-zinc-800 bg-zinc-900/80 px-5 py-4 backdrop-blur-xl">
