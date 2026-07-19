@@ -165,7 +165,7 @@ export default function Home() {
       </a>
 
       <a
-        href="https://node1.zencheap.net:30275"
+        href="http://node1.zencheap.net:30275/"
         target="_blank"
         className="block rounded-xl px-4 py-3 text-lg text-zinc-300 transition hover:bg-white/5 hover:text-white"
       >
