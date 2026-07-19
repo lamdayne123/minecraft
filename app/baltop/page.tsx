@@ -80,30 +80,6 @@ export default function BaltopPage() {
           "radial-gradient(circle at top, rgba(34,197,94,0.14), transparent 36%), linear-gradient(to bottom, #050505 0%, #050705 52%, #030303 100%)",
       }}
     >
-      <style>{`
-        @keyframes craftopia-marquee {
-          0% { transform: translateX(0%); }
-          15% { transform: translateX(0%); }
-          85% { transform: translateX(calc(-100% + 12rem)); }
-          100% { transform: translateX(0%); }
-        }
-
-        @media (max-width: 767px) {
-          .craftopia-marquee {
-            display: inline-block;
-            min-width: max-content;
-            padding-right: 1rem;
-            animation: craftopia-marquee 7s linear infinite;
-          }
-        }
-
-        @media (min-width: 768px) {
-          .craftopia-marquee {
-            animation: none;
-          }
-        }
-      `}</style>
-
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
         <header className="sticky top-4 z-40 pt-4">
           <div className="rounded-3xl border border-emerald-500/20 bg-black/75 px-4 py-3 shadow-[0_0_40px_rgba(34,197,94,0.08)] backdrop-blur-xl sm:px-6">
@@ -204,7 +180,7 @@ export default function BaltopPage() {
             </div>
           ) : (
             <>
-              <section className="grid items-end gap-5 md:grid-cols-3">
+              <section className="grid grid-cols-3 items-end gap-2 sm:gap-5">
                 {sortedPlayers.slice(0, 3).map((player, index) => {
                   const rank = index + 1;
                   const name = getPlayerName(player);
@@ -212,10 +188,10 @@ export default function BaltopPage() {
 
                   const rankStyles =
                     rank === 1
-                      ? "border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)] md:-mt-8 md:order-2 md:scale-[1.05] z-10"
+                      ? "border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)] sm:-mt-8 sm:scale-[1.05] z-10"
                       : rank === 2
-                      ? "border-zinc-300/60 bg-zinc-400/8 md:order-1 md:mt-6"
-                      : "border-orange-400/70 bg-orange-500/10 md:order-3 md:mt-6";
+                      ? "border-zinc-300/60 bg-zinc-400/8 sm:mt-6"
+                      : "border-orange-400/70 bg-orange-500/10 sm:mt-6";
 
                   const rankGlow =
                     rank === 1 ? "text-yellow-300" : rank === 2 ? "text-zinc-200" : "text-orange-300";
@@ -228,22 +204,22 @@ export default function BaltopPage() {
                   return (
                     <article
                       key={name}
-                      className={`relative overflow-hidden rounded-[2rem] border p-6 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-8 ${rankStyles}`}
+                      className={`relative overflow-hidden rounded-[2rem] border p-3 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-6 ${rankStyles}`}
                     >
                       {rank === 1 && (
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.18),transparent_48%)]" />
                       )}
 
                       <div className="relative z-10">
-                        <div className={`mb-3 text-4xl font-black ${rankGlow}`}>
+                        <div className={`mb-2 text-2xl font-black sm:mb-3 sm:text-4xl ${rankGlow}`}>
                           {medalIcon}
                         </div>
 
-                        <div className="mx-auto mb-4 flex h-28 w-28 items-center justify-center rounded-[1.65rem] border border-white/10 bg-zinc-950/80 shadow-[0_0_20px_rgba(0,0,0,0.35)]">
+                        <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-[1rem] border border-white/10 bg-zinc-950/80 shadow-[0_0_20px_rgba(0,0,0,0.35)] sm:mb-4 sm:h-28 sm:w-28 sm:rounded-[1.65rem]">
                           <img
                             src={avatar}
                             alt={name}
-                            className="h-24 w-24 rounded-[1.1rem] object-cover"
+                            className="h-12 w-12 rounded-[0.8rem] object-cover sm:h-24 sm:w-24 sm:rounded-[1.1rem]"
                             onError={(e) => {
                               const target = e.currentTarget as HTMLImageElement;
                               target.src = "https://mc-heads.net/avatar/Steve/128";
@@ -251,22 +227,22 @@ export default function BaltopPage() {
                           />
                         </div>
 
-                        <div className="mx-auto inline-flex max-w-full items-center gap-2 rounded-2xl border border-white/10 bg-black/45 px-4 py-2">
-                          <span className="text-lime-300">▰</span>
-                          <span className="craftopia-marquee max-w-[12rem] overflow-hidden whitespace-nowrap text-lime-400">
+                        <div className="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-2xl border border-white/10 bg-black/45 px-2 py-2 sm:gap-2 sm:px-4">
+                          <span className="text-lime-300 text-[10px] sm:text-base">▰</span>
+                          <span className="block min-w-0 whitespace-normal break-words text-center text-[10px] font-bold leading-tight text-lime-400 sm:text-base sm:whitespace-nowrap sm:leading-normal">
                             {name}
                           </span>
                         </div>
 
-                        <div className="mt-6 text-left">
-                          <div className="text-xs font-bold tracking-[0.2em] text-zinc-400">
+                        <div className="mt-4 text-left sm:mt-6">
+                          <div className="text-[9px] font-bold tracking-[0.2em] text-zinc-400 sm:text-xs">
                             SỐ TIỀN
                           </div>
-                          <div className={`mt-2 flex items-end justify-between gap-4 ${moneyColor}`}>
-                            <div className="text-4xl font-black tracking-tight">
+                          <div className={`mt-1.5 flex items-end justify-between gap-2 sm:mt-2 sm:gap-4 ${moneyColor}`}>
+                            <div className="text-sm font-black tracking-tight sm:text-4xl">
                               {getMoney(player)}
                             </div>
-                            <div className="text-4xl">{rank === 3 ? "💰" : "🪙"}</div>
+                            <div className="text-lg sm:text-4xl">{rank === 3 ? "💰" : "🪙"}</div>
                           </div>
                         </div>
                       </div>
@@ -312,8 +288,8 @@ export default function BaltopPage() {
                           />
 
                           <div className="min-w-0">
-                            <div className="max-w-full overflow-hidden whitespace-nowrap">
-                              <span className="craftopia-marquee inline-block max-w-[10.5rem] overflow-hidden whitespace-nowrap font-bold text-white sm:max-w-none">
+                            <div className="max-w-full">
+                              <span className="block whitespace-normal break-words font-bold leading-tight text-white">
                                 {name}
                               </span>
                             </div>
@@ -358,4 +334,4 @@ export default function BaltopPage() {
       </div>
     </main>
   );
-}
+                                }
