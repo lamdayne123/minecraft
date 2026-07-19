@@ -57,10 +57,16 @@ export default function Home() {
 
   return (
   <main
-    className="min-h-screen bg-cover bg-center bg-fixed text-white"
+    className="relative min-h-screen overflow-x-hidden text-white"
     style={{
-      backgroundImage:
-        "linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.55)), url('/images/background.jpg')",
+      backgroundImage: `
+        radial-gradient(circle at top, rgba(34,197,94,.12), transparent 45%),
+        linear-gradient(rgba(8,12,18,.45), rgba(8,12,18,.75)),
+        url('/images/background.jpg')
+      `,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
     }}
   >
       {/* Navbar */}
