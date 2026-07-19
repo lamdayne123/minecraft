@@ -56,7 +56,6 @@ export default function Home() {
   }, []);
 
   return (
-  return (
   <main className="relative min-h-screen overflow-x-hidden text-white">
 
     {/* Background Mobile */}
