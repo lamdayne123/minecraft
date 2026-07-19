@@ -90,35 +90,81 @@ export default function Home() {
         Craftopia
       </a>
 
-      <nav className="hidden items-center gap-8 md:flex">
-        <a href="/donate" className="text-zinc-300 hover:text-green-400">
-          💎 Donate
-        </a>
+      <nav className="hidden items-center gap-2 rounded-full border border-white/10 bg-black/25 px-2 py-2 backdrop-blur-xl md:flex">
 
-        <a href="/rules" className="text-zinc-300 hover:text-green-400">
-          📜 Rules
-        </a>
+  <a
+    href="/"
+    className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white"
+  >
+    🏠 Trang chủ
+  </a>
 
-        <a
-          href="https://discord.gg/maY22mamA"
-          target="_blank"
-          className="text-zinc-300 hover:text-green-400"
-        >
-          💬 Discord
-        </a>
-      </nav>
+  <a
+    href="/donate"
+    className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white"
+  >
+    💎 Donate
+  </a>
 
-      <div className="flex items-center gap-3">
+  <a
+    href="/rules"
+    className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white"
+  >
+    📜 Rules
+  </a>
 
+  <a
+    href="http://node1.zencheap.net:30275/"
+    target="_blank"
+    className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white"
+  >
+    🚫 Danh sách cấm
+  </a>
 
-        <a
-          href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
-          className="hidden rounded-full bg-green-500 px-5 py-2 font-bold text-black md:block"
-        >
-          🎮 Vào Server
-        </a>
+</nav>
 
+<div className="hidden items-center gap-3 md:flex">
 
+  <a
+    href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
+    className="
+      rounded-full
+      bg-green-500
+      px-6
+      py-3
+      font-bold
+      text-black
+      transition
+      hover:bg-green-400
+      hover:scale-105
+    "
+  >
+    🎮 Vào Server
+  </a>
+
+  <a
+    href="https://discord.gg/maY22mamA"
+    target="_blank"
+    className="
+      flex
+      h-12
+      w-12
+      items-center
+      justify-center
+      rounded-full
+      border
+      border-white/10
+      bg-zinc-900/70
+      text-xl
+      transition
+      hover:bg-zinc-800
+      hover:scale-105
+    "
+  >
+    💬
+  </a>
+
+</div>
         {/* Mobile button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -234,9 +280,7 @@ export default function Home() {
     </div>
   </div>
 )}
-
-  </div>
-  </div>
+    </div>
 </header>
 
       {/* Hero */}
