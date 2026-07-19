@@ -114,7 +114,9 @@ export default function BaltopPage() {
                   <a
                     key={href}
                     href={href}
-                    className={`transition hover:text-emerald-400 ${href === "/baltop" ? "text-emerald-400" : ""}`}
+                    className={`transition hover:text-emerald-400 ${
+                      href === "/baltop" ? "text-emerald-400" : ""
+                    }`}
                   >
                     {label}
                   </a>
@@ -188,16 +190,24 @@ export default function BaltopPage() {
 
                   const rankStyles =
                     rank === 1
-                      ? "border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)] sm:-mt-8 sm:scale-[1.05] z-10"
+                      ? "col-start-2 -mt-6 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)] sm:-mt-10 sm:scale-[1.05] z-10"
                       : rank === 2
-                      ? "border-zinc-300/60 bg-zinc-400/8 sm:mt-6"
-                      : "border-orange-400/70 bg-orange-500/10 sm:mt-6";
+                      ? "col-start-1 mt-4 border-zinc-300/60 bg-zinc-400/8 sm:mt-8"
+                      : "col-start-3 mt-4 border-orange-400/70 bg-orange-500/10 sm:mt-8";
 
                   const rankGlow =
-                    rank === 1 ? "text-yellow-300" : rank === 2 ? "text-zinc-200" : "text-orange-300";
+                    rank === 1
+                      ? "text-yellow-300"
+                      : rank === 2
+                      ? "text-zinc-200"
+                      : "text-orange-300";
 
                   const moneyColor =
-                    rank === 1 ? "text-yellow-400" : rank === 2 ? "text-zinc-100" : "text-orange-300";
+                    rank === 1
+                      ? "text-yellow-400"
+                      : rank === 2
+                      ? "text-zinc-100"
+                      : "text-orange-300";
 
                   const medalIcon = medals[index] || "🏅";
 
@@ -228,7 +238,7 @@ export default function BaltopPage() {
                         </div>
 
                         <div className="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-2xl border border-white/10 bg-black/45 px-2 py-2 sm:gap-2 sm:px-4">
-                          <span className="text-lime-300 text-[10px] sm:text-base">▰</span>
+                          <span className="text-[10px] text-lime-300 sm:text-base">▰</span>
                           <span className="block min-w-0 whitespace-normal break-words text-center text-[10px] font-bold leading-tight text-lime-400 sm:text-base sm:whitespace-nowrap sm:leading-normal">
                             {name}
                           </span>
@@ -238,7 +248,9 @@ export default function BaltopPage() {
                           <div className="text-[9px] font-bold tracking-[0.2em] text-zinc-400 sm:text-xs">
                             SỐ TIỀN
                           </div>
-                          <div className={`mt-1.5 flex items-end justify-between gap-2 sm:mt-2 sm:gap-4 ${moneyColor}`}>
+                          <div
+                            className={`mt-1.5 flex items-end justify-between gap-2 sm:mt-2 sm:gap-4 ${moneyColor}`}
+                          >
                             <div className="text-sm font-black tracking-tight sm:text-4xl">
                               {getMoney(player)}
                             </div>
@@ -334,4 +346,4 @@ export default function BaltopPage() {
       </div>
     </main>
   );
-                                }
+} 
