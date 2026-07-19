@@ -150,7 +150,7 @@ export default function BaltopPage() {
               <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
                 <div className="flex items-center gap-3">
                   <span className="text-emerald-400">♻️</span>
-                  <span>Dữ liệu được cập nhật mỗi 5 phút</span>
+                  <span>Dữ liệu được cập nhật mỗi ngày</span>
                 </div>
                 <div className="flex items-center gap-2 text-zinc-400">
                   <span>Cập nhật lúc {statUpdated}</span>
