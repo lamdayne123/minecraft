@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
 
   const [menuOpen, setMenuOpen] = useState(false);
-
+const [guideTab, setGuideTab] = useState<"java" | "bedrock">("java");
   const [server, setServer] = useState({
     online: false,
     players: 0,
@@ -409,7 +409,49 @@ export default function Home() {
 
 </div>
 </section>
+<section className="mx-auto mt-10 max-w-4xl px-6">
+  <div className="rounded-3xl border border-white/10 bg-black/35 p-6 backdrop-blur-xl">
 
+    <h2 className="mb-5 text-center text-2xl font-bold">
+      📖 Hướng dẫn tham gia
+    </h2>
+
+    <div className="mb-5 flex rounded-full bg-zinc-900 p-1">
+      <button
+        onClick={() => setGuideTab("java")}
+        className={`flex-1 rounded-full py-3 font-bold transition ${
+          guideTab === "java"
+            ? "bg-green-500 text-black"
+            : "text-zinc-400"
+        }`}
+      >
+        🖥 Java
+      </button>
+
+      <button
+        onClick={() => setGuideTab("bedrock")}
+        className={`flex-1 rounded-full py-3 font-bold transition ${
+          guideTab === "bedrock"
+            ? "bg-green-500 text-black"
+            : "text-zinc-400"
+        }`}
+      >
+        📱 Bedrock
+      </button>
+    </div>
+
+    {guideTab === "java" ? (
+      <video controls className="w-full rounded-2xl">
+        <source src="/videos/java.mp4" type="video/mp4" />
+      </video>
+    ) : (
+      <video controls className="w-full rounded-2xl">
+        <source src="/videos/bedrock.mp4" type="video/mp4" />
+      </video>
+    )}
+
+  </div>
+</section>
       {/* Features */}
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="mb-12 text-center">
