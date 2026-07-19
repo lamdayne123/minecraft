@@ -57,18 +57,16 @@ export default function Home() {
 
   return (
   <main
-    className="relative min-h-screen overflow-x-hidden text-white"
-    style={{
-      backgroundImage: `
-        radial-gradient(circle at top, rgba(34,197,94,.12), transparent 45%),
-        linear-gradient(rgba(8,12,18,.45), rgba(8,12,18,.75)),
-        url('/images/background.jpg')
-      `,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-    }}
-  >
+  className="relative min-h-screen text-white"
+  style={{
+    backgroundImage:
+      "linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.7)), url('/images/background.jpg')",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center top",
+    backgroundSize: "contain",
+    backgroundColor: "#09090b",
+  }}
+>
       {/* Navbar */}
     <header className="sticky top-5 z-50 px-4">
   <div className="mx-auto max-w-7xl rounded-3xl border border-zinc-800 bg-zinc-900/80 px-5 py-4 backdrop-blur-xl">
