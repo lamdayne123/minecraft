@@ -215,7 +215,7 @@ export default function BaltopPage() {
             </div>
           ) : (
             <>
-              <section className="grid grid-cols-3 items-stretch gap-2 sm:gap-5">
+              <section className="grid grid-cols-3 items-end gap-2 sm:gap-5">
                 {sortedPlayers.slice(0, 3).map((player, index) => {
                   const rank = index + 1;
                   const name = getPlayerName(player);
@@ -244,8 +244,8 @@ export default function BaltopPage() {
 
                   const medalIcon = medals[index] || "🏅";
 
-                  // Hạ top 1 xuống nhẹ để bớt nhô cao
-                  const podiumOffset = rank === 1 ? "translate-y-4 sm:translate-y-8" : "";
+                  // Chỉ nhô hạng 1 nhẹ hơn một chút so với hạng 2/3, không làm nó cao vọt hẳn lên
+                  const podiumOffset = rank === 1 ? "-translate-y-2 sm:-translate-y-3" : "";
 
                   return (
                     <article
@@ -257,15 +257,15 @@ export default function BaltopPage() {
                       )}
 
                       <div className="relative z-10">
-                        <div className={`mb-2 text-2xl font-black sm:mb-3 sm:text-4xl ${rankGlow}`}>
+                        <div className={`mb-2 text-xl font-black sm:mb-3 sm:text-3xl ${rankGlow}`}>
                           {medalIcon}
                         </div>
 
-                        <div className="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-[1rem] border border-white/10 bg-zinc-950/80 shadow-[0_0_20px_rgba(0,0,0,0.35)] sm:mb-4 sm:h-28 sm:w-28 sm:rounded-[1.65rem]">
+                        <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-[1rem] border border-white/10 bg-zinc-950/80 shadow-[0_0_20px_rgba(0,0,0,0.35)] sm:mb-4 sm:h-24 sm:w-24 sm:rounded-[1.5rem]">
                           <img
                             src={avatar}
                             alt={name}
-                            className="h-11 w-11 rounded-[0.8rem] object-cover sm:h-24 sm:w-24 sm:rounded-[1.1rem]"
+                            className="h-9 w-9 rounded-[0.8rem] object-cover sm:h-20 sm:w-20 sm:rounded-[1rem]"
                             onError={(e) => {
                               const target = e.currentTarget as HTMLImageElement;
                               target.src = "https://mc-heads.net/avatar/Steve/128";
@@ -287,10 +287,10 @@ export default function BaltopPage() {
                           <div
                             className={`mt-1.5 flex items-end justify-between gap-2 sm:mt-2 sm:gap-4 ${moneyColor}`}
                           >
-                            <div className="text-xs font-black tracking-tight sm:text-4xl">
+                            <div className="text-xs font-black tracking-tight sm:text-3xl">
                               {getMoney(player)}
                             </div>
-                            <div className="text-base sm:text-4xl">{rank === 3 ? "💰" : "🪙"}</div>
+                            <div className="text-base sm:text-3xl">{rank === 3 ? "💰" : "🪙"}</div>
                           </div>
                         </div>
                       </div>
