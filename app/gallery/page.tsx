@@ -9,7 +9,6 @@ type GalleryItem = {
   url: string;
 };
 
-const DEFAULT_RATIO = 4 / 3;
 const AUTO_REFRESH_MS = 5 * 60 * 1000;
 
 function isGalleryItem(value: unknown): value is GalleryItem {
@@ -32,11 +31,16 @@ function makeBlurDataURL(): string {
   ].join("");
 }
 
+// Quyết định ảnh nào sẽ hiển thị to (bento) — cứ mỗi 7 ảnh thì có 1 ảnh to,
+// và ảnh đầu tiên luôn to để làm điểm nhấn.
+function isFeatured(index: number) {
+  return index === 0 || index % 7 === 3;
+}
+
 export default function GalleryPage() {
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [aspectRatios, setAspectRatios] = useState<Record<string, number>>({});
   const [loadedNames, setLoadedNames] = useState<Record<string, boolean>>({});
   const [now, setNow] = useState<string>("");
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
@@ -209,24 +213,33 @@ export default function GalleryPage() {
           animation: craftopia-float 6s ease-in-out infinite;
         }
 
-        @media (max-width: 639px) {
-          .craftopia-masonry {
-            column-count: 2;
-            column-gap: 0.75rem;
-          }
+        /* Bento gallery grid — khung to xen kẽ khung nhỏ */
+        .craftopia-bento {
+          display: grid;
+          grid-auto-flow: dense;
+          grid-template-columns: repeat(2, 1fr);
+          grid-auto-rows: 130px;
+          gap: 0.75rem;
+        }
+
+        .craftopia-bento-large {
+          grid-column: span 2;
+          grid-row: span 2;
         }
 
         @media (min-width: 640px) and (max-width: 1023px) {
-          .craftopia-masonry {
-            column-count: 3;
-            column-gap: 1rem;
+          .craftopia-bento {
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 150px;
+            gap: 1rem;
           }
         }
 
         @media (min-width: 1024px) {
-          .craftopia-masonry {
-            column-count: 4;
-            column-gap: 1.15rem;
+          .craftopia-bento {
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 175px;
+            gap: 1.15rem;
           }
         }
       `}</style>
@@ -334,18 +347,15 @@ export default function GalleryPage() {
 
         <section className="mt-10 flex-1">
           {loading ? (
-            <div className="craftopia-masonry">
+            <div className="craftopia-bento">
               {Array.from({ length: 12 }).map((_, index) => (
-                <div key={index} className="mb-4 break-inside-avoid">
-                  <div
-                    className="craftopia-skeleton rounded-[2rem] border border-white/8"
-                    style={{
-                      aspectRatio:
-                        index % 3 === 0 ? "3 / 4" : index % 3 === 1 ? "4 / 3" : "1 / 1",
-                    }}
-                  >
-                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
-                  </div>
+                <div
+                  key={index}
+                  className={`craftopia-skeleton relative overflow-hidden rounded-[2rem] border border-white/8 ${
+                    isFeatured(index) ? "craftopia-bento-large" : ""
+                  }`}
+                >
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
                 </div>
               ))}
             </div>
@@ -354,47 +364,44 @@ export default function GalleryPage() {
               Chưa có dữ liệu Gallery
             </div>
           ) : (
-            <div className="craftopia-masonry">
+            <div className="craftopia-bento">
               {items.map((item, index) => {
-                const ratio = aspectRatios[item.url] ?? DEFAULT_RATIO;
                 const isLoaded = loadedNames[item.url] === true;
+                const large = isFeatured(index);
 
                 return (
                   <article
                     key={item.url}
-                    className="mb-4 break-inside-avoid"
-                    style={{ animationDelay: `${index * 70}ms` }}
+                    className={`craftopia-card-enter relative ${
+                      large ? "craftopia-bento-large" : ""
+                    }`}
+                    style={{ animationDelay: `${Math.min(index, 12) * 55}ms` }}
                   >
                     <button
                       type="button"
                       onClick={() => openItem(index)}
-                      className="group relative w-full overflow-hidden rounded-[2rem] border border-emerald-500/12 bg-black/55 text-left shadow-[0_0_30px_rgba(0,0,0,0.3)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-emerald-300/30 hover:shadow-[0_0_40px_rgba(34,197,94,0.18)] focus:outline-none"
+                      className="group relative block h-full w-full overflow-hidden rounded-[2rem] border border-emerald-500/12 bg-black/55 text-left shadow-[0_0_30px_rgba(0,0,0,0.3)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-emerald-300/30 hover:shadow-[0_0_40px_rgba(34,197,94,0.18)] focus:outline-none"
                       aria-label={`Xem ảnh ${item.name}`}
                     >
                       <div
-                        className={`relative w-full overflow-hidden bg-zinc-950/90 transition duration-300 group-hover:brightness-110 ${
+                        className={`relative h-full w-full overflow-hidden bg-zinc-950/90 transition duration-300 group-hover:brightness-110 ${
                           isLoaded ? "" : "craftopia-skeleton"
                         }`}
-                        style={{ aspectRatio: String(ratio) }}
                       >
                         <Image
                           src={item.url}
                           alt={item.name}
                           fill
-                          sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 25vw"
-                          className="object-contain transition duration-500 ease-out group-hover:scale-[1.03]"
+                          sizes={
+                            large
+                              ? "(max-width: 639px) 100vw, (max-width: 1023px) 66vw, 50vw"
+                              : "(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 25vw"
+                          }
+                          className="object-cover transition duration-500 ease-out group-hover:scale-[1.05]"
                           loading="lazy"
                           placeholder="blur"
                           blurDataURL={blurDataURL}
-                          onLoad={(event) => {
-                            const width = event.currentTarget.naturalWidth;
-                            const height = event.currentTarget.naturalHeight;
-                            if (width > 0 && height > 0) {
-                              setAspectRatios((current) => ({
-                                ...current,
-                                [item.url]: width / height,
-                              }));
-                            }
+                          onLoad={() => {
                             setLoadedNames((current) => ({
                               ...current,
                               [item.url]: true,
@@ -411,7 +418,11 @@ export default function GalleryPage() {
                               <span>🔍</span>
                               <span>Xem ảnh</span>
                             </div>
-                            <div className="mt-2 truncate text-sm font-bold text-white sm:text-base">
+                            <div
+                              className={`mt-2 truncate font-bold text-white ${
+                                large ? "text-base sm:text-lg" : "text-sm sm:text-base"
+                              }`}
+                            >
                               {item.name}
                             </div>
                           </div>
