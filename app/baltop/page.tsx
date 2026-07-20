@@ -215,18 +215,21 @@ export default function BaltopPage() {
             </div>
           ) : (
             <>
-              <section className="grid grid-cols-3 items-stretch gap-2 sm:gap-5">
+              <section className="flex items-stretch gap-2 sm:gap-5">
                 {sortedPlayers.slice(0, 3).map((player, index) => {
                   const rank = index + 1;
                   const name = getPlayerName(player);
                   const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(name)}/128`;
 
+                  const orderClass =
+                    rank === 1 ? "order-2" : rank === 2 ? "order-1" : "order-3";
+
                   const rankStyles =
                     rank === 1
-                      ? "col-start-2 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)]"
+                      ? "border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)]"
                       : rank === 2
-                      ? "col-start-1 border-zinc-300/60 bg-zinc-400/8"
-                      : "col-start-3 border-orange-400/70 bg-orange-500/10";
+                      ? "border-zinc-300/60 bg-zinc-400/8"
+                      : "border-orange-400/70 bg-orange-500/10";
 
                   const rankGlow =
                     rank === 1
@@ -247,7 +250,7 @@ export default function BaltopPage() {
                   return (
                     <article
                       key={name}
-                      className={`relative h-full overflow-hidden rounded-[2rem] border p-2 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-6 ${rankStyles}`}
+                      className={`relative flex-1 basis-0 overflow-hidden rounded-[2rem] border p-2 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-6 ${orderClass} ${rankStyles}`}
                     >
                       {rank === 1 && (
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.18),transparent_48%)]" />
