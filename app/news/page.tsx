@@ -1,6 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+
+const display = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  variable: "--font-display",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
+});
 
 type News = {
   id: number;
@@ -13,22 +26,18 @@ type News = {
 };
 
 export default function NewsPage() {
-
   const [news, setNews] = useState<News[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-
-    fetch("/api/news", {
-      cache: "no-store"
-    })
+    fetch("/api/news", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => setNews(data))
-      .catch(console.error);
-
+      .catch(console.error)
+      .finally(() => setLoaded(true));
   }, []);
 
   function formatDate(date: string) {
-
     return new Date(date).toLocaleString("vi-VN", {
       day: "2-digit",
       month: "2-digit",
@@ -36,92 +45,18 @@ export default function NewsPage() {
       hour: "2-digit",
       minute: "2-digit",
     });
-
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 px-6 py-20 text-white">
-
-      <div className="mx-auto max-w-5xl">
-
-        <h1 className="mb-3 text-center text-5xl font-black text-green-400">
-          📰 Tin tức
-        </h1>
-
-        <p className="mb-12 text-center text-zinc-400">
-          Các thông báo mới nhất từ Craftopia Survival.
-        </p>
-
-        <div className="space-y-6">
-
-          {news.length === 0 && (
-
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-10 text-center text-zinc-500">
-              Chưa có thông báo nào.
-            </div>
-
-          )}
-
-          {news.map((item) => (
-
-            <div
-              key={item.id}
-              className="overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900 transition hover:border-green-500"
-            >
-
-              {item.image && (
-
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-64 w-full object-cover"
-                />
-
-              )}
-
-              <div className="p-8">
-
-                <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-
-                  <h2 className="text-2xl font-bold text-green-400">
-                    {item.title}
-                  </h2>
-
-                  <span className="text-sm text-zinc-500">
-                    {formatDate(item.created_at)}
-                  </span>
-
-                </div>
-
-                <p className="whitespace-pre-wrap text-zinc-300">
-                  {item.content}
-                </p>
-
-                <div className="mt-6 flex items-center justify-between border-t border-zinc-800 pt-4 text-sm">
-
-                  <span className="text-zinc-500">
-                    Đăng bởi{" "}
-                    <span className="font-semibold text-white">
-                      {item.author}
-                    </span>
-                  </span>
-
-                  <span className="rounded-full bg-green-500/20 px-3 py-1 text-xs font-bold uppercase text-green-400">
-                    {item.category}
-                  </span>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          ))}
-
-        </div>
-
+    <main
+      className={`${display.variable} ${mono.variable} min-h-screen bg-[#12151a] px-4 py-14 text-[#eef0f2] sm:px-6 sm:py-20 lg:px-8`}
+      style={{ fontFamily: "var(--font-display), sans-serif" }}
+    >
+      {/* ambient glow */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#f0a35e]/10 blur-[100px]" />
       </div>
 
-    </main>
-  );
-}
+      <div className="relative mx-auto max-w-3xl">
+        {/* Header */}
+        <header className="mb-10 sm:mb-14">
