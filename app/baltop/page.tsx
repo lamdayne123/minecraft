@@ -52,6 +52,22 @@ export default function BaltopPage() {
     return value.toString();
   }
 
+  function parseMoneyValue(value: any) {
+    if (value === null || value === undefined) return 0;
+
+    if (typeof value === "string") {
+      const upper = value.toUpperCase().trim();
+
+      if (upper.endsWith("K")) return Number(upper.slice(0, -1)) * 1_000;
+      if (upper.endsWith("M")) return Number(upper.slice(0, -1)) * 1_000_000;
+      if (upper.endsWith("B")) return Number(upper.slice(0, -1)) * 1_000_000_000;
+
+      return Number(upper.replace(/,/g, ""));
+    }
+
+    return Number(value);
+  }
+
   async function loadBaltop() {
     try {
       const res = await fetch("/api/baltop", { cache: "no-store" });
@@ -73,7 +89,9 @@ export default function BaltopPage() {
   const medals = ["🥇", "🥈", "🥉"];
 
   const sortedPlayers = useMemo(() => {
-    return [...players].slice(0, 20);
+    return [...players]
+      .sort((a, b) => parseMoneyValue(b.money) - parseMoneyValue(a.money))
+      .slice(0, 20);
   }, [players]);
 
   const getPlayerName = (player: Player) => player.player || player.name || "Unknown";
@@ -191,7 +209,7 @@ export default function BaltopPage() {
               <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
                 <div className="flex items-center gap-3">
                   <span className="text-emerald-400">♻️</span>
-                  <span>Dữ liệu được cập nhật mỗi 5 phút</span>
+                  <span>Dữ liệu được cập nhật mỗi 30 giây</span>
                 </div>
                 <div className="flex items-center gap-2 text-zinc-400">
                   <span>Cập nhật lúc {statUpdated}</span>
@@ -219,11 +237,14 @@ export default function BaltopPage() {
                 {sortedPlayers.slice(0, 3).map((player, index) => {
                   const rank = index + 1;
                   const name = getPlayerName(player);
-                  const avatar = `https://mc-heads.net/avatar/${encodeURIComponent(name)}/128`;
+
+                  const avatar = `https://starlightskins.lunareclipse.studio/render/head/${encodeURIComponent(
+                    name
+                  )}/full`;
 
                   const rankStyles =
                     rank === 1
-                      ? "col-start-2 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)]"
+                      ? "col-start-2 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)] md:scale-[1.05]"
                       : rank === 2
                       ? "col-start-1 border-zinc-300/60 bg-zinc-400/8"
                       : "col-start-3 border-orange-400/70 bg-orange-500/10";
@@ -247,7 +268,9 @@ export default function BaltopPage() {
                   return (
                     <article
                       key={name}
-                      className={`relative overflow-hidden rounded-[2rem] border p-2 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-6 ${rankStyles}`}
+                      className={`relative overflow-hidden rounded-[2rem] border p-2 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-6 ${
+                        rank === 1 ? "md:-mt-10" : "md:mt-6"
+                      } ${rankStyles}`}
                     >
                       {rank === 1 && (
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.18),transparent_48%)]" />
@@ -263,6 +286,7 @@ export default function BaltopPage() {
                             src={avatar}
                             alt={name}
                             className="h-11 w-11 rounded-[0.8rem] object-cover sm:h-24 sm:w-24 sm:rounded-[1.1rem]"
+                            style={{ imageRendering: "pixelated" }}
                             onError={(e) => {
                               const target = e.currentTarget as HTMLImageElement;
                               target.src = "https://mc-heads.net/avatar/Steve/128";
@@ -270,7 +294,11 @@ export default function BaltopPage() {
                           />
                         </div>
 
-                        <div className="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-2xl border border-white/10 bg-black/45 px-1.5 py-1.5 sm:gap-2 sm:px-4 sm:py-2">
+                        <div
+                          className={`mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-2xl border border-white/10 bg-black/45 px-1.5 py-1.5 sm:gap-2 sm:px-4 sm:py-2 ${
+                            rank === 1 ? "max-w-[12rem]" : "max-w-[11rem]"
+                          }`}
+                        >
                           <span className="text-[9px] text-lime-300 sm:text-base">▰</span>
                           <span className="block min-w-0 whitespace-normal break-words text-center text-[9px] font-bold leading-tight text-lime-400 sm:text-base sm:whitespace-nowrap sm:leading-normal">
                             {name}
@@ -281,11 +309,15 @@ export default function BaltopPage() {
                           <div className="text-[8px] font-bold tracking-[0.2em] text-zinc-400 sm:text-xs">
                             SỐ TIỀN
                           </div>
-                          <div className={`mt-1.5 flex items-end justify-between gap-2 sm:mt-2 sm:gap-4 ${moneyColor}`}>
+                          <div
+                            className={`mt-1.5 flex items-end justify-between gap-2 sm:mt-2 sm:gap-4 ${moneyColor}`}
+                          >
                             <div className="text-xs font-black tracking-tight sm:text-4xl">
                               {getMoney(player)}
                             </div>
-                            <div className="text-base sm:text-4xl">{rank === 3 ? "💰" : "🪙"}</div>
+                            <div className="text-base sm:text-4xl">
+                              {rank === 3 ? "💰" : "🪙"}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -313,7 +345,7 @@ export default function BaltopPage() {
                     return (
                       <div
                         key={name + index}
-                        className="grid grid-cols-[72px_1fr_120px] items-center gap-4 px-4 py-4 transition hover:bg-white/4 sm:grid-cols-[88px_1fr_160px] sm:px-6"
+                        className="grid grid-cols-[72px_1fr_120px] items-center gap-4 px-4 py-4 transition hover:bg-white/5 sm:grid-cols-[88px_1fr_160px] sm:px-6"
                       >
                         <div className="text-lg font-black text-zinc-300">
                           #{index + 4}
@@ -324,6 +356,7 @@ export default function BaltopPage() {
                             src={avatar}
                             alt={name}
                             className="h-11 w-11 shrink-0 rounded-xl border border-white/10 bg-zinc-950 object-cover shadow-lg"
+                            style={{ imageRendering: "pixelated" }}
                             onError={(e) => {
                               const target = e.currentTarget as HTMLImageElement;
                               target.src = "https://mc-heads.net/avatar/Steve/64";
@@ -382,4 +415,4 @@ export default function BaltopPage() {
       </div>
     </main>
   );
-} 
+}
