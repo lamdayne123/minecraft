@@ -401,7 +401,7 @@ export default function FAQPage() {
             <div className="flex gap-2 overflow-x-auto pb-2 lg:hidden">
               {filtered.map((item) => {
                 const isActive = selected?.title === item.title;
-                const theme = themeClasses(item.color);
+                const theme = themeClasses(item.color as ThemeName);
                 return (
                   <button
                     key={item.title}
@@ -420,7 +420,7 @@ export default function FAQPage() {
             <div className="hidden space-y-2 lg:block">
               {filtered.map((item) => {
                 const isActive = selected?.title === item.title;
-                const theme = themeClasses(item.color);
+                const theme = themeClasses(item.color as ThemeName);
 
                 return (
                   <button
