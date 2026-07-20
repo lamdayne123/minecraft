@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 const rules = [
-  { icon: '🤝', title: 'Tôn trọng người chơi', content: 'Không xúc phạm, gây war, spam chat hoặc làm phiền người khác.' },
+  { icon: '🤝', title: 'Tôn trọng nhau', content: 'Không xúc phạm, gây war, spam chat hoặc làm phiền người khác.' },
   { icon: '🚫', title: 'Không gian lận', content: 'Không sử dụng hack, cheat, duping hoặc bất kỳ công cụ gian lận nào.' },
   { icon: '⚒️', title: 'Không phá hoại', content: 'Không grief hoặc phá hoại công trình người khác, gây lag server.' },
   { icon: '📢', title: 'Không quảng cáo', content: 'Không quảng bá server khác, link hay nội dung không liên quan.' },
