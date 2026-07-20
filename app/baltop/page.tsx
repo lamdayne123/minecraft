@@ -10,10 +10,10 @@ type Player = {
 
 function MobileTicker({ text }: { text: string }) {
   return (
-    <div className="craftopia-ticker-wrap w-full overflow-hidden">
+    <div className="w-full overflow-hidden">
       <div className="craftopia-ticker-track inline-flex min-w-max items-center whitespace-nowrap">
-        <span className="craftopia-ticker-item inline-block pr-8">{text}</span>
-        <span aria-hidden="true" className="craftopia-ticker-item inline-block pr-8">
+        <span className="inline-block pr-8">{text}</span>
+        <span aria-hidden="true" className="inline-block pr-8">
           {text}
         </span>
       </div>
@@ -95,8 +95,12 @@ export default function BaltopPage() {
     >
       <style>{`
         @keyframes craftopia-ticker {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-50%);
+          }
         }
 
         @media (max-width: 639px) {
@@ -215,7 +219,7 @@ export default function BaltopPage() {
             </div>
           ) : (
             <>
-              <section className="grid grid-cols-3 items-end gap-2 sm:gap-5">
+              <section className="grid grid-cols-3 items-start gap-2 sm:gap-5">
                 {sortedPlayers.slice(0, 3).map((player, index) => {
                   const rank = index + 1;
                   const name = getPlayerName(player);
@@ -223,7 +227,7 @@ export default function BaltopPage() {
 
                   const rankStyles =
                     rank === 1
-                      ? "col-start-2 -mt-1 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)]"
+                      ? "col-start-2 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)]"
                       : rank === 2
                       ? "col-start-1 border-zinc-300/60 bg-zinc-400/8"
                       : "col-start-3 border-orange-400/70 bg-orange-500/10";
@@ -247,7 +251,7 @@ export default function BaltopPage() {
                   return (
                     <article
                       key={name}
-                      className={`relative overflow-hidden rounded-[2rem] border p-3 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-6 ${rankStyles}`}
+                      className={`relative overflow-hidden rounded-[2rem] border p-2 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-6 ${rankStyles}`}
                     >
                       {rank === 1 && (
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.18),transparent_48%)]" />
@@ -258,11 +262,11 @@ export default function BaltopPage() {
                           {medalIcon}
                         </div>
 
-                        <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-[1rem] border border-white/10 bg-zinc-950/80 shadow-[0_0_20px_rgba(0,0,0,0.35)] sm:mb-4 sm:h-28 sm:w-28 sm:rounded-[1.65rem]">
+                        <div className="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-[1rem] border border-white/10 bg-zinc-950/80 shadow-[0_0_20px_rgba(0,0,0,0.35)] sm:mb-4 sm:h-28 sm:w-28 sm:rounded-[1.65rem]">
                           <img
                             src={avatar}
                             alt={name}
-                            className="h-12 w-12 rounded-[0.8rem] object-cover sm:h-24 sm:w-24 sm:rounded-[1.1rem]"
+                            className="h-11 w-11 rounded-[0.8rem] object-cover sm:h-24 sm:w-24 sm:rounded-[1.1rem]"
                             onError={(e) => {
                               const target = e.currentTarget as HTMLImageElement;
                               target.src = "https://mc-heads.net/avatar/Steve/128";
@@ -270,24 +274,22 @@ export default function BaltopPage() {
                           />
                         </div>
 
-                        <div className="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-2xl border border-white/10 bg-black/45 px-2 py-2 sm:gap-2 sm:px-4">
-                          <span className="text-[10px] text-lime-300 sm:text-base">▰</span>
-                          <span className="block min-w-0 whitespace-normal break-words text-center text-[10px] font-bold leading-tight text-lime-400 sm:text-base sm:whitespace-nowrap sm:leading-normal">
+                        <div className="mx-auto flex w-full max-w-full items-center justify-center gap-1 rounded-2xl border border-white/10 bg-black/45 px-1.5 py-1.5 sm:gap-2 sm:px-4 sm:py-2">
+                          <span className="text-[9px] text-lime-300 sm:text-base">▰</span>
+                          <span className="block min-w-0 whitespace-normal break-words text-center text-[9px] font-bold leading-tight text-lime-400 sm:text-base sm:whitespace-nowrap sm:leading-normal">
                             {name}
                           </span>
                         </div>
 
-                        <div className="mt-4 text-left sm:mt-6">
-                          <div className="text-[9px] font-bold tracking-[0.2em] text-zinc-400 sm:text-xs">
+                        <div className="mt-3 text-left sm:mt-6">
+                          <div className="text-[8px] font-bold tracking-[0.2em] text-zinc-400 sm:text-xs">
                             SỐ TIỀN
                           </div>
-                          <div
-                            className={`mt-1.5 flex items-end justify-between gap-2 sm:mt-2 sm:gap-4 ${moneyColor}`}
-                          >
-                            <div className="text-sm font-black tracking-tight sm:text-4xl">
+                          <div className={`mt-1.5 flex items-end justify-between gap-2 sm:mt-2 sm:gap-4 ${moneyColor}`}>
+                            <div className="text-xs font-black tracking-tight sm:text-4xl">
                               {getMoney(player)}
                             </div>
-                            <div className="text-lg sm:text-4xl">{rank === 3 ? "💰" : "🪙"}</div>
+                            <div className="text-base sm:text-4xl">{rank === 3 ? "💰" : "🪙"}</div>
                           </div>
                         </div>
                       </div>
@@ -317,7 +319,9 @@ export default function BaltopPage() {
                         key={name + index}
                         className="grid grid-cols-[72px_1fr_120px] items-center gap-4 px-4 py-4 transition hover:bg-white/4 sm:grid-cols-[88px_1fr_160px] sm:px-6"
                       >
-                        <div className="text-lg font-black text-zinc-300">#{index + 4}</div>
+                        <div className="text-lg font-black text-zinc-300">
+                          #{index + 4}
+                        </div>
 
                         <div className="flex min-w-0 items-center gap-3">
                           <img
@@ -331,12 +335,12 @@ export default function BaltopPage() {
                           />
 
                           <div className="min-w-0">
-                            <div className="max-w-full sm:hidden">
+                            <div className="sm:hidden">
                               <MobileTicker text={name} />
                             </div>
 
-                            <div className="hidden max-w-full sm:block">
-                              <span className="block whitespace-normal break-words font-bold leading-tight text-white">
+                            <div className="hidden sm:block">
+                              <span className="block whitespace-nowrap font-bold leading-tight text-white">
                                 {name}
                               </span>
                             </div>
