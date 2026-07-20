@@ -95,12 +95,8 @@ export default function BaltopPage() {
     >
       <style>{`
         @keyframes craftopia-ticker {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
         }
 
         @media (max-width: 639px) {
@@ -364,7 +360,9 @@ export default function BaltopPage() {
               <div className="mt-6 rounded-2xl border border-emerald-500/25 bg-emerald-500/8 px-4 py-4 text-sm text-zinc-300">
                 <div className="flex items-center gap-2">
                   <span className="text-emerald-400">ℹ️</span>
-                  <span>Số tiền được tính dựa trên hệ thống Economy của server Craftopia Survival.</span>
+                  <span>
+                    Số tiền được tính dựa trên hệ thống Economy của server Craftopia Survival.
+                  </span>
                 </div>
               </div>
             </>
@@ -384,4 +382,4 @@ export default function BaltopPage() {
       </div>
     </main>
   );
-}
+} 
