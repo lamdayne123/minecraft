@@ -95,12 +95,8 @@ export default function BaltopPage() {
     >
       <style>{`
         @keyframes craftopia-ticker {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
         }
 
         @media (max-width: 639px) {
@@ -227,7 +223,7 @@ export default function BaltopPage() {
 
                   const rankStyles =
                     rank === 1
-                      ? "col-start-2 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)]"
+                      ? "col-start-2 -mt-1 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)]"
                       : rank === 2
                       ? "col-start-1 border-zinc-300/60 bg-zinc-400/8"
                       : "col-start-3 border-orange-400/70 bg-orange-500/10";
