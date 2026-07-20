@@ -41,6 +41,47 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  const features = [
+    {
+      icon: "🛡️",
+      title: "Chống Grief tuyệt đối",
+      desc: "Hệ thống Claim giúp bảo vệ đất đai — không ai phá được block trong khu vực của bạn.",
+      color: "emerald",
+    },
+    {
+      icon: "⚔️",
+      title: "Skills nâng cấp nhân vật",
+      desc: "Đào, chặt cây, chiến đấu, câu cá — mọi hành động đều tích lũy kỹ năng và mở khóa buff.",
+      color: "cyan",
+    },
+    {
+      icon: "💰",
+      title: "Kinh tế do người chơi dẫn dắt",
+      desc: "Mua bán tự do qua Auction House, kiếm tiền từ farm, câu cá, và leo bảng xếp hạng Baltop.",
+      color: "amber",
+    },
+    {
+      icon: "🎁",
+      title: "Thưởng & sự kiện đều đặn",
+      desc: "Đăng nhập mỗi ngày để nhận quà, cùng các sự kiện cộng đồng thường xuyên.",
+      color: "fuchsia",
+    },
+  ] as const;
+
+  const featureBorder: Record<(typeof features)[number]["color"], string> = {
+    emerald: "border-emerald-500/15 hover:border-emerald-400/40",
+    cyan: "border-cyan-500/15 hover:border-cyan-400/40",
+    amber: "border-amber-500/15 hover:border-amber-400/40",
+    fuchsia: "border-fuchsia-500/15 hover:border-fuchsia-400/40",
+  };
+
+  const featureText: Record<(typeof features)[number]["color"], string> = {
+    emerald: "text-emerald-300",
+    cyan: "text-cyan-300",
+    amber: "text-amber-300",
+    fuchsia: "text-fuchsia-300",
+  };
+
   return (
     <main className="relative min-h-screen text-white">
       <div
@@ -68,19 +109,19 @@ export default function Home() {
             <nav className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-2 backdrop-blur-xl md:flex">
               <a
                 href="/"
-                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white"
+                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400"
               >
                 🏠 Trang chủ
               </a>
               <a
                 href="/donate"
-                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white"
+                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400"
               >
                 💎 Donate
               </a>
               <a
                 href="/rules"
-                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white"
+                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400"
               >
                 📜 Rules
               </a>
@@ -88,7 +129,7 @@ export default function Home() {
                 href="http://node1.zencheap.net:30275/"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white"
+                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400"
               >
                 🚫 Danh sách cấm
               </a>
@@ -97,7 +138,7 @@ export default function Home() {
             <div className="hidden items-center gap-3 md:flex">
               <a
                 href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
-                className="rounded-full bg-emerald-500 px-6 py-3 font-bold text-black transition hover:scale-105 hover:bg-emerald-400"
+                className="rounded-full bg-emerald-500 px-6 py-3 font-bold text-black transition hover:scale-105 hover:bg-emerald-400 active:scale-95"
               >
                 🎮 Vào Server
               </a>
@@ -105,7 +146,7 @@ export default function Home() {
                 href="https://discord.gg/maY22mamA"
                 target="_blank"
                 rel="noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-xl transition hover:scale-105 hover:bg-white/10"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-xl transition hover:scale-105 hover:bg-white/10 active:scale-95"
               >
                 💬
               </a>
@@ -114,6 +155,7 @@ export default function Home() {
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="rounded-xl border border-zinc-700 bg-black/30 px-3 py-2 text-xl md:hidden"
+              aria-label="Mở menu"
             >
               ☰
             </button>
@@ -174,9 +216,16 @@ export default function Home() {
       </header>
 
       <section className="mx-auto flex max-w-7xl flex-col items-center px-6 py-24 text-center">
-        <span className="rounded-full border border-emerald-500/35 bg-emerald-500/10 px-4 py-2 text-emerald-300 backdrop-blur-md">
-          🟢 Java & Bedrock
-        </span>
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <span className="rounded-full border border-emerald-500/35 bg-emerald-500/10 px-4 py-2 text-emerald-300 backdrop-blur-md">
+            🟢 Java & Bedrock
+          </span>
+          {server.version && (
+            <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 backdrop-blur-md">
+              📦 {server.version}
+            </span>
+          )}
+        </div>
 
         <h2 className="mt-8 text-4xl font-black sm:text-6xl">Craftopia Survival</h2>
 
@@ -208,6 +257,7 @@ export default function Home() {
             <button
               onClick={copyIP}
               className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 active:scale-90 sm:h-12 sm:w-12"
+              aria-label="Sao chép địa chỉ IP"
             >
               {copied ? "✅" : "📋"}
             </button>
@@ -266,9 +316,9 @@ export default function Home() {
         <div className="grid items-stretch gap-6 md:grid-cols-3">
           <a
             href="/events"
-            className="group flex h-full flex-col justify-between rounded-[2rem] border border-orange-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-orange-400/40 hover:bg-white/5"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-orange-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-orange-400/40 hover:bg-white/5"
           >
-            <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(251,146,60,0.10),transparent_55%)] opacity-80" />
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(251,146,60,0.10),transparent_55%)] opacity-80" />
             <div className="relative z-10">
               <h3 className="text-xl font-bold text-orange-300">🎉 Events</h3>
               <p className="mt-3 text-sm text-zinc-300">
@@ -283,9 +333,9 @@ export default function Home() {
 
           <a
             href="/faq"
-            className="group flex h-full flex-col justify-between rounded-[2rem] border border-purple-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-purple-400/40 hover:bg-white/5"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-purple-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-purple-400/40 hover:bg-white/5"
           >
-            <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.10),transparent_55%)] opacity-80" />
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.10),transparent_55%)] opacity-80" />
             <div className="relative z-10">
               <h3 className="text-xl font-bold text-purple-300">📚 FAQ</h3>
               <p className="mt-3 text-sm text-zinc-300">
@@ -300,9 +350,9 @@ export default function Home() {
 
           <a
             href="/rules"
-            className="group flex h-full flex-col justify-between rounded-[2rem] border border-sky-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-sky-400/40 hover:bg-white/5"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-sky-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-sky-400/40 hover:bg-white/5"
           >
-            <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.10),transparent_55%)] opacity-80" />
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.10),transparent_55%)] opacity-80" />
             <div className="relative z-10">
               <h3 className="text-xl font-bold text-sky-300">📜 Rules</h3>
               <p className="mt-3 text-sm text-zinc-300">
@@ -317,9 +367,9 @@ export default function Home() {
 
           <a
             href="/gallery"
-            className="group flex h-full flex-col justify-between rounded-[2rem] border border-emerald-500/25 bg-emerald-500/8 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-emerald-300/60 hover:bg-emerald-500/12"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-emerald-500/25 bg-emerald-500/8 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-emerald-300/60 hover:bg-emerald-500/12"
           >
-            <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.14),transparent_55%)] opacity-90" />
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.14),transparent_55%)] opacity-90" />
             <div className="relative z-10">
               <h3 className="text-xl font-bold text-emerald-300">🖼 Gallery</h3>
               <p className="mt-3 text-sm text-zinc-200">
@@ -334,9 +384,9 @@ export default function Home() {
 
           <a
             href="/news"
-            className="group flex h-full flex-col justify-between rounded-[2rem] border border-red-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-red-400/40 hover:bg-white/5"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-red-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-red-400/40 hover:bg-white/5"
           >
-            <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.10),transparent_55%)] opacity-80" />
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.10),transparent_55%)] opacity-80" />
             <div className="relative z-10">
               <h3 className="text-xl font-bold text-red-300">📰 Tin tức</h3>
               <p className="mt-3 text-sm text-zinc-300">
@@ -351,9 +401,9 @@ export default function Home() {
 
           <a
             href="/baltop"
-            className="group flex h-full flex-col justify-between rounded-[2rem] border border-yellow-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-yellow-400/40 hover:bg-white/5"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-yellow-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-yellow-400/40 hover:bg-white/5"
           >
-            <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.10),transparent_55%)] opacity-80" />
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.10),transparent_55%)] opacity-80" />
             <div className="relative z-10">
               <h3 className="text-xl font-bold text-yellow-300">💰 Kinh tế</h3>
               <p className="mt-3 text-sm text-zinc-300">
@@ -369,51 +419,38 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 pb-24">
-        <div className="mb-12 text-center">
-          <h2 className="text-5xl font-black">📊 Trạng thái Server</h2>
-          <p className="mt-3 text-zinc-400">
-            Theo dõi trạng thái máy chủ theo thời gian thực.
+        <div className="mb-12 flex flex-col items-center gap-3 text-center">
+          <h2 className="text-5xl font-black">⚡ Tính năng nổi bật</h2>
+          <p className="max-w-xl text-zinc-400">
+            Những gì khiến Craftopia Survival trở nên đáng chơi.
           </p>
+          <span className="mt-1 inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/8 px-4 py-1.5 text-sm text-emerald-300">
+            <span
+              className={`h-2 w-2 rounded-full ${
+                server.online ? "bg-emerald-400 animate-pulse" : "bg-red-500"
+              }`}
+            />
+            {server.online
+              ? `${server.players} người đang chơi ngay bây giờ`
+              : "Server hiện đang offline"}
+          </span>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-4">
-          <div className="rounded-[2rem] border border-emerald-500/15 bg-black/55 p-8 text-center shadow-2xl backdrop-blur-xl transition hover:-translate-y-1 hover:border-emerald-400/40">
-            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/5 text-5xl">
-              {server.online ? "🟢" : "🔴"}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {features.map((f) => (
+            <div
+              key={f.title}
+              className={`rounded-[2rem] border bg-black/55 p-8 text-center shadow-2xl backdrop-blur-xl transition duration-300 hover:-translate-y-1 ${featureBorder[f.color]}`}
+            >
+              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/5 text-4xl">
+                {f.icon}
+              </div>
+              <h3 className={`mt-2 text-xl font-bold ${featureText[f.color]}`}>
+                {f.title}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-400">{f.desc}</p>
             </div>
-            <h3 className="mt-2 text-2xl font-bold">
-              {server.online ? "Online" : "Offline"}
-            </h3>
-            <p className="mt-2 text-zinc-400">Trạng thái</p>
-          </div>
-
-          <div className="rounded-[2rem] border border-cyan-500/15 bg-black/55 p-8 text-center shadow-2xl backdrop-blur-xl transition hover:-translate-y-1 hover:border-cyan-400/40">
-            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/5 text-5xl">
-              👥
-            </div>
-            <h3 className="mt-2 text-2xl font-bold">
-              {server.players}/{server.max}
-            </h3>
-            <p className="mt-2 text-zinc-400">Người chơi</p>
-          </div>
-
-          <div className="rounded-[2rem] border border-yellow-500/15 bg-black/55 p-8 text-center shadow-2xl backdrop-blur-xl transition hover:-translate-y-1 hover:border-yellow-400/40">
-            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/5 text-5xl">
-              📦
-            </div>
-            <h3 className="mt-2 text-2xl font-bold">{server.version}</h3>
-            <p className="mt-2 text-zinc-400">Phiên bản</p>
-          </div>
-
-          <div className="rounded-[2rem] border border-purple-500/15 bg-black/55 p-8 text-center shadow-2xl backdrop-blur-xl transition hover:-translate-y-1 hover:border-purple-400/40">
-            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/5 text-5xl">
-              🌐
-            </div>
-            <h3 className="mt-2 break-words text-xl font-bold">
-              craftopia.zencheap.net
-            </h3>
-            <p className="mt-2 text-zinc-400">Port: 30263</p>
-          </div>
+          ))}
         </div>
       </section>
     </main>
