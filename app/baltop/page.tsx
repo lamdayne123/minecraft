@@ -216,7 +216,7 @@ to { transform: translateX(-50%); }
         </div>
       ) : (
         <>
-          <section className="grid grid-cols-3 items-start gap-2 sm:gap-5">
+          <section className="grid grid-cols-3 items-stretch gap-2 sm:gap-5">
             {sortedPlayers.slice(0, 3).map((player, index) => {
               const rank = index + 1;
               const name = getPlayerName(player);
@@ -224,7 +224,7 @@ to { transform: translateX(-50%); }
 
               const rankStyles =
                 rank === 1
-                  ? "col-start-2 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)] -translate-y-1 sm:-translate-y-2"
+                  ? "col-start-2 border-yellow-300/70 bg-yellow-500/10 shadow-[0_0_40px_rgba(250,204,21,0.16)]"
                   : rank === 2
                   ? "col-start-1 border-zinc-300/60 bg-zinc-400/8"
                   : "col-start-3 border-orange-400/70 bg-orange-500/10";
@@ -248,7 +248,7 @@ to { transform: translateX(-50%); }
               return (
                 <article
                   key={name}
-                  className={`relative overflow-hidden rounded-[2rem] border p-2 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-6 ${rankStyles}`}
+                  className={`relative h-full overflow-hidden rounded-[2rem] border p-2 text-center backdrop-blur-xl transition hover:-translate-y-1 sm:p-6 ${rankStyles}`}
                 >
                   {rank === 1 && (
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.18),transparent_48%)]" />
