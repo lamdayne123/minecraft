@@ -199,11 +199,7 @@ export default function EventsPage() {
                   <span className="absolute -right-3 top-[122px] hidden h-6 w-6 rounded-full bg-[#050705] sm:block" />
 
                   <div className="p-5 pt-8 sm:p-7 sm:pt-9">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-emerald-300">
-                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-                        Đang diễn ra
-                      </span>
+                    <div className="flex items-center justify-end gap-2">
                       <span className="text-xs text-zinc-500">
                         {formatDate(event.created_at)}
                       </span>
