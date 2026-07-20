@@ -14,7 +14,6 @@ const AUTO_REFRESH_MS = 5 * 60 * 1000;
 
 function isGalleryItem(value: unknown): value is GalleryItem {
   if (typeof value !== "object" || value === null) return false;
-
   const record = value as Record<string, unknown>;
   return typeof record.name === "string" && typeof record.url === "string";
 }
@@ -129,12 +128,14 @@ export default function GalleryPage() {
 
   const openItem = (index: number) => setOpenIndex(index);
   const closeItem = () => setOpenIndex(null);
+
   const goPrev = () => {
     setOpenIndex((current) => {
       if (current === null || items.length === 0) return current;
       return (current - 1 + items.length) % items.length;
     });
   };
+
   const goNext = () => {
     setOpenIndex((current) => {
       if (current === null || items.length === 0) return current;
@@ -339,7 +340,8 @@ export default function GalleryPage() {
                   <div
                     className="craftopia-skeleton rounded-[2rem] border border-white/8"
                     style={{
-                      aspectRatio: index % 3 === 0 ? "3 / 4" : index % 3 === 1 ? "4 / 3" : "1 / 1",
+                      aspectRatio:
+                        index % 3 === 0 ? "3 / 4" : index % 3 === 1 ? "4 / 3" : "1 / 1",
                     }}
                   >
                     <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
@@ -470,43 +472,43 @@ export default function GalleryPage() {
               setTouchStart(null);
             }}
           >
-            <div className="absolute right-0 top-0 z-10 flex items-center gap-2 p-2 sm:p-0">
+            <div className="absolute right-2 top-2 z-20 flex items-center gap-2 sm:right-0 sm:top-0 sm:p-0">
               <button
                 type="button"
                 onClick={closeItem}
-                className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl text-white shadow-[0_0_30px_rgba(0,0,0,0.45)] transition hover:scale-105 hover:bg-white/10"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-black/60 text-xl text-white shadow-[0_0_30px_rgba(0,0,0,0.45)] backdrop-blur-md transition hover:scale-105 hover:bg-white/10 sm:h-12 sm:w-12 sm:text-2xl"
                 aria-label="Đóng"
               >
                 ×
               </button>
             </div>
 
-            <div className="mb-4 flex w-full items-center justify-between gap-3 text-zinc-300">
+            <div className="mb-3 flex w-full items-center justify-between gap-2 text-zinc-300 sm:mb-4 sm:gap-3">
               <button
                 type="button"
                 onClick={goPrev}
-                className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-xl shadow-[0_0_30px_rgba(0,0,0,0.45)] transition hover:scale-105 hover:bg-white/10"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-black/60 text-lg shadow-[0_0_30px_rgba(0,0,0,0.45)] backdrop-blur-md transition hover:scale-105 hover:bg-white/10 sm:h-12 sm:w-12 sm:text-xl"
                 aria-label="Ảnh trước"
               >
                 ←
               </button>
 
-              <div className="rounded-full border border-white/10 bg-black/50 px-4 py-2 text-sm font-semibold backdrop-blur-md">
+              <div className="rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-xs font-semibold backdrop-blur-md sm:px-4 sm:py-2 sm:text-sm">
                 {openIndex !== null ? `${openIndex + 1} / ${count}` : `0 / ${count}`}
               </div>
 
               <button
                 type="button"
                 onClick={goNext}
-                className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-xl shadow-[0_0_30px_rgba(0,0,0,0.45)] transition hover:scale-105 hover:bg-white/10"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-black/60 text-lg shadow-[0_0_30px_rgba(0,0,0,0.45)] backdrop-blur-md transition hover:scale-105 hover:bg-white/10 sm:h-12 sm:w-12 sm:text-xl"
                 aria-label="Ảnh tiếp theo"
               >
                 →
               </button>
             </div>
 
-            <div className="relative w-full overflow-hidden rounded-[2rem] border border-white/10 bg-black/70 shadow-[0_0_60px_rgba(0,0,0,0.65)]">
-              <div className="relative max-h-[78vh] w-full bg-black/60">
+            <div className="relative w-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/70 shadow-[0_0_60px_rgba(0,0,0,0.65)] sm:rounded-[2rem]">
+              <div className="relative max-h-[72vh] w-full bg-black/60 sm:max-h-[78vh]">
                 <Image
                   src={currentItem.url}
                   alt={currentItem.name}
@@ -520,17 +522,17 @@ export default function GalleryPage() {
                 />
               </div>
 
-              <div className="border-t border-white/10 bg-black/65 px-5 py-4 backdrop-blur-md sm:px-6">
+              <div className="border-t border-white/10 bg-black/65 px-4 py-3 backdrop-blur-md sm:px-6 sm:py-4">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <div className="text-xs font-bold tracking-[0.18em] text-emerald-300">
+                    <div className="text-[10px] font-bold tracking-[0.18em] text-emerald-300 sm:text-xs">
                       GALLERY
                     </div>
-                    <div className="mt-1 text-lg font-black text-white sm:text-2xl">
+                    <div className="mt-1 text-base font-black text-white sm:text-2xl">
                       {currentItem.name}
                     </div>
                   </div>
-                  <div className="text-sm text-zinc-400">ESC để đóng • Click nền để đóng</div>
+                  <div className="text-xs text-zinc-400 sm:text-sm">ESC để đóng • Click nền để đóng</div>
                 </div>
               </div>
             </div>
