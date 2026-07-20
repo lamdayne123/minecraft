@@ -18,7 +18,6 @@ const faq: readonly FaqItem[] = [
     color: "emerald",
     desc: "Thông tin cơ bản để tham gia Craftopia Survival.",
     items: [
-      "IP: craftopia.zencheap.net:30263",
       "Java: 1.20 trở lên",
       "Bedrock: 26.0 trở lên",
       "Hỗ trợ Java & Bedrock",
@@ -118,7 +117,15 @@ const faq: readonly FaqItem[] = [
   },
 ];
 
-type ThemeName = "emerald" | "lime" | "violet" | "cyan" | "amber" | "pink" | "orange" | "indigo";
+type ThemeName =
+  | "emerald"
+  | "lime"
+  | "violet"
+  | "cyan"
+  | "amber"
+  | "pink"
+  | "orange"
+  | "indigo";
 
 function themeClasses(theme: ThemeName) {
   const map: Record<
@@ -193,6 +200,7 @@ export default function FAQPage() {
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     if (!q) return [...faq];
+
     return faq.filter((x) => {
       const haystack = [x.title, x.desc, ...x.items, x.tip].join(" ").toLowerCase();
       return haystack.includes(q);
@@ -331,7 +339,7 @@ export default function FAQPage() {
           </div>
         </header>
 
-        <section className="relative mt-8 overflow-hidden rounded-[2rem] border border-emerald-500/10 bg-black/55 px-4 py-14 shadow-2xl sm:px-8 sm:py-18">
+        <section className="relative mt-8 overflow-hidden rounded-[2rem] border border-emerald-500/10 bg-black/55 px-4 py-12 shadow-2xl sm:px-8 sm:py-18">
           <div className="pointer-events-none absolute inset-0">
             <div className="craftopia-pulse absolute left-10 top-14 h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_20px_rgba(74,222,128,0.9)]" />
             <div className="craftopia-pulse absolute right-16 top-16 h-3 w-3 rounded-full bg-lime-400 shadow-[0_0_24px_rgba(163,230,53,0.9)]" />
@@ -342,7 +350,7 @@ export default function FAQPage() {
 
           <div className="relative z-10 text-center">
             <div className="mb-3 text-4xl">📚</div>
-            <h1 className="mx-auto max-w-4xl bg-[linear-gradient(180deg,#ffffff_10%,#f7f7f7_35%,#bafc6d_65%,#43ff4e_100%)] bg-clip-text text-5xl font-black tracking-[0.08em] text-transparent drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)] sm:text-7xl">
+            <h1 className="mx-auto max-w-4xl bg-[linear-gradient(180deg,#ffffff_10%,#f7f7f7_35%,#bafc6d_65%,#43ff4e_100%)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)] sm:text-7xl">
               CRAFTOPIA FAQ
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm font-medium text-zinc-300 sm:text-lg">
@@ -398,20 +406,34 @@ export default function FAQPage() {
               </span>
             </div>
 
-            <div className="flex gap-2 overflow-x-auto pb-2 lg:hidden">
+            <div className="grid grid-cols-2 gap-2 pb-2 lg:hidden">
               {filtered.map((item) => {
                 const isActive = selected?.title === item.title;
                 const theme = themeClasses(item.color as ThemeName);
+
                 return (
                   <button
                     key={item.title}
                     onClick={() => setSelectedTitle(item.title)}
-                    className={`shrink-0 rounded-full border px-4 py-3 text-sm font-bold transition ${theme.border} ${
-                      isActive ? `${theme.soft} ${theme.text}` : "bg-white/5 text-zinc-300"
+                    className={`min-w-0 rounded-2xl border px-3 py-3 text-left transition duration-200 ${
+                      isActive
+                        ? `${theme.border} ${theme.soft} ${theme.glow}`
+                        : "border-white/10 bg-white/5 hover:bg-white/8"
                     }`}
                   >
-                    <span className="mr-2">{item.icon}</span>
-                    {item.title}
+                    <div className="flex items-start gap-2">
+                      <div className={`mt-0.5 text-lg ${isActive ? theme.text : "text-white"}`}>
+                        {item.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <div className={`text-sm font-black leading-tight ${isActive ? theme.text : "text-white"}`}>
+                          {item.title}
+                        </div>
+                        <div className="mt-1 line-clamp-2 text-[11px] leading-snug text-zinc-400">
+                          {item.desc}
+                        </div>
+                      </div>
+                    </div>
                   </button>
                 );
               })}
@@ -450,25 +472,27 @@ export default function FAQPage() {
           </aside>
 
           <article
-            className={`rounded-[2rem] border bg-black/50 p-5 shadow-[0_0_30px_rgba(0,0,0,0.25)] backdrop-blur-xl sm:p-8 ${activeTheme.border} ${activeTheme.glow}`}
+            className={`rounded-[2rem] border bg-black/50 p-4 shadow-[0_0_30px_rgba(0,0,0,0.25)] backdrop-blur-xl sm:p-8 ${activeTheme.border} ${activeTheme.glow}`}
           >
             {selected ? (
               <>
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-4xl">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-3xl sm:h-16 sm:w-16 sm:text-4xl">
                       {selected.icon}
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <div
-                        className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold tracking-[0.18em] ${activeTheme.badge}`}
+                        className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-bold tracking-[0.18em] sm:text-xs ${activeTheme.badge}`}
                       >
                         {selected.color.toUpperCase()}
                       </div>
-                      <h2 className={`mt-3 text-3xl font-black sm:text-4xl ${activeTheme.text}`}>
+                      <h2 className={`mt-3 text-2xl font-black leading-tight sm:text-4xl ${activeTheme.text}`}>
                         {selected.title}
                       </h2>
-                      <p className="mt-2 max-w-2xl text-zinc-300">{selected.desc}</p>
+                      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-300 sm:text-base">
+                        {selected.desc}
+                      </p>
                     </div>
                   </div>
 
@@ -478,19 +502,19 @@ export default function FAQPage() {
                   </div>
                 </div>
 
-                <div className="mt-8 grid gap-3">
+                <div className="mt-6 grid gap-3 sm:mt-8">
                   {selected.items.map((item) => (
                     <div
                       key={item}
-                      className="rounded-2xl border border-white/10 bg-black/35 px-4 py-4 text-zinc-100 transition hover:bg-white/5"
+                      className="rounded-2xl border border-white/10 bg-black/35 px-3 py-3 text-sm leading-relaxed text-zinc-100 transition hover:bg-white/5 sm:px-4 sm:py-4 sm:text-base"
                     >
-                      <span className={`mr-3 font-black ${activeTheme.text}`}>✓</span>
+                      <span className={`mr-2 font-black sm:mr-3 ${activeTheme.text}`}>✓</span>
                       {item}
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-3">
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                     <div className="text-sm text-zinc-400">Mức độ</div>
                     <div className="mt-1 font-black text-white">Dễ hiểu</div>
@@ -525,11 +549,7 @@ export default function FAQPage() {
                 và nhiều hoạt động cho người chơi mới lẫn người chơi lâu năm.
               </p>
 
-              <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="text-sm text-zinc-400">IP</div>
-                  <div className="mt-1 font-black text-white">craftopia.zencheap.net:30263</div>
-                </div>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-sm text-zinc-400">Java</div>
                   <div className="mt-1 font-black text-white">1.20+</div>
