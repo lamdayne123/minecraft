@@ -179,7 +179,7 @@ export default function RulesPage() {
             <p className="mx-auto mt-4 max-w-2xl text-zinc-400">
               Hãy tuân thủ các quy tắc để duy trì cộng đồng chơi lành mạnh và công bằng. Cần biết chi tiết
               hơn về mod, kinh tế hay hình phạt? Xem{' '}
-              <a href="/server-guide" className="font-semibold text-emerald-400 underline underline-offset-4 hover:text-emerald-300">
+              <a href="/guide" className="font-semibold text-emerald-400 underline underline-offset-4 hover:text-emerald-300">
                 Server Guide
               </a>
               .
