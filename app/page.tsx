@@ -16,7 +16,7 @@ export default function Home() {
 
   const copyIP = async () => {
     try {
-      await navigator.clipboard.writeText("craftopia.zencheap.net:30263");
+      await navigator.clipboard.writeText("node1.zencheap.net:30263");
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
