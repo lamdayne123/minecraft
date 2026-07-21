@@ -485,11 +485,11 @@ export default function ServerGuidePage() {
             <div>
               <div className="font-black text-white">Resource Pack chưa tự tải?</div>
               <div className="mt-1 text-sm text-zinc-400">
-                Tải thủ công nếu Minecraft không tự động nhận Resource Pack của server.
+                Tải thủ công nếu Minecraft không tự động nhận Resource Pack của server (chỉ dùng khi không thấy icon rank hoặc số hiện số 0 đỏ trên scoreboard).
               </div>
             </div>
             <a
-              href="/resource-pack"
+              href="https://github.com/lamdayne123/minecraft-web/raw/refs/heads/main/Gi%E1%BA%A3i%20n%C3%A9n%20file%20n%C3%A0y.zip"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-3 font-bold text-black transition hover:scale-[1.02] hover:bg-emerald-400"
             >
               <span>⬇</span>
