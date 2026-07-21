@@ -28,7 +28,7 @@ type FaqEntry = {
 const sections: readonly RuleSection[] = [
   {
     icon: "🧩",
-    title: "Mod / Addon / Resource Pack",
+    title: "Mod/Resource Pack",
     color: "emerald",
     desc: "Danh sách mod và công cụ hỗ trợ được phép hoặc bị cấm sử dụng trên server.",
     allowed: [
@@ -48,7 +48,7 @@ const sections: readonly RuleSection[] = [
       "Kill Aura",
       "Reach",
       "Fly",
-      "Freecam",
+      "Freecam" (admin cho phép mới được dùng),
       "Baritone",
       "Nuker",
       "Auto Click",
@@ -67,7 +67,6 @@ const sections: readonly RuleSection[] = [
     forbidden: [
       "Scam",
       "Duplication",
-      "Lợi dụng Bug",
       "Block ESP kiếm tiền",
       "Farm tiền trái phép",
     ],
