@@ -41,14 +41,6 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Khoá scroll nền khi menu mobile mở
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [menuOpen]);
-
   const features = [
     {
       icon: "🛡️",
@@ -90,39 +82,8 @@ export default function Home() {
     fuchsia: "text-fuchsia-300",
   };
 
-  const navLinks = [
-    ["🏠", "Trang chủ", "/"],
-    ["💎", "Donate", "/donate"],
-    ["📜", "Rules", "/rules"],
-    ["🚫", "Danh sách cấm", "http://node1.zencheap.net:30275/", true],
-  ] as const;
-
   return (
     <main className="relative min-h-screen text-white">
-      <style>{`
-        @keyframes craftopia-fade-up {
-          from { opacity: 0; transform: translateY(16px); filter: blur(10px); }
-          to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-        @keyframes craftopia-menu-in {
-          from { opacity: 0; transform: translateY(-12px) scale(0.98); }
-          to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes craftopia-overlay-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        .craftopia-fade-up {
-          animation: craftopia-fade-up 0.7s ease-out both;
-        }
-        .craftopia-menu-in {
-          animation: craftopia-menu-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-        .craftopia-overlay-in {
-          animation: craftopia-overlay-in 0.2s ease-out both;
-        }
-      `}</style>
-
       <div
         className="fixed inset-0 -z-10 md:hidden bg-cover bg-center bg-fixed"
         style={{
@@ -138,54 +99,54 @@ export default function Home() {
         }}
       />
 
-      <header className="sticky top-4 z-50 px-4 sm:top-5 sm:px-6 lg:px-8">
-        <div className="relative mx-auto max-w-7xl rounded-3xl border border-emerald-500/15 bg-black/55 px-4 py-3.5 shadow-[0_0_40px_rgba(34,197,94,0.08)] backdrop-blur-xl sm:px-5 sm:py-4">
-          <div className="flex items-center justify-between gap-3">
-            <a href="/" className="shrink-0 text-xl font-black tracking-tight text-emerald-400 sm:text-2xl">
+      <header className="sticky top-5 z-50 px-4">
+        <div className="mx-auto max-w-7xl rounded-3xl border border-emerald-500/15 bg-black/55 px-5 py-4 shadow-[0_0_40px_rgba(34,197,94,0.08)] backdrop-blur-xl">
+          <div className="flex items-center justify-between">
+            <a href="/" className="text-2xl font-black text-emerald-400">
               Craftopia
             </a>
 
-            <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1.5 backdrop-blur-xl md:flex">
-              
+            <nav className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-2 backdrop-blur-xl md:flex">
+              <a
                 href="/"
-                className="rounded-full px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400 lg:px-5"
+                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400"
               >
                 🏠 Trang chủ
               </a>
-              
+              <a
                 href="/donate"
-                className="rounded-full px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400 lg:px-5"
+                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400"
               >
                 💎 Donate
               </a>
-              
+              <a
                 href="/rules"
-                className="rounded-full px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400 lg:px-5"
+                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400"
               >
                 📜 Rules
               </a>
-              
+              <a
                 href="http://node1.zencheap.net:30275/"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400 lg:px-5"
+                className="rounded-full px-5 py-2 text-zinc-300 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400"
               >
                 🚫 Danh sách cấm
               </a>
             </nav>
 
-            <div className="hidden items-center gap-2.5 md:flex">
-              
+            <div className="hidden items-center gap-3 md:flex">
+              <a
                 href="minecraft://?addExternalServer=Craftopia|node1.zencheap.net:30263"
-                className="rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black transition hover:scale-105 hover:bg-emerald-400 active:scale-95 lg:px-6 lg:py-3"
+                className="rounded-full bg-emerald-500 px-6 py-3 font-bold text-black transition hover:scale-105 hover:bg-emerald-400 active:scale-95"
               >
                 🎮 Vào Server
               </a>
-              
+              <a
                 href="https://discord.gg/maY22mamA"
                 target="_blank"
                 rel="noreferrer"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg transition hover:scale-105 hover:bg-white/10 active:scale-95 lg:h-12 lg:w-12 lg:text-xl"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-xl transition hover:scale-105 hover:bg-white/10 active:scale-95"
               >
                 💬
               </a>
@@ -193,72 +154,58 @@ export default function Home() {
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 transition active:scale-90 md:hidden"
-              aria-label={menuOpen ? "Đóng menu" : "Mở menu"}
-              aria-expanded={menuOpen}
+              className="rounded-xl border border-zinc-700 bg-black/30 px-3 py-2 text-xl md:hidden"
+              aria-label="Mở menu"
             >
-              <span className="relative flex h-4 w-5 flex-col justify-between">
-                <span
-                  className={`h-0.5 w-full rounded-full bg-white transition-all duration-300 ${
-                    menuOpen ? "translate-y-[7px] rotate-45" : ""
-                  }`}
-                />
-                <span
-                  className={`h-0.5 w-full rounded-full bg-white transition-all duration-300 ${
-                    menuOpen ? "opacity-0" : "opacity-100"
-                  }`}
-                />
-                <span
-                  className={`h-0.5 w-full rounded-full bg-white transition-all duration-300 ${
-                    menuOpen ? "-translate-y-[7px] -rotate-45" : ""
-                  }`}
-                />
-              </span>
+              ☰
             </button>
           </div>
 
-          {/* Menu sổ xuống mobile */}
           {menuOpen && (
-            <div
-              className="craftopia-menu-in absolute inset-x-3 top-[calc(100%+10px)] z-50 overflow-hidden rounded-[28px] border border-white/10 bg-black/90 shadow-[0_24px_70px_rgba(0,0,0,0.6)] backdrop-blur-2xl md:hidden"
-              style={{ transformOrigin: "top center" }}
-            >
-              <div className="p-2.5">
-                {navLinks.map(([icon, label, href, external]) => (
-                  
-                    key={href}
-                    href={href}
-                    target={external ? "_blank" : undefined}
-                    rel={external ? "noreferrer" : undefined}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 rounded-2xl px-4 py-3.5 text-[15px] font-medium text-zinc-200 transition active:bg-white/10"
-                  >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/5 text-lg">
-                      {icon}
-                    </span>
-                    <span className="flex-1">{label}</span>
-                    <span className="text-zinc-600">›</span>
-                  </a>
-                ))}
+            <div className="absolute right-0 top-[90px] w-[320px] rounded-[32px] border border-white/10 bg-black/80 p-6 shadow-[0_20px_80px_rgba(0,0,0,.55)] backdrop-blur-3xl md:hidden">
+              <div className="space-y-1">
+                <a
+                  href="/"
+                  className="block rounded-xl px-4 py-3 text-lg text-zinc-300 transition hover:bg-white/5 hover:text-white"
+                >
+                  🏠 Trang chủ
+                </a>
+                <a
+                  href="/donate"
+                  className="block rounded-xl px-4 py-3 text-lg text-zinc-300 transition hover:bg-white/5 hover:text-white"
+                >
+                  💎 Donate
+                </a>
+                <a
+                  href="/rules"
+                  className="block rounded-xl px-4 py-3 text-lg text-zinc-300 transition hover:bg-white/5 hover:text-white"
+                >
+                  📜 Rules
+                </a>
+                <a
+                  href="http://node1.zencheap.net:30275/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block rounded-xl px-4 py-3 text-lg text-zinc-300 transition hover:bg-white/5 hover:text-white"
+                >
+                  🚫 Danh sách cấm
+                </a>
               </div>
 
-              <div className="mx-4 border-t border-white/10" />
+              <div className="my-5 border-t border-white/10" />
 
-              <div className="flex items-center gap-3 p-4">
-                
+              <div className="flex items-center gap-3">
+                <a
                   href="https://discord.gg/maY22mamA"
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl transition active:scale-90 active:bg-white/10"
-                  aria-label="Discord"
+                  className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-2xl transition hover:bg-white/10"
                 >
                   💬
                 </a>
-                
+                <a
                   href="minecraft://?addExternalServer=Craftopia|node1.zencheap.net:30263"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-4 text-center font-bold text-black transition active:scale-[0.98] active:bg-emerald-400"
+                  className="flex-1 rounded-full bg-emerald-500 py-4 text-center font-bold text-black transition hover:bg-emerald-400"
                 >
                   🎮 Vào Server
                 </a>
@@ -266,20 +213,11 @@ export default function Home() {
             </div>
           )}
         </div>
-
-        {/* Lớp phủ tối phía sau menu, bấm ra ngoài để đóng */}
-        {menuOpen && (
-          <div
-            className="craftopia-overlay-in fixed inset-0 -z-10 bg-black/60 backdrop-blur-sm md:hidden"
-            onClick={() => setMenuOpen(false)}
-            aria-hidden="true"
-          />
-        )}
       </header>
 
-      <section className="mx-auto flex max-w-7xl flex-col items-center px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8">
-        <div className="craftopia-fade-up flex flex-wrap items-center justify-center gap-2">
-          <span className="rounded-full border border-emerald-500/35 bg-emerald-500/10 px-4 py-2 text-sm text-emerald-300 backdrop-blur-md">
+      <section className="mx-auto flex max-w-7xl flex-col items-center px-6 py-24 text-center">
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <span className="rounded-full border border-emerald-500/35 bg-emerald-500/10 px-4 py-2 text-emerald-300 backdrop-blur-md">
             🟢 Java & Bedrock
           </span>
           {server.version && (
@@ -289,30 +227,28 @@ export default function Home() {
           )}
         </div>
 
-        <h2 className="craftopia-fade-up mt-7 text-4xl font-black leading-[1.1] sm:mt-8 sm:text-6xl" style={{ animationDelay: "80ms" }}>
-          Craftopia Survival
-        </h2>
+        <h2 className="mt-8 text-4xl font-black sm:text-6xl">Craftopia Survival</h2>
 
-        <p className="craftopia-fade-up mt-5 max-w-2xl text-base text-zinc-300 sm:mt-6 sm:text-lg" style={{ animationDelay: "140ms" }}>
+        <p className="mt-6 max-w-2xl text-lg text-zinc-300">
           Máy chủ Minecraft Survival với Claim, Skills, Crate, Kinh tế, Xây dựng và nhiều tính năng hấp dẫn khác.
         </p>
 
-        <div className="craftopia-fade-up mt-10 w-full sm:mt-12" style={{ animationDelay: "200ms" }}>
-          <div className="mx-auto flex max-w-3xl items-center rounded-full border border-white/10 bg-black/55 px-2.5 py-2.5 shadow-2xl backdrop-blur-xl sm:px-3 sm:py-3">
-            <div className="flex shrink-0 items-center gap-2 px-2.5 sm:px-5">
+        <div className="mt-12 w-full px-3">
+          <div className="mx-auto flex max-w-3xl items-center rounded-full border border-white/10 bg-black/55 px-3 py-3 shadow-2xl backdrop-blur-xl">
+            <div className="flex shrink-0 items-center gap-2 px-2 sm:px-5">
               <span
-                className={`h-2.5 w-2.5 rounded-full sm:h-3 sm:w-3 ${
+                className={`h-3 w-3 rounded-full ${
                   server.online ? "bg-emerald-400 animate-pulse" : "bg-red-500"
                 }`}
               />
-              <span className="text-lg font-black sm:text-3xl">{server.players}</span>
+              <span className="text-xl font-black sm:text-3xl">{server.players}</span>
               <span className="hidden text-sm text-zinc-400 sm:block">đang chơi</span>
             </div>
 
             <div className="hidden h-8 w-px bg-white/10 sm:block" />
 
-            <div className="min-w-0 flex-1 px-2 text-center sm:px-3">
-              <p className="truncate text-xs font-bold sm:text-2xl">
+            <div className="min-w-0 flex-1 px-3 text-center">
+              <p className="truncate text-sm font-bold sm:text-2xl">
                 node1.zencheap.net
               </p>
               <p className="hidden text-xs text-zinc-500 sm:block">Port: 30263</p>
@@ -320,7 +256,7 @@ export default function Home() {
 
             <button
               onClick={copyIP}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 active:scale-90 sm:h-12 sm:w-12"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 active:scale-90 sm:h-12 sm:w-12"
               aria-label="Sao chép địa chỉ IP"
             >
               {copied ? "✅" : "📋"}
@@ -329,14 +265,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto mt-4 max-w-4xl px-4 sm:mt-10 sm:px-6 lg:px-8">
-        <div className="rounded-[2rem] border border-emerald-500/12 bg-black/50 p-4 shadow-[0_0_40px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-6">
-          <h2 className="mb-5 text-center text-xl font-bold sm:text-2xl">📖 Hướng dẫn tham gia</h2>
+      <section className="mx-auto mt-10 max-w-4xl px-6">
+        <div className="rounded-[2rem] border border-emerald-500/12 bg-black/50 p-6 shadow-[0_0_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+          <h2 className="mb-5 text-center text-2xl font-bold">📖 Hướng dẫn tham gia</h2>
 
           <div className="mb-5 flex rounded-full border border-white/10 bg-white/5 p-1 backdrop-blur-md">
             <button
               onClick={() => setGuideTab("java")}
-              className={`flex-1 rounded-full py-2.5 text-sm font-bold transition-all duration-300 sm:py-3 sm:text-base ${
+              className={`flex-1 rounded-full py-3 font-bold transition-all duration-300 ${
                 guideTab === "java"
                   ? "bg-emerald-500 text-black shadow-lg"
                   : "text-zinc-400 hover:text-white"
@@ -347,7 +283,7 @@ export default function Home() {
 
             <button
               onClick={() => setGuideTab("bedrock")}
-              className={`flex-1 rounded-full py-2.5 text-sm font-bold transition-all duration-300 sm:py-3 sm:text-base ${
+              className={`flex-1 rounded-full py-3 font-bold transition-all duration-300 ${
                 guideTab === "bedrock"
                   ? "bg-emerald-500 text-black shadow-lg"
                   : "text-zinc-400 hover:text-white"
@@ -372,21 +308,151 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <div className="mb-10 text-center sm:mb-12">
-          <h2 className="text-3xl font-black sm:text-5xl">✨ Khám phá</h2>
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <div className="mb-12 text-center">
+          <h2 className="text-5xl font-black">✨ Khám phá</h2>
         </div>
 
-        <div className="grid items-stretch gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-          
+        <div className="grid items-stretch gap-6 md:grid-cols-3">
+          <a
             href="/events"
-            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-orange-500/20 bg-black/55 p-5 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-orange-400/40 hover:bg-white/5 sm:p-6"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-orange-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-orange-400/40 hover:bg-white/5"
           >
             <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(251,146,60,0.10),transparent_55%)] opacity-80" />
             <div className="relative z-10">
-              <h3 className="text-lg font-bold text-orange-300 sm:text-xl">🎉 Events</h3>
-              <p className="mt-2.5 text-sm text-zinc-300 sm:mt-3">
+              <h3 className="text-xl font-bold text-orange-300">🎉 Events</h3>
+              <p className="mt-3 text-sm text-zinc-300">
                 Theo dõi các sự kiện mới nhất, phần thưởng và hoạt động đang diễn ra tại Craftopia.
               </p>
             </div>
-            <div className="relative z-10 mt-5 flex items-center justify-between
+            <div className="relative z-10 mt-6 flex items-center justify-between">
+              <span className="font-semibold text-orange-300">Xem Events →</span>
+              <span className="text-3xl transition group-hover:scale-110">🎁</span>
+            </div>
+          </a>
+
+          <a
+            href="/faq"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-purple-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-purple-400/40 hover:bg-white/5"
+          >
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.10),transparent_55%)] opacity-80" />
+            <div className="relative z-10">
+              <h3 className="text-xl font-bold text-purple-300">📚 FAQ</h3>
+              <p className="mt-3 text-sm text-zinc-300">
+                Hướng dẫn các hệ thống, lệnh và tính năng của máy chủ.
+              </p>
+            </div>
+            <div className="relative z-10 mt-6 flex items-center justify-between">
+              <span className="font-semibold text-purple-300">Mở FAQ →</span>
+              <span className="text-3xl transition group-hover:scale-110">📖</span>
+            </div>
+          </a>
+
+          <a
+            href="/rules"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-sky-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-sky-400/40 hover:bg-white/5"
+          >
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.10),transparent_55%)] opacity-80" />
+            <div className="relative z-10">
+              <h3 className="text-xl font-bold text-sky-300">📜 Rules</h3>
+              <p className="mt-3 text-sm text-zinc-300">
+                Đọc nội quy chính thức của máy chủ trước khi tham gia chơi.
+              </p>
+            </div>
+            <div className="relative z-10 mt-6 flex items-center justify-between">
+              <span className="font-semibold text-sky-300">Xem Rules →</span>
+              <span className="text-3xl transition group-hover:scale-110">⚖️</span>
+            </div>
+          </a>
+
+          <a
+            href="/gallery"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-emerald-500/25 bg-emerald-500/8 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-emerald-300/60 hover:bg-emerald-500/12"
+          >
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.14),transparent_55%)] opacity-90" />
+            <div className="relative z-10">
+              <h3 className="text-xl font-bold text-emerald-300">🖼 Gallery</h3>
+              <p className="mt-3 text-sm text-zinc-200">
+                Xem những khoảnh khắc đẹp nhất của Craftopia Survival.
+              </p>
+            </div>
+            <div className="relative z-10 mt-6 flex items-center justify-between">
+              <span className="font-semibold text-emerald-300">Mở Gallery →</span>
+              <span className="text-3xl transition group-hover:scale-110">✨</span>
+            </div>
+          </a>
+
+          <a
+            href="/news"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-red-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-red-400/40 hover:bg-white/5"
+          >
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.10),transparent_55%)] opacity-80" />
+            <div className="relative z-10">
+              <h3 className="text-xl font-bold text-red-300">📰 Tin tức</h3>
+              <p className="mt-3 text-sm text-zinc-300">
+                Xem các thông báo và cập nhật mới nhất của máy chủ.
+              </p>
+            </div>
+            <div className="relative z-10 mt-6 flex items-center justify-between">
+              <span className="font-semibold text-red-300">Xem Tin tức →</span>
+              <span className="text-3xl transition group-hover:scale-110">📢</span>
+            </div>
+          </a>
+
+          <a
+            href="/baltop"
+            className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-yellow-500/20 bg-black/55 p-6 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-yellow-400/40 hover:bg-white/5"
+          >
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.10),transparent_55%)] opacity-80" />
+            <div className="relative z-10">
+              <h3 className="text-xl font-bold text-yellow-300">💰 Kinh tế</h3>
+              <p className="mt-3 text-sm text-zinc-300">
+                Xem bảng xếp hạng Baltop và nền kinh tế của máy chủ.
+              </p>
+            </div>
+            <div className="relative z-10 mt-6 flex items-center justify-between">
+              <span className="font-semibold text-yellow-300">Xem Baltop →</span>
+              <span className="text-3xl transition group-hover:scale-110">🏆</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 pb-24">
+        <div className="mb-12 flex flex-col items-center gap-3 text-center">
+          <h2 className="text-5xl font-black">⚡ Tính năng nổi bật</h2>
+          <p className="max-w-xl text-zinc-400">
+            Những gì khiến Craftopia Survival trở nên đáng chơi.
+          </p>
+          <span className="mt-1 inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/8 px-4 py-1.5 text-sm text-emerald-300">
+            <span
+              className={`h-2 w-2 rounded-full ${
+                server.online ? "bg-emerald-400 animate-pulse" : "bg-red-500"
+              }`}
+            />
+            {server.online
+              ? `${server.players} người đang chơi ngay bây giờ`
+              : "Server hiện đang offline"}
+          </span>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {features.map((f) => (
+            <div
+              key={f.title}
+              className={`rounded-[2rem] border bg-black/55 p-8 text-center shadow-2xl backdrop-blur-xl transition duration-300 hover:-translate-y-1 ${featureBorder[f.color]}`}
+            >
+              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/5 text-4xl">
+                {f.icon}
+              </div>
+              <h3 className={`mt-2 text-xl font-bold ${featureText[f.color]}`}>
+                {f.title}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-400">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
