@@ -137,7 +137,7 @@ export default function Home() {
 
             <div className="hidden items-center gap-3 md:flex">
               <a
-                href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
+                href="minecraft://?addExternalServer=Craftopia|node1.zencheap.net:30263"
                 className="rounded-full bg-emerald-500 px-6 py-3 font-bold text-black transition hover:scale-105 hover:bg-emerald-400 active:scale-95"
               >
                 🎮 Vào Server
@@ -204,7 +204,7 @@ export default function Home() {
                   💬
                 </a>
                 <a
-                  href="minecraft://?addExternalServer=Craftopia|craftopia.zencheap.net:30263"
+                  href="minecraft://?addExternalServer=Craftopia|node1.zencheap.net:30263"
                   className="flex-1 rounded-full bg-emerald-500 py-4 text-center font-bold text-black transition hover:bg-emerald-400"
                 >
                   🎮 Vào Server
@@ -249,7 +249,7 @@ export default function Home() {
 
             <div className="min-w-0 flex-1 px-3 text-center">
               <p className="truncate text-sm font-bold sm:text-2xl">
-                craftopia.zencheap.net
+                node1.zencheap.net
               </p>
               <p className="hidden text-xs text-zinc-500 sm:block">Port: 30263</p>
             </div>
