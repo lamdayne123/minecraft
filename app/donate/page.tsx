@@ -365,7 +365,7 @@ export default function DonatePage() {
               <h3 className="text-lg font-black text-white">Lưu ý</h3>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-zinc-300">
                 <li className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
-                  • Nhập đúng tên Minecraft để hệ thống cộng đúng người.
+                  • Nhập đúng tên minecraft.
                 </li>
                 <li className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
                   • Chụp ảnh giao dịch nếu bạn cần đối soát.
