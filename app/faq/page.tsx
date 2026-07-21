@@ -42,7 +42,7 @@ const faq: readonly FaqItem[] = [
     icon: "⚔️",
     title: "Kỹ năng",
     color: "violet",
-    desc: "AuraSkills giúp tăng sức mạnh nhân vật.",
+    desc: "Skills giúp tăng sức mạnh nhân vật.",
     items: [
       "Đào sẽ tăng Mining.",
       "Chặt cây tăng Foraging.",
