@@ -194,7 +194,7 @@ export default function RulesPage() {
                 💬 Tham gia Discord
               </a>
               <a
-                href="/server-guide"
+                href="/guide"
                 className="inline-block rounded-full border border-emerald-400/50 bg-emerald-500/10 px-8 py-3 font-bold text-emerald-300 transition hover:-translate-y-0.5 hover:bg-emerald-500/15"
               >
                 ⚖️ Server Guide
