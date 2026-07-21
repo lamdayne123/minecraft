@@ -345,18 +345,18 @@ export default function DonatePage() {
           <aside className="space-y-6">
             <div className="rounded-[2rem] border border-emerald-500/15 bg-black/50 p-5 shadow-[0_0_30px_rgba(0,0,0,0.25)] backdrop-blur-xl sm:p-6">
               <div className="inline-flex rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-bold tracking-[0.18em] text-emerald-300">
-                QUYỀN LỢI
+                Donate
               </div>
               <h2 className="mt-4 text-2xl font-black sm:text-3xl">Ủng hộ server để nhận hỗ trợ</h2>
               <div className="mt-4 space-y-3 text-sm text-zinc-300">
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
-                  🎁 Hỗ trợ phát triển server và cải thiện trải nghiệm.
+                  🎁 Giúp hỗ trợ phát triển server.
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
-                  ⚡ Xử lý nhanh, giao diện rõ ràng trên cả mobile lẫn PC.
+                  ⚡ Giúp admin có tiền mua mỳ gói.
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
-                  🌿 Đồng bộ với phong cách Craftopia Survival.
+                  🌿 Giúp trải nghiệm mượt mà hơn.
                 </div>
               </div>
             </div>
