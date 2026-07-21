@@ -48,7 +48,7 @@ const sections: readonly RuleSection[] = [
       "Kill Aura",
       "Reach",
       "Fly",
-      "Freecam" (admin cho phép mới được dùng),
+      "Freecam (admin cho phép mới được dùng)",
       "Baritone",
       "Nuker",
       "Auto Click",
