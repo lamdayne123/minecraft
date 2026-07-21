@@ -121,7 +121,7 @@ export default function RulesPage() {
         {/* Server Guide CTA — điểm nhấn chính, dễ chú ý */}
         <section className="mx-auto mt-10 max-w-5xl px-4 sm:px-6 lg:px-8">
           <a
-            href="/server-guide"
+            href="/guide"
             className="craftopia-cta-sheen group relative flex flex-col items-center gap-4 overflow-hidden rounded-[2rem] border border-emerald-400/40 bg-gradient-to-r from-emerald-500/15 via-emerald-500/5 to-lime-500/15 p-6 text-center shadow-[0_0_50px_rgba(34,197,94,0.18)] transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-[0_0_70px_rgba(34,197,94,0.28)] sm:flex-row sm:justify-between sm:text-left sm:p-8"
           >
             <div className="flex items-center gap-4">
