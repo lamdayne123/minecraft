@@ -347,7 +347,7 @@ export default function DonatePage() {
               <div className="inline-flex rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-bold tracking-[0.18em] text-emerald-300">
                 Donate
               </div>
-              <h2 className="mt-4 text-2xl font-black sm:text-3xl">Ủng hộ server để nhận hỗ trợ</h2>
+              <h2 className="mt-4 text-2xl font-black sm:text-3xl">Ủng hộ server giúp</h2>
               <div className="mt-4 space-y-3 text-sm text-zinc-300">
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
                   🎁 Giúp hỗ trợ phát triển server.
