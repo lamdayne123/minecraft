@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 type BanStatus = "active" | "expired" | "removed";
 type BanType = "permanent" | "temporary";
@@ -14,12 +15,12 @@ interface BanRecord {
   reason: string | null;
   banned_by_name: string | null;
   banned_by_uuid: string | null;
-  time: string;
-  until: string;
+  time: number | string;
+  until: number | string;
   removed_by_name: string | null;
   removed_by_uuid: string | null;
   removed_by_reason: string | null;
-  removed_by_date: string | null;
+  removed_by_date: number | string | null;
   server_origin: string | null;
   server_scope: string | null;
   silent: boolean;
@@ -28,7 +29,10 @@ interface BanRecord {
   template: boolean | null;
 }
 
-interface BanWithComputed extends BanRecord {
+interface BanWithComputed extends Omit<BanRecord, "time" | "until" | "removed_by_date"> {
+  time: number;
+  until: number;
+  removed_by_date: number | null;
   status: BanStatus;
   banType: BanType;
 }
@@ -42,31 +46,43 @@ const FILTER_OPTIONS: { value: BanFilter; label: string }[] = [
   { value: "removed", label: "Đã gỡ ban" },
 ];
 
+function toNumber(value: number | string | null | undefined): number {
+  if (value === null || value === undefined) return 0;
+  const num = typeof value === "string" ? Number(value) : value;
+  return Number.isFinite(num) ? num : 0;
+}
+
 function classifyBan(row: BanRecord): { status: BanStatus; banType: BanType } {
-  const untilNum = Number(row.until ?? 0);
+  const untilNum = toNumber(row.until);
   const banType: BanType = untilNum === 0 ? "permanent" : "temporary";
 
   if (row.removed_by_name) return { status: "removed", banType };
   if (untilNum === 0) return { status: "active", banType };
 
-  const now = Date.now();
-  return { status: untilNum > now ? "active" : "expired", banType };
+  return {
+    status: untilNum > Date.now() ? "active" : "expired",
+    banType,
+  };
 }
 
 function maskIp(ip: string | null): string {
   if (!ip) return "Không có";
+
   const parts = ip.split(".");
   if (parts.length === 4) return `${parts[0]}.${parts[1]}.***.***`;
+
   if (ip.length > 6) {
     const half = Math.ceil(ip.length / 2);
     return `${ip.slice(0, half)}${"*".repeat(ip.length - half)}`;
   }
+
   return "***";
 }
 
-function formatMsDate(ms: string | null | undefined): string {
-  const num = Number(ms ?? 0);
+function formatMsDate(value: number | string | null | undefined): string {
+  const num = toNumber(value);
   if (!num) return "—";
+
   return new Date(num).toLocaleString("vi-VN", {
     day: "2-digit",
     month: "2-digit",
@@ -76,23 +92,54 @@ function formatMsDate(ms: string | null | undefined): string {
   });
 }
 
-const statusConfig: Record<BanStatus, { label: string; dot: string; text: string; bg: string; border: string }> = {
-  active: { label: "Active", dot: "bg-green-400", text: "text-green-400", bg: "bg-green-500/10", border: "border-green-500/25" },
-  expired: { label: "Expired", dot: "bg-red-400", text: "text-red-400", bg: "bg-red-500/10", border: "border-red-500/25" },
-  removed: { label: "Removed", dot: "bg-yellow-400", text: "text-yellow-400", bg: "bg-yellow-500/10", border: "border-yellow-500/25" },
+const statusConfig: Record<
+  BanStatus,
+  { label: string; dot: string; text: string; bg: string; border: string }
+> = {
+  active: {
+    label: "Active",
+    dot: "bg-green-400",
+    text: "text-green-400",
+    bg: "bg-green-500/10",
+    border: "border-green-500/25",
+  },
+  expired: {
+    label: "Expired",
+    dot: "bg-red-400",
+    text: "text-red-400",
+    bg: "bg-red-500/10",
+    border: "border-red-500/25",
+  },
+  removed: {
+    label: "Removed",
+    dot: "bg-yellow-400",
+    text: "text-yellow-400",
+    bg: "bg-yellow-500/10",
+    border: "border-yellow-500/25",
+  },
 };
 
 function StatusBadge({ status }: { status: BanStatus }) {
   const c = statusConfig[status];
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${c.bg} ${c.border} ${c.text}`}>
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${c.bg} ${c.border} ${c.text}`}
+    >
       <span className={`h-1.5 w-1.5 rounded-full ${c.dot}`} />
       {c.label}
     </span>
   );
 }
 
-function Row({ label, value, mono }: { label: string; value: React.ReactNode; mono?: boolean }) {
+function Row({
+  label,
+  value,
+  mono,
+}: {
+  label: string;
+  value: React.ReactNode;
+  mono?: boolean;
+}) {
   return (
     <div className="flex items-start justify-between gap-4 border-b border-white/5 pb-3">
       <span className="shrink-0 text-zinc-500">{label}</span>
@@ -110,25 +157,50 @@ export default function BansPage() {
   const [filter, setFilter] = useState<BanFilter>("all");
   const [page, setPage] = useState(1);
   const [selectedBan, setSelectedBan] = useState<BanWithComputed | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let alive = true;
+
     async function loadBans() {
       try {
+        setLoading(true);
+        setError(null);
+
         const res = await fetch("/api/bans", { cache: "no-store" });
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+
         const data: BanRecord[] = await res.json();
-        const computed = (Array.isArray(data) ? data : []).map((row) => ({
-          ...row,
-          ...classifyBan(row),
-        }));
-        setAllBans(computed);
+
+        const computed: BanWithComputed[] = (Array.isArray(data) ? data : []).map((row) => {
+          const statusInfo = classifyBan(row);
+
+          return {
+            ...row,
+            time: toNumber(row.time),
+            until: toNumber(row.until),
+            removed_by_date: row.removed_by_date ? toNumber(row.removed_by_date) : null,
+            template: Boolean(row.template),
+            ...statusInfo,
+          };
+        });
+
+        if (alive) setAllBans(computed);
       } catch (err) {
         console.error("Fetch bans error:", err);
+        if (alive) setError("Không tải được danh sách cấm.");
       } finally {
-        setLoading(false);
+        if (alive) setLoading(false);
       }
     }
 
     loadBans();
+
+    return () => {
+      alive = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -146,7 +218,8 @@ export default function BansPage() {
         !q ||
         (ban.name ?? "").toLowerCase().includes(q) ||
         ban.uuid.toLowerCase().includes(q) ||
-        (ban.reason ?? "").toLowerCase().includes(q);
+        (ban.reason ?? "").toLowerCase().includes(q) ||
+        (ban.banned_by_name ?? "").toLowerCase().includes(q);
 
       const matchesFilter =
         filter === "all" ||
@@ -163,7 +236,12 @@ export default function BansPage() {
   }, [search, filter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const safePage = Math.min(page, totalPages);
+  const paginated = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+
+  useEffect(() => {
+    if (page !== safePage) setPage(safePage);
+  }, [page, safePage]);
 
   return (
     <main
@@ -174,11 +252,10 @@ export default function BansPage() {
       }}
     >
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <header className="sticky top-4 z-40 pt-4">
           <div className="rounded-3xl border border-green-500/20 bg-black/75 px-4 py-3 shadow-[0_0_40px_rgba(34,197,94,0.08)] backdrop-blur-xl sm:px-6">
             <div className="flex items-center justify-between gap-4">
-              <a href="/" className="flex items-center gap-3">
+              <Link href="/" className="flex items-center gap-3">
                 <div
                   className="h-10 w-10 rounded-xl bg-cover bg-center shadow-lg"
                   style={{
@@ -194,7 +271,7 @@ export default function BansPage() {
                     SURVIVAL
                   </div>
                 </div>
-              </a>
+              </Link>
 
               <nav className="hidden items-center gap-7 text-sm font-medium text-zinc-300 xl:flex">
                 {[
@@ -204,19 +281,17 @@ export default function BansPage() {
                   ["SỰ KIỆN", "/events"],
                   ["DANH SÁCH CẤM", "/bans"],
                 ].map(([label, href]) => (
-                  
+                  <Link
                     key={href}
                     href={href}
-                    className={`transition hover:text-green-400 ${
-                      href === "/bans" ? "text-green-400" : ""
-                    }`}
+                    className={`transition hover:text-green-400 ${href === "/bans" ? "text-green-400" : ""}`}
                   >
                     {label}
-                  </a>
+                  </Link>
                 ))}
               </nav>
 
-              
+              <a
                 href="https://discord.gg/maY22mamA"
                 target="_blank"
                 rel="noreferrer"
@@ -228,7 +303,6 @@ export default function BansPage() {
           </div>
         </header>
 
-        {/* Hero */}
         <section className="relative mt-8 overflow-hidden rounded-3xl border border-green-500/10 bg-[#18181b]/70 px-4 py-14 shadow-2xl backdrop-blur-xl sm:px-8 sm:py-18">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.10),transparent_45%)]" />
           <div className="relative z-10 text-center">
@@ -245,7 +319,6 @@ export default function BansPage() {
           </div>
         </section>
 
-        {/* Search + Filter */}
         <section className="mt-6 flex flex-col gap-3 sm:flex-row">
           <div className="relative flex-1">
             <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500">
@@ -254,7 +327,7 @@ export default function BansPage() {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Tìm theo tên, UUID hoặc lý do..."
+              placeholder="Tìm theo tên, UUID, staff hoặc lý do..."
               className="w-full rounded-2xl border border-white/10 bg-[#18181b] py-3.5 pl-12 pr-4 text-white outline-none transition placeholder:text-zinc-500 focus:border-green-500/40"
             />
           </div>
@@ -272,7 +345,6 @@ export default function BansPage() {
           </select>
         </section>
 
-        {/* Table (desktop) / Cards (mobile) */}
         <section className="mt-6 pb-10">
           {loading ? (
             <>
@@ -282,12 +354,13 @@ export default function BansPage() {
                     key={i}
                     className="grid grid-cols-[1.4fr_1.6fr_0.9fr_1fr_1fr_1fr_0.8fr_0.6fr] items-center gap-3 border-b border-white/5 px-5 py-4"
                   >
-                    {Array.from({ length: 8 }).map((_, j) => (
+                    {Array.from({ length: 8 }).map((__, j) => (
                       <div key={j} className="h-4 w-full animate-pulse rounded-full bg-white/5" />
                     ))}
                   </div>
                 ))}
               </div>
+
               <div className="space-y-3 md:hidden">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <div key={i} className="rounded-3xl border border-white/10 bg-[#18181b] p-4">
@@ -306,13 +379,16 @@ export default function BansPage() {
                 ))}
               </div>
             </>
+          ) : error ? (
+            <div className="rounded-3xl border border-red-500/20 bg-red-500/5 p-10 text-center text-red-300">
+              {error}
+            </div>
           ) : paginated.length === 0 ? (
             <div className="rounded-3xl border border-white/10 bg-[#18181b] p-10 text-center text-zinc-400">
               Không tìm thấy lệnh cấm nào phù hợp.
             </div>
           ) : (
             <>
-              {/* Desktop table */}
               <div className="hidden overflow-hidden rounded-3xl border border-white/10 bg-[#18181b] shadow-2xl md:block">
                 <div className="grid grid-cols-[1.4fr_1.6fr_0.9fr_1fr_1fr_1fr_0.8fr_0.6fr] gap-3 border-b border-white/10 px-5 py-4 text-xs font-black uppercase tracking-wide text-zinc-500">
                   <div>Player</div>
@@ -388,7 +464,6 @@ export default function BansPage() {
                 </div>
               </div>
 
-              {/* Mobile cards */}
               <div className="space-y-3 md:hidden">
                 {paginated.map((ban, i) => (
                   <motion.div
@@ -444,7 +519,6 @@ export default function BansPage() {
           )}
         </section>
 
-        {/* Pagination */}
         {!loading && totalPages > 1 && (
           <section className="pb-16">
             <div className="flex flex-wrap items-center justify-center gap-2">
@@ -458,13 +532,13 @@ export default function BansPage() {
 
               {Array.from({ length: totalPages })
                 .map((_, i) => i + 1)
-                .filter((p) => p >= page - 2 && p <= page + 2)
+                .filter((p) => p >= safePage - 2 && p <= safePage + 2)
                 .map((p) => (
                   <button
                     key={p}
                     onClick={() => setPage(p)}
                     className={`h-10 w-10 rounded-full text-sm font-bold transition ${
-                      p === page
+                      p === safePage
                         ? "bg-green-500 text-black shadow-[0_0_20px_rgba(34,197,94,0.35)]"
                         : "border border-white/10 bg-[#18181b] text-zinc-300 hover:bg-[#27272a]"
                     }`}
@@ -485,7 +559,6 @@ export default function BansPage() {
         )}
       </div>
 
-      {/* Modal chi tiết */}
       <AnimatePresence>
         {selectedBan && (
           <motion.div
@@ -516,7 +589,7 @@ export default function BansPage() {
 
               <div className="p-6">
                 <div className="flex flex-col items-center text-center">
-                  
+                  <a
                     href={`https://mc-heads.net/body/${selectedBan.uuid}/200`}
                     target="_blank"
                     rel="noreferrer"
@@ -532,9 +605,11 @@ export default function BansPage() {
                       }}
                     />
                   </a>
+
                   <h4 className="mt-4 text-xl font-black text-white">
                     {selectedBan.name ?? "Unknown"}
                   </h4>
+
                   <div className="mt-2">
                     <StatusBadge status={selectedBan.status} />
                   </div>
