@@ -62,29 +62,29 @@ function normalizeBan(row: BanRow) {
 
 export async function GET() {
   try {
-    const bans = await sql<BanRow[]>`
-      SELECT
-        id,
-        uuid,
-        ip,
-        reason,
-        banned_by_name,
-        banned_by_uuid,
-        time,
-        until,
-        removed_by_name,
-        removed_by_uuid,
-        removed_by_reason,
-        removed_by_date,
-        server_origin,
-        server_scope,
-        silent,
-        ipban,
-        name,
-        template
-      FROM litebans_bans
-      ORDER BY time DESC
-    `;
+    const bans = (await sql`
+  SELECT
+    id,
+    uuid,
+    ip,
+    reason,
+    banned_by_name,
+    banned_by_uuid,
+    time,
+    until,
+    removed_by_name,
+    removed_by_uuid,
+    removed_by_reason,
+    removed_by_date,
+    server_origin,
+    server_scope,
+    silent,
+    ipban,
+    name,
+    template
+  FROM litebans_bans
+  ORDER BY time DESC
+`) as BanRow[];
 
     return NextResponse.json(bans.map(normalizeBan));
   } catch (err) {
