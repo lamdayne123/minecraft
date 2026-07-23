@@ -76,39 +76,16 @@ function formatMsDate(ms: string | null | undefined): string {
   });
 }
 
-const statusConfig: Record
-  BanStatus,
-  { label: string; dot: string; text: string; bg: string; border: string }
-> = {
-  active: {
-    label: "Active",
-    dot: "bg-green-400",
-    text: "text-green-400",
-    bg: "bg-green-500/10",
-    border: "border-green-500/25",
-  },
-  expired: {
-    label: "Expired",
-    dot: "bg-red-400",
-    text: "text-red-400",
-    bg: "bg-red-500/10",
-    border: "border-red-500/25",
-  },
-  removed: {
-    label: "Removed",
-    dot: "bg-yellow-400",
-    text: "text-yellow-400",
-    bg: "bg-yellow-500/10",
-    border: "border-yellow-500/25",
-  },
+const statusConfig: Record<BanStatus, { label: string; dot: string; text: string; bg: string; border: string }> = {
+  active: { label: "Active", dot: "bg-green-400", text: "text-green-400", bg: "bg-green-500/10", border: "border-green-500/25" },
+  expired: { label: "Expired", dot: "bg-red-400", text: "text-red-400", bg: "bg-red-500/10", border: "border-red-500/25" },
+  removed: { label: "Removed", dot: "bg-yellow-400", text: "text-yellow-400", bg: "bg-yellow-500/10", border: "border-yellow-500/25" },
 };
 
 function StatusBadge({ status }: { status: BanStatus }) {
   const c = statusConfig[status];
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${c.bg} ${c.border} ${c.text}`}
-    >
+    <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${c.bg} ${c.border} ${c.text}`}>
       <span className={`h-1.5 w-1.5 rounded-full ${c.dot}`} />
       {c.label}
     </span>
