@@ -157,38 +157,38 @@ export async function GET() {
       );
     }
 
-    const rows = (await sql`
-      SELECT
-        b.id,
-        b.uuid,
-        h.name,
-        b.ip,
-        b.reason,
-        b.banned_by_uuid,
-        b.banned_by_name,
-        b.removed_by_uuid,
-        b.removed_by_name,
-        b.removed_by_reason,
-        b.removed_by_date,
-        b.time,
-        b.until,
-        b.template,
-        b.server_scope,
-        b.server_origin,
-        b.silent,
-        b.ipban,
-        b.ipban_wildcard,
-        b.active
-      FROM litebans_bans b
-      LEFT JOIN LATERAL (
-        SELECT lh.name
-        FROM litebans_history lh
-        WHERE lh.uuid = b.uuid
-        ORDER BY lh.date DESC, lh.id DESC
-        LIMIT 1
-      ) h ON true
-      ORDER BY b.time DESC, b.id DESC
-    `) as RawBanRow[];
+    const rows = await sql`
+  SELECT
+    b.id,
+    b.uuid,
+    h.name,
+    b.ip,
+    b.reason,
+    b.banned_by_uuid,
+    b.banned_by_name,
+    b.removed_by_uuid,
+    b.removed_by_name,
+    b.removed_by_reason,
+    b.removed_by_date,
+    b.time,
+    b.until,
+    b.template,
+    b.server_scope,
+    b.server_origin,
+    b.silent,
+    b.ipban,
+    b.ipban_wildcard,
+    b.active
+  FROM litebans_bans b
+  LEFT JOIN LATERAL (
+    SELECT name
+    FROM litebans_history
+    WHERE uuid = b.uuid
+    ORDER BY date DESC, id DESC
+    LIMIT 1
+  ) h ON true
+  ORDER BY b.time DESC, b.id DESC
+`;
 
     return NextResponse.json(rows.map(normalizeRow));
   } catch (err) {
