@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [guideTab, setGuideTab] = useState<"java" | "bedrock">("java");
   const [server, setServer] = useState({
     online: false,
     players: 0,
@@ -16,7 +15,7 @@ export default function Home() {
 
   const copyIP = async () => {
     try {
-      await navigator.clipboard.writeText("craftopics.online");
+      await navigator.clipboard.writeText("craftopics.online:30263");
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
@@ -137,18 +136,19 @@ export default function Home() {
 
             <div className="hidden items-center gap-3 md:flex">
               <a
-                href="minecraft://?addExternalServer=Craftopia|craftopics.online:30263"
-                className="rounded-full bg-emerald-500 px-6 py-3 font-bold text-black transition hover:scale-105 hover:bg-emerald-400 active:scale-95"
-              >
-                🎮 Vào Server
-              </a>
-              <a
                 href="https://discord.gg/maY22mamA"
                 target="_blank"
                 rel="noreferrer"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-xl transition hover:scale-105 hover:bg-white/10 active:scale-95"
+                className="rounded-full border border-white/10 bg-white/5 px-5 py-3 font-bold text-white transition hover:scale-105 hover:bg-white/10 active:scale-95"
               >
-                💬
+                💬 Discord
+              </a>
+
+              <a
+                href="minecraft://?addExternalServer=Craftopia|craftopics.online:30263"
+                className="rounded-full bg-emerald-500 px-6 py-3 font-bold text-black transition hover:scale-105 hover:bg-emerald-400 active:scale-95"
+              >
+                🎮 Vào server PE
               </a>
             </div>
 
@@ -200,6 +200,7 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                   className="flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-white/5 text-2xl transition hover:bg-white/10"
+                  aria-label="Discord"
                 >
                   💬
                 </a>
@@ -207,7 +208,7 @@ export default function Home() {
                   href="minecraft://?addExternalServer=Craftopia|craftopics.online:30263"
                   className="flex-1 rounded-full bg-emerald-500 py-4 text-center font-bold text-black transition hover:bg-emerald-400"
                 >
-                  🎮 Vào Server
+                  🎮 Vào server PE
                 </a>
               </div>
             </div>
@@ -227,84 +228,65 @@ export default function Home() {
           )}
         </div>
 
-        <h2 className="mt-8 text-4xl font-black sm:text-6xl">Craftopia Survival</h2>
+        <h2 className="mt-8 text-4xl font-black sm:text-6xl">
+          Craftopia Survival
+        </h2>
 
         <p className="mt-6 max-w-2xl text-lg text-zinc-300">
           Máy chủ Minecraft Survival với Claim, Skills, Crate, Kinh tế, Xây dựng và nhiều tính năng hấp dẫn khác.
         </p>
 
+        <div className="mt-10 flex w-full max-w-3xl flex-col gap-4 sm:flex-row">
+          <a
+            href="https://discord.gg/maY22mamA"
+            target="_blank"
+            rel="noreferrer"
+            className="flex-1 rounded-2xl border border-indigo-400/20 bg-indigo-500/15 px-6 py-4 text-center text-lg font-bold text-indigo-200 transition hover:scale-[1.02] hover:bg-indigo-500/25"
+          >
+            💬 Vào Discord
+          </a>
+
+          <a
+            href="minecraft://?addExternalServer=Craftopia|craftopics.online:30263"
+            className="flex-1 rounded-2xl bg-emerald-500 px-6 py-4 text-center text-lg font-bold text-black transition hover:scale-[1.02] hover:bg-emerald-400"
+          >
+            🎮 Vào Server
+          </a>
+        </div>
+
         <div className="mt-12 w-full px-3">
-          <div className="mx-auto flex max-w-3xl items-center rounded-full border border-white/10 bg-black/55 px-3 py-3 shadow-2xl backdrop-blur-xl">
-            <div className="flex shrink-0 items-center gap-2 px-2 sm:px-5">
+          <div className="mx-auto flex max-w-4xl flex-col gap-3 rounded-[2rem] border border-white/10 bg-black/55 p-4 shadow-2xl backdrop-blur-xl sm:flex-row sm:items-center sm:gap-4">
+            <div className="flex shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-3 sm:px-5">
               <span
                 className={`h-3 w-3 rounded-full ${
                   server.online ? "bg-emerald-400 animate-pulse" : "bg-red-500"
                 }`}
               />
-              <span className="text-xl font-black sm:text-3xl">{server.players}</span>
-              <span className="hidden text-sm text-zinc-400 sm:block">đang chơi</span>
+              <span className="text-xl font-black sm:text-3xl">
+                {server.players}
+              </span>
+              <span className="hidden text-sm text-zinc-400 sm:block">
+                đang chơi
+              </span>
             </div>
 
-            <div className="hidden h-8 w-px bg-white/10 sm:block" />
-
-            <div className="min-w-0 flex-1 px-3 text-center">
+            <div className="min-w-0 flex-1 rounded-full border border-white/10 bg-white/5 px-4 py-3 text-center">
               <p className="truncate text-sm font-bold sm:text-2xl">
                 craftopics.online
               </p>
-              <p className="hidden text-xs text-zinc-500 sm:block">Port: 30263</p>
+              <p className="text-xs text-zinc-500 sm:text-sm">Port: 30263</p>
             </div>
 
-            <button
-              onClick={copyIP}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 active:scale-90 sm:h-12 sm:w-12"
-              aria-label="Sao chép địa chỉ IP"
-            >
-              {copied ? "✅" : "📋"}
-            </button>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <button
+                onClick={copyIP}
+                className="flex h-12 items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 transition hover:bg-white/10 active:scale-95"
+                aria-label="Sao chép địa chỉ IP"
+              >
+                {copied ? "✅ Đã copy" : "📋 Copy IP"}
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto mt-10 max-w-4xl px-6">
-        <div className="rounded-[2rem] border border-emerald-500/12 bg-black/50 p-6 shadow-[0_0_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
-          <h2 className="mb-5 text-center text-2xl font-bold">📖 Hướng dẫn tham gia</h2>
-
-          <div className="mb-5 flex rounded-full border border-white/10 bg-white/5 p-1 backdrop-blur-md">
-            <button
-              onClick={() => setGuideTab("java")}
-              className={`flex-1 rounded-full py-3 font-bold transition-all duration-300 ${
-                guideTab === "java"
-                  ? "bg-emerald-500 text-black shadow-lg"
-                  : "text-zinc-400 hover:text-white"
-              }`}
-            >
-              🖥 Java
-            </button>
-
-            <button
-              onClick={() => setGuideTab("bedrock")}
-              className={`flex-1 rounded-full py-3 font-bold transition-all duration-300 ${
-                guideTab === "bedrock"
-                  ? "bg-emerald-500 text-black shadow-lg"
-                  : "text-zinc-400 hover:text-white"
-              }`}
-            >
-              📱 Bedrock
-            </button>
-          </div>
-
-          <video
-            key={guideTab}
-            controls
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
-            className="w-full rounded-2xl border border-white/10 bg-black"
-          >
-            <source src={guideTab === "java" ? "/videos/java.mp4" : "/videos/bedrock.mp4"} type="video/mp4" />
-            Trình duyệt của bạn không hỗ trợ video.
-          </video>
         </div>
       </section>
 
