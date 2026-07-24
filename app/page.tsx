@@ -241,51 +241,53 @@ export default function Home() {
             href="https://discord.gg/maY22mamA"
             target="_blank"
             rel="noreferrer"
-            className="flex-1 rounded-2xl border border-indigo-400/20 bg-indigo-500/15 px-6 py-4 text-center text-lg font-bold text-indigo-200 transition hover:scale-[1.02] hover:bg-indigo-500/25"
+            className="group relative flex flex-1 items-center justify-center gap-3 overflow-hidden rounded-2xl border border-indigo-400/25 bg-indigo-500/10 px-6 py-4 text-lg font-bold text-indigo-200 shadow-[0_0_25px_rgba(99,102,241,0.12)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-indigo-300/50 hover:bg-indigo-500/20 hover:shadow-[0_0_35px_rgba(99,102,241,0.28)] active:scale-[0.98]"
           >
-            💬 Vào Discord
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-indigo-400/15 text-xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+              💬
+            </span>
+            <span>Vào Discord</span>
           </a>
 
           <a
             href="minecraft://?addExternalServer=Craftopia|craftopics.online:30263"
-            className="flex-1 rounded-2xl bg-emerald-500 px-6 py-4 text-center text-lg font-bold text-black transition hover:scale-[1.02] hover:bg-emerald-400"
+            className="group relative flex flex-1 items-center justify-center gap-3 overflow-hidden rounded-2xl bg-emerald-500 px-6 py-4 text-lg font-bold text-black shadow-[0_0_25px_rgba(34,197,94,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-400 hover:shadow-[0_0_38px_rgba(34,197,94,0.5)] active:scale-[0.98]"
           >
-            🎮 Vào Server
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-black/10 text-xl transition-transform duration-300 group-hover:scale-110">
+              🎮
+            </span>
+            <span>Vào Server</span>
           </a>
         </div>
 
         <div className="mt-12 w-full px-3">
-          <div className="mx-auto flex max-w-4xl flex-col gap-3 rounded-[2rem] border border-white/10 bg-black/55 p-4 shadow-2xl backdrop-blur-xl sm:flex-row sm:items-center sm:gap-4">
-            <div className="flex shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-3 sm:px-5">
+          <div className="mx-auto flex max-w-3xl items-center gap-2 rounded-full border border-white/10 bg-black/55 p-2 shadow-2xl backdrop-blur-xl sm:gap-3 sm:p-3">
+            <div className="flex shrink-0 items-center gap-2 px-2 sm:px-4">
               <span
-                className={`h-3 w-3 rounded-full ${
+                className={`h-3 w-3 shrink-0 rounded-full ${
                   server.online ? "bg-emerald-400 animate-pulse" : "bg-red-500"
                 }`}
               />
-              <span className="text-xl font-black sm:text-3xl">
+              <span className="text-xl font-black sm:text-2xl">
                 {server.players}
               </span>
-              <span className="hidden text-sm text-zinc-400 sm:block">
-                đang chơi
-              </span>
             </div>
 
-            <div className="min-w-0 flex-1 rounded-full border border-white/10 bg-white/5 px-4 py-3 text-center">
-              <p className="truncate text-sm font-bold sm:text-2xl">
+            <div className="hidden h-8 w-px shrink-0 bg-white/10 sm:block" />
+
+            <div className="min-w-0 flex-1 text-center">
+              <p className="truncate text-sm font-bold sm:text-xl">
                 craftopics.online
               </p>
-              <p className="text-xs text-zinc-500 sm:text-sm">Port: 30263</p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <button
-                onClick={copyIP}
-                className="flex h-12 items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 transition hover:bg-white/10 active:scale-95"
-                aria-label="Sao chép địa chỉ IP"
-              >
-                {copied ? "✅ Đã copy" : "📋 Copy IP"}
-              </button>
-            </div>
+            <button
+              onClick={copyIP}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 active:scale-90 sm:h-12 sm:w-12"
+              aria-label="Sao chép địa chỉ IP"
+            >
+              {copied ? "✅" : "📋"}
+            </button>
           </div>
         </div>
       </section>
