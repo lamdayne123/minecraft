@@ -205,7 +205,7 @@ export default function Home() {
                   💬
                 </a>
                 <a
-                  href="minecraft://?addExternalServer=Craftopia|craftopics.online:30263"
+                  href="minecraft://?addExternalServer=Craftopia|craftopics.online:24546"
                   className="flex-1 rounded-full bg-emerald-500 py-4 text-center font-bold text-black transition hover:bg-emerald-400"
                 >
                   🎮 Vào server PE
