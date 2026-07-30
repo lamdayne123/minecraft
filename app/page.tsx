@@ -250,7 +250,7 @@ export default function Home() {
           </a>
 
           <a
-            href="minecraft://?addExternalServer=Craftopia|craftopics.online:30263"
+            href="minecraft://?addExternalServer=Craftopia|craftopics.online:24546"
             className="group relative flex flex-1 items-center justify-center gap-3 overflow-hidden rounded-2xl bg-emerald-500 px-6 py-4 text-lg font-bold text-black shadow-[0_0_25px_rgba(34,197,94,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-400 hover:shadow-[0_0_38px_rgba(34,197,94,0.5)] active:scale-[0.98]"
           >
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-black/10 text-xl transition-transform duration-300 group-hover:scale-110">
